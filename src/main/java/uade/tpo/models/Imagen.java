@@ -7,20 +7,16 @@ import java.util.*;
  */
 public class Imagen {
 
-    /**
-     * Default constructor
-     */
-    public Imagen() {
-    }
-
-    /**
-     * 
-     */
     private byte[] imagen;
-
-    /**
-     * 
-     */
     private Date fecha;
+	public Imagen(byte[] imagen, Date fecha) {
+		super();
+		this.imagen = imagen;
+		this.fecha = fecha;
+	}
+	
+	
+    
+    
 
 }
