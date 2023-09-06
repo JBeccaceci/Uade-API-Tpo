@@ -4,26 +4,44 @@ package uade.tpo.models;
  * 
  */
 public class Direccion {
+	String calle;
+	int altura;
+	String cp;
+	
+	public Direccion (String calle, int altura, String cp) {
+	this.calle= calle;
+	this.altura= altura;
+	this.cp= cp;
+	}
 
-    /**
-     * Default constructor
-     */
-    public Direccion() {
-    }
+	public String getCalle() {
+		return calle;
+	}
 
-    /**
-     * 
-     */
-    private String calle;
+	public void setCalle(String calle) {
+		this.calle = calle;
+	}
 
-    /**
-     * 
-     */
-    private String altura;
+	public int getAltura() {
+		return altura;
+	}
 
-    /**
-     * 
-     */
-    private String cp;
+	public void setAltura(int altura) {
+		this.altura = altura;
+	}
 
+	public String getCp() {
+		return cp;
+	}
+
+	public void setCp(String cp) {
+		this.cp = cp;
+	}
+
+	@Override
+	public String toString() {
+		return "Direccion [calle=" + calle + ", altura=" + altura + ", cp=" + cp + "]";
+	}
+	
+	
 }
