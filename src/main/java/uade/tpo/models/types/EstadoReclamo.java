@@ -1,4 +1,4 @@
-package uade.tpo.models;
+package uade.tpo.models.types;
 
 /**
  * 

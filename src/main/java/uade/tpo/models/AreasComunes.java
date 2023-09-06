@@ -1,8 +1,6 @@
 package uade.tpo.models;
 
-/**
- * 
- */
+// TODO: Posibilidad de que sea un ENUM?
 public class AreasComunes {
     private String nombre;
     private int capacidad; 

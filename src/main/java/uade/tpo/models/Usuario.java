@@ -1,46 +1,114 @@
 package uade.tpo.models;
 
+import javax.persistence.*;
 import java.util.*;
 
-/**
- * 
- */
+@Entity
+@Table(name = "usuarios_table")
 public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    /**
-     * Default constructor
-     */
+    @Column(name = "nombre", nullable = false, length = 50)
+    private String nombre;
+
+    private String password;
+    private String apellido;
+    private String dni;
+    private String nombreUsuario;
+    private List<String> permisos;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Reclamo> reclamos;
+
+    @ManyToOne
+    @JoinColumn(name = "unidad_id")
+    private Unidad unidad;
+
+    public Usuario(String nombre, String password, String apellido, String dni, String nombreUsuario, List<String> permisos, List<Reclamo> reclamos) {
+        this.nombre = nombre;
+        this.password = password;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.nombreUsuario = nombreUsuario;
+        this.permisos = permisos;
+        this.reclamos = reclamos;
+    }
+
     public Usuario() {
     }
 
-    /**
-     * 
-     */
-    private String nombre;
+    public int getId() {
+        return id;
+    }
 
-    /**
-     * 
-     */
-    private String password;
+    public String getNombre() {
+        return nombre;
+    }
 
-    /**
-     * 
-     */
-    private String apellido;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-    /**
-     * 
-     */
-    private String dni;
+    public String getPassword() {
+        return password;
+    }
 
-    /**
-     * 
-     */
-    private String nombreUsuario;
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    /**
-     * 
-     */
-    private List<String> permisos;
+    public String getApellido() {
+        return apellido;
+    }
 
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public List<String> getPermisos() {
+        return permisos;
+    }
+
+    public void setPermisos(List<String> permisos) {
+        this.permisos = permisos;
+    }
+
+    public List<Reclamo> getReclamos() {
+        return reclamos;
+    }
+
+    public void setReclamos(List<Reclamo> reclamos) {
+        this.reclamos = reclamos;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", password='" + password + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", dni='" + dni + '\'' +
+                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", permisos=" + permisos +
+                '}';
+    }
 }

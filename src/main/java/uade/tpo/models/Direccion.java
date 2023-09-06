@@ -1,17 +1,17 @@
 package uade.tpo.models;
 
-/**
- * 
- */
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Direccion {
-	String calle;
-	int altura;
-	String cp;
+	private String calle;
+	private int altura;
+	private String cp;
 	
 	public Direccion (String calle, int altura, String cp) {
-	this.calle= calle;
-	this.altura= altura;
-	this.cp= cp;
+		this.calle = calle;
+		this.altura = altura;
+		this.cp = cp;
 	}
 
 	public String getCalle() {
@@ -42,6 +42,4 @@ public class Direccion {
 	public String toString() {
 		return "Direccion [calle=" + calle + ", altura=" + altura + ", cp=" + cp + "]";
 	}
-	
-	
 }

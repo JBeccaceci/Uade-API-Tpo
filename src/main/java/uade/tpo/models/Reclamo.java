@@ -1,65 +1,63 @@
 package uade.tpo.models;
 
+import uade.tpo.models.types.EstadoReclamo;
+import uade.tpo.models.types.TipoReclamo;
+
+import javax.persistence.*;
 import java.util.*;
 
-/**
- * 
- */
+@Entity
+@Table(name = "reclamo_table")
 public class Reclamo {
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 
 	private TipoReclamo tipoReclamo;
 
+	@Transient
 	private IUtilizable objReclamo;
+
 	private String descripcion;
 	private Date creado;
 	private Date actualizado;
+
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
 	private Usuario usuario;
+
+	@OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
 	private List<Imagen> imagenes;
+
 	private EstadoReclamo estadoReclamo;
+
+	@OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
 	private List<Medida> medidas;
 
-	
-
-	
-	
-	public Reclamo(String id, TipoReclamo tipoReclamo, IUtilizable objReclamo, String descripcion, Date creado,
-			Date actualizado, Usuario usuario, List<Imagen> imagenes, EstadoReclamo estadoReclamo,
-			List<Medida> medidas) {
-		super();
-		this.id = id;
+	public Reclamo(TipoReclamo tipoReclamo, IUtilizable objReclamo, String descripcion,
+				   Usuario usuario, List<Imagen> imagenes, EstadoReclamo estadoReclamo,
+				   List<Medida> medidas) {
 		this.tipoReclamo = tipoReclamo;
 		this.objReclamo = objReclamo;
 		this.descripcion = descripcion;
-		this.creado = creado;
-		this.actualizado = actualizado;
+		this.creado = new Date();
+		this.actualizado = new Date();
 		this.usuario = usuario;
 		this.imagenes = imagenes;
 		this.estadoReclamo = estadoReclamo;
 		this.medidas = medidas;
 	}
 
+	public Reclamo() {
+	}
+
 	public void subirImagen(Imagen imagen) {
 		// TODO implement here
 	}
 
-	/**
-	 * @return
-	 */
-
-	
-//--------------------------Getters y setters--------------
 	public String guardar() {
 		// TODO implement here
 		return "";
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public TipoReclamo getTipoReclamo() {
@@ -134,4 +132,23 @@ public class Reclamo {
 		this.medidas = medidas;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Reclamo{" +
+				"id=" + id +
+				", tipoReclamo=" + tipoReclamo +
+				", objReclamo=" + objReclamo +
+				", descripcion='" + descripcion + '\'' +
+				", creado=" + creado +
+				", actualizado=" + actualizado +
+				", usuario=" + usuario +
+				", imagenes=" + imagenes +
+				", estadoReclamo=" + estadoReclamo +
+				", medidas=" + medidas +
+				'}';
+	}
 }

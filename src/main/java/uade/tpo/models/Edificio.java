@@ -1,18 +1,22 @@
 package uade.tpo.models;
+import javax.persistence.*;
 import java.util.*;
 
-/**
- * 
- */
+@Entity
+@Table(name = "edificio_table")
 public class Edificio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String nombre;
     private Direccion direccion;
     private int numeroPisos;
     private boolean tieneAscensor;
-    private List<Unidad> unidades; 
 
-   
+    @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
+    private List<Unidad> unidades;
+
     public Edificio(String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
         this.nombre = nombre;
         this.direccion = direccion;
