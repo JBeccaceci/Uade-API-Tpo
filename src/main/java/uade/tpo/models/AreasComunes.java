@@ -4,34 +4,42 @@ package uade.tpo.models;
  * 
  */
 public class AreasComunes {
-
-    /**
-     * Default constructor
-     */
-    public AreasComunes() {
+    private String nombre;
+    private int capacidad; 
+    private String edificio;
+    
+    public AreasComunes(String nombre, int capacidad, String edificio) {
+        this.nombre = nombre;
+        this.capacidad = capacidad;
+        this.edificio= edificio;
     }
 
-    /**
-     * 
-     */
-    private String tipo;
+	public String getNombre() {
+		return nombre;
+	}
 
-    /**
-     * 
-     */
-    private int capacidad;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    /**
-     * 
-     */
-    private Edificio edificio;
+	public int getCapacidad() {
+		return capacidad;
+	}
 
-    /**
-     * @return
-     */
-    public String getTipo() {
-        // TODO implement here
-        return "";
-    }
+	public void setCapacidad(int capacidad) {
+		this.capacidad = capacidad;
+	}
 
+	public String getEdificio() {
+		return edificio;
+	}
+
+	public void setEdificio(String edificio) {
+		this.edificio = edificio;
+	}
+
+	@Override
+	public String toString() {
+		return "AreasComunes [nombre=" + nombre + ", capacidad=" + capacidad + ", edificio=" + edificio + "]";
+	}
 }
