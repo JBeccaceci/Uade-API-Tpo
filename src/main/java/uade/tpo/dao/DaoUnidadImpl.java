@@ -5,12 +5,12 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import org.hibernate.query.Query;
 import uade.tpo.models.Unidad;
 
 public class DaoUnidadImpl implements DAO<Unidad> {
 
     private Session session;
-
 
     public DaoUnidadImpl(Session session) {
         super();
@@ -19,30 +19,30 @@ public class DaoUnidadImpl implements DAO<Unidad> {
 
     @Override
     public List<Unidad> getAll() throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        Query<Unidad> getQuery = session.createQuery("FROM unidad_table", Unidad.class);
+        List<Unidad> unidades = getQuery.list();
+        return unidades;
     }
 
     @Override
     public void save(Unidad persistible) throws Exception {
-
         Transaction tx = session.beginTransaction();
         session.save(persistible);
         tx.commit();
-
-
     }
 
     @Override
     public void update(Unidad persistible) throws Exception {
-
+        Transaction tx = session.beginTransaction();
+        session.save(persistible);
+        tx.commit();
     }
 
     @Override
     public void delete(int id) throws Exception {
-        Unidad res = session.get(Unidad.class, id);
+        Unidad res = session.get(Unidad.class,  id);
 
-        if (res != null) {
+        if(res != null) {
             Transaction tx = session.beginTransaction();
             session.delete(res);
             session.getTransaction().commit();
