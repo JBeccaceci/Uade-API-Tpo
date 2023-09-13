@@ -29,9 +29,11 @@ public class App {
     }
 
     public static void crearUsuario(Session session) {
+        /*
         Usuario usuario1 = new Usuario("Juan", "123", "Perez", "84754832", "juanperezkpo", new ArrayList<>(), new ArrayList<>());
         Transaction tx = session.beginTransaction();
         session.save(usuario1);
         tx.commit();
+         */
     }
 }
