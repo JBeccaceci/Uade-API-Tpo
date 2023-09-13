@@ -4,8 +4,9 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "usuarios_table")
-public class Usuario {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
+public abstract class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

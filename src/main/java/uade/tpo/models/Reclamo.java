@@ -2,6 +2,7 @@ package uade.tpo.models;
 
 import uade.tpo.models.types.EstadoReclamo;
 import uade.tpo.models.types.TipoReclamo;
+import uade.tpo.models.types.tipoDelReclamado;
 
 import javax.persistence.*;
 import java.util.*;
@@ -12,12 +13,8 @@ public class Reclamo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
 	private TipoReclamo tipoReclamo;
-
-	@Transient
-	private IUtilizable objReclamo;
-
+	private tipoDelReclamado tipoDelReclamado; 
 	private String descripcion;
 	private Date creado;
 	private Date actualizado;
@@ -34,11 +31,11 @@ public class Reclamo {
 	@OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
 	private List<Medida> medidas;
 
-	public Reclamo(TipoReclamo tipoReclamo, IUtilizable objReclamo, String descripcion,
+	public Reclamo(TipoReclamo tipoReclamo, tipoDelReclamado objReclamo, String descripcion,
 				   Usuario usuario, List<Imagen> imagenes, EstadoReclamo estadoReclamo,
 				   List<Medida> medidas) {
 		this.tipoReclamo = tipoReclamo;
-		this.objReclamo = objReclamo;
+		this.tipoDelReclamado = objReclamo;
 		this.descripcion = descripcion;
 		this.creado = new Date();
 		this.actualizado = new Date();
@@ -68,12 +65,14 @@ public class Reclamo {
 		this.tipoReclamo = tipoReclamo;
 	}
 
-	public IUtilizable getObjReclamo() {
-		return objReclamo;
+
+
+	public tipoDelReclamado getTipoDelReclamado() {
+		return tipoDelReclamado;
 	}
 
-	public void setObjReclamo(IUtilizable objReclamo) {
-		this.objReclamo = objReclamo;
+	public void setTipoDelReclamado(tipoDelReclamado tipoDelReclamado) {
+		this.tipoDelReclamado = tipoDelReclamado;
 	}
 
 	public String getDescripcion() {
@@ -141,7 +140,7 @@ public class Reclamo {
 		return "Reclamo{" +
 				"id=" + id +
 				", tipoReclamo=" + tipoReclamo +
-				", objReclamo=" + objReclamo +
+				", objReclamo=" + tipoDelReclamado +
 				", descripcion='" + descripcion + '\'' +
 				", creado=" + creado +
 				", actualizado=" + actualizado +
