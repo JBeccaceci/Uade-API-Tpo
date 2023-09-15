@@ -1,51 +1,56 @@
 package uade.tpo.dao;
 
-import java.util.List;
-
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.models.Edificio;
 
+import java.util.List;
+
+@Repository
 public class DaoEdificioImpl implements DAO<Edificio> {
-    private Session session;
 
-    public DaoEdificioImpl(Session session) {
-        this.session = session;
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public DaoEdificioImpl() { }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Edificio> getAll() {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Edificio> getQuery = currentSession.createQuery("FROM edificios", Edificio.class);
+        return getQuery.list();
     }
 
     @Override
-    public List<Edificio> getAll() throws Exception {
-        Query<Edificio> getQuery = session.createQuery("FROM edificio_table", Edificio.class);
-        List<Edificio> edificios = getQuery.list();
-        return edificios;
+    @Transactional
+    public void save(Edificio persistible) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.persist(persistible);
     }
 
     @Override
-    public void save(Edificio persistible) throws Exception {
-        Transaction tx = session.beginTransaction();
-        session.save(persistible);
-        tx.commit();
+    @Transactional // TODO: Update va en el service
+    public void update(Edificio persistible) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        currentSession.update(persistible);
     }
 
     @Override
-    public void update(Edificio persistible) throws Exception {
-        Transaction tx = session.beginTransaction();
-        session.save(persistible);
-        tx.commit();
-        // TODO: Comprobar con el profesor si hay que pisar el objeto
-    }
+    @Transactional
+    public void delete(int id) {
+        Session currentSession = entityManager.unwrap(Session.class);
 
-    @Override
-    public void delete(int id) throws Exception {
-        Edificio res = session.get(Edificio.class, id);
-
-        if (res != null) {
-            session.beginTransaction();
-            session.delete(res);
-            session.getTransaction().commit();
-        }
+        Query theQuery = currentSession.createQuery("delete from edificios where id=:idEdificio");
+        theQuery.setParameter("idEdificio", id);
+        theQuery.executeUpdate();
     }
 }
 

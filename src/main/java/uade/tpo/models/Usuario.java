@@ -1,6 +1,7 @@
 package uade.tpo.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.*;
 
 @Entity

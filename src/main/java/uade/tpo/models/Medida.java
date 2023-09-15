@@ -1,9 +1,9 @@
 package uade.tpo.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "medida_table")
+@Table(name = "medidas")
 public class Medida {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,10 +44,4 @@ public class Medida {
 	public String toString() {
 		return "Medida [id=" + id + ", descripcion=" + descripcion + "]";
 	}
-	
-	
-    
-    
-
-    
 }

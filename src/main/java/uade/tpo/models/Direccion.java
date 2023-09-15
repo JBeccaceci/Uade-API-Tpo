@@ -1,6 +1,6 @@
 package uade.tpo.models;
 
-import javax.persistence.Embeddable;
+import jakarta.persistence.*;
 
 @Embeddable
 public class Direccion {

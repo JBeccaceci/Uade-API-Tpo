@@ -1,9 +1,10 @@
 package uade.tpo.models;
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.*;
 
 @Entity
-@Table(name = "edificio_table")
+@Table(name = "edificios")
 public class Edificio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

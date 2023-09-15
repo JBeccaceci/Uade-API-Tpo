@@ -1,10 +1,11 @@
 package uade.tpo.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.*;
 
 @Entity
-@Table(name = "unidad_table")
+@Table(name = "unidades")
 public class Unidad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,7 +15,7 @@ public class Unidad {
     private Usuario propietario;
 
     //TODO: Preguntar al profe como se hace en estos casos..
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Usuario> habitantes;
 
     @ManyToOne

@@ -1,10 +1,10 @@
 package uade.tpo.models;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "imagen_table")
+@Table(name = "imagenes")
 public class Imagen {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

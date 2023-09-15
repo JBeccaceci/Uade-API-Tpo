@@ -2,8 +2,8 @@ package uade.tpo.models;
 
 import java.util.List;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
+import jakarta.persistence.*;
+
 @Entity
 @DiscriminatorValue("PR")
 public class Propietario extends Usuario {
