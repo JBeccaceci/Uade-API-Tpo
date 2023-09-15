@@ -12,7 +12,7 @@ public class Unidad {
     private int id;
 
     //TODO: Preguntar al profe como se hace en estos casos..
-    private Usuario propietario;
+    //private Usuario propietario;
 
     //TODO: Preguntar al profe como se hace en estos casos..
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
@@ -29,7 +29,7 @@ public class Unidad {
     }
 
     public Unidad(Usuario propietario, List<Usuario> habitantes, Edificio edificio, int dpto, int piso) {
-        this.propietario = propietario;
+        //this.propietario = propietario;
         this.habitantes = habitantes;
         this.edificio = edificio;
         this.dpto = dpto;
@@ -40,6 +40,7 @@ public class Unidad {
         return id;
     }
 
+    /*
     public Usuario getPropietario() {
         return propietario;
     }
@@ -47,6 +48,7 @@ public class Unidad {
     public void setPropietario(Usuario propietario) {
         this.propietario = propietario;
     }
+     */
 
     public List<Usuario> getHabitantes() {
         return habitantes;
@@ -84,7 +86,7 @@ public class Unidad {
     public String toString() {
         return "Unidad{" +
                 "id=" + id +
-                ", propietario=" + propietario +
+                //", propietario=" + propietario +
                 ", habitantes=" + habitantes +
                 ", edificio=" + edificio +
                 ", dpto=" + dpto +
