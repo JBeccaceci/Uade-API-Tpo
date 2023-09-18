@@ -1,8 +1,22 @@
 package uade.tpo.models;
 
-import jakarta.persistence.*;
 
 import java.util.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
+
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -29,14 +43,14 @@ public abstract class Usuario {
     @JoinColumn(name = "unidad_id")
     private Unidad unidad;
 
-    public Usuario(String nombre, String password, String apellido, String dni, String nombreUsuario, List<String> permisos, List<Reclamo> reclamos) {
+    public Usuario(String nombre, String password, String apellido, String dni, String nombreUsuario) {
         this.nombre = nombre;
         this.password = password;
         this.apellido = apellido;
         this.dni = dni;
         this.nombreUsuario = nombreUsuario;
-        this.permisos = permisos;
-        this.reclamos = reclamos;
+        this.permisos = new ArrayList<>();
+        this.reclamos = new ArrayList<>();
     }
 
     public Usuario() {

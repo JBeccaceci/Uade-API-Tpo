@@ -8,6 +8,18 @@ import jakarta.persistence.*;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "reclamos")
 public class Reclamo {
@@ -15,7 +27,7 @@ public class Reclamo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private TipoReclamo tipoReclamo;
-    private tipoDelReclamado tipoDelReclamado;
+    private Object objetoReclamo;
     private String descripcion;
     private Date creado;
     private Date actualizado;
@@ -32,11 +44,11 @@ public class Reclamo {
     @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
     private List<Medida> medidas;
 
-    public Reclamo(TipoReclamo tipoReclamo, tipoDelReclamado objReclamo, String descripcion,
+    public Reclamo(TipoReclamo tipoReclamo, Object objReclamo, String descripcion,
                    Usuario usuario, List<Imagen> imagenes, EstadoReclamo estadoReclamo,
                    List<Medida> medidas) {
         this.tipoReclamo = tipoReclamo;
-        this.tipoDelReclamado = objReclamo;
+        this.objetoReclamo = objReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
         this.actualizado = new Date();
