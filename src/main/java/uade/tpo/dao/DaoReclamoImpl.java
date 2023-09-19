@@ -30,6 +30,11 @@ public class DaoReclamoImpl implements DAO<Reclamo> {
     }
 
     @Override
+    public Reclamo findById(int id) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public void save(Reclamo persistible) {
         Session currentSession = entityManager.unwrap(Session.class);

@@ -30,6 +30,11 @@ public class DaoMedidaImpl implements DAO<Medida> {
     }
 
     @Override
+    public Medida findById(int id) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public void save(Medida persistible) {
         Session currentSession = entityManager.unwrap(Session.class);

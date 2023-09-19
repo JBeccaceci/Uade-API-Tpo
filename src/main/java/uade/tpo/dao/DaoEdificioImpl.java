@@ -10,21 +10,30 @@ import uade.tpo.models.Edificio;
 
 import java.util.List;
 
+
 @Repository
 public class DaoEdificioImpl implements DAO<Edificio> {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public DaoEdificioImpl() { }
-
     @Override
     @Transactional(readOnly = true)
     public List<Edificio> getAll() {
-        Session currentSession = entityManager.unwrap(Session.class);
+        Session currentSession = this.entityManager.unwrap(Session.class);
 
         Query<Edificio> getQuery = currentSession.createQuery("FROM edificios", Edificio.class);
         return getQuery.list();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Edificio findById(int id) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Edificio edificio = currentSession.get(Edificio.class, id);
+
+        return edificio;
     }
 
     @Override

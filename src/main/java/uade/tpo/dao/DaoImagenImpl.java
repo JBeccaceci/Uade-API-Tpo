@@ -28,6 +28,11 @@ public class DaoImagenImpl implements DAO<Imagen> {
     }
 
     @Override
+    public Imagen findById(int id) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public void save(Imagen persistible) {
         Session currentSession = entityManager.unwrap(Session.class);
