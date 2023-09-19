@@ -30,6 +30,11 @@ public class DaoUnidadImpl implements DAO<Unidad> {
     }
 
     @Override
+    public Unidad findById(int id) {
+        return null;
+    }
+
+    @Override
     @Transactional
     public void save(Unidad persistible) {
         Session currentSession = entityManager.unwrap(Session.class);

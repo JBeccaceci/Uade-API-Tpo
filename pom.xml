@@ -8,8 +8,8 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
-  <groupId>grupo2</groupId>
-  <artifactId>tpo</artifactId>
+  <groupId>uade.tpo</groupId>
+  <artifactId>uade.tpo</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
