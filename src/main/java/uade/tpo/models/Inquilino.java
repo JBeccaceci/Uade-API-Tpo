@@ -1,12 +1,8 @@
 package uade.tpo.models;
 
-import java.util.List;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 
-import jakarta.persistence.*;
-
-/**
- *
- */
 @Entity
 @DiscriminatorValue("IN")
 public class Inquilino extends Usuario {
@@ -14,9 +10,8 @@ public class Inquilino extends Usuario {
     private String ingreso;
     private float montoAlquiler;
 
-    public Inquilino(String nombre, String password, String apellido, String dni, String nombreUsuario,
-                     List<String> permisos, List<Reclamo> reclamos, String vencimiento, String ingreso, float montoAlquiler) {
-        super(nombre, password, apellido, dni, nombreUsuario, permisos, reclamos);
+    public Inquilino(String nombre, String password, String apellido, String dni, String nombreUsuario, String vencimiento, String ingreso, float montoAlquiler) {
+        super(nombre, password, apellido, dni, nombreUsuario);
         this.vencimiento = vencimiento;
         this.ingreso = ingreso;
         this.montoAlquiler = montoAlquiler;

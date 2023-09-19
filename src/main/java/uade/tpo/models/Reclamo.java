@@ -1,24 +1,11 @@
 package uade.tpo.models;
 
+import jakarta.persistence.*;
 import uade.tpo.models.types.EstadoReclamo;
 import uade.tpo.models.types.TipoReclamo;
-import uade.tpo.models.types.tipoDelReclamado;
 
-import jakarta.persistence.*;
-
-import java.util.*;
-
-import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "reclamos")
@@ -27,7 +14,6 @@ public class Reclamo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private TipoReclamo tipoReclamo;
-    private Object objetoReclamo;
     private String descripcion;
     private Date creado;
     private Date actualizado;
@@ -44,11 +30,10 @@ public class Reclamo {
     @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
     private List<Medida> medidas;
 
-    public Reclamo(TipoReclamo tipoReclamo, Object objReclamo, String descripcion,
+    public Reclamo(TipoReclamo tipoReclamo, String descripcion,
                    Usuario usuario, List<Imagen> imagenes, EstadoReclamo estadoReclamo,
                    List<Medida> medidas) {
         this.tipoReclamo = tipoReclamo;
-        this.objetoReclamo = objReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
         this.actualizado = new Date();
@@ -68,14 +53,6 @@ public class Reclamo {
 
     public void setTipoReclamo(TipoReclamo tipoReclamo) {
         this.tipoReclamo = tipoReclamo;
-    }
-
-    public tipoDelReclamado getTipoDelReclamado() {
-        return tipoDelReclamado;
-    }
-
-    public void setTipoDelReclamado(tipoDelReclamado tipoDelReclamado) {
-        this.tipoDelReclamado = tipoDelReclamado;
     }
 
     public String getDescripcion() {
@@ -143,7 +120,6 @@ public class Reclamo {
         return "Reclamo{" +
                 "id=" + id +
                 ", tipoReclamo=" + tipoReclamo +
-                ", objReclamo=" + tipoDelReclamado +
                 ", descripcion='" + descripcion + '\'' +
                 ", creado=" + creado +
                 ", actualizado=" + actualizado +
