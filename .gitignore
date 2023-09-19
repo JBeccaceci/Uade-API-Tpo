@@ -2,3 +2,4 @@ target/
 .DS_Store
 .idea/
 tpo.iml
+src/main/resources/application.properties
