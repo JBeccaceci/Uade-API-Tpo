@@ -16,4 +16,3 @@ public interface IPropietarioService {
     public void deleteById(int id);
 }
 
-}

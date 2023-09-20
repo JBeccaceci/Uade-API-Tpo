@@ -38,7 +38,7 @@ public class MedidaService implements IMedidaService {
 
     @Override
     public void deleteById(int id) {
-        daoEdificioImpl.delete(id);
+        daoMedidaImpl.delete(id);
     }
 
 	
