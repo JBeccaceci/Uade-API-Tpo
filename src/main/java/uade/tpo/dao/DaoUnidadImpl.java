@@ -30,6 +30,7 @@ public class DaoUnidadImpl implements DAO<Unidad> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Unidad findById(int id) {
         return null;
     }

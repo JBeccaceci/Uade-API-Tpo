@@ -30,6 +30,7 @@ public class DaoMedidaImpl implements DAO<Medida> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Medida findById(int id) {
         return null;
     }
