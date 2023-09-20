@@ -7,7 +7,10 @@ public class Direccion {
 	private String calle;
 	private int altura;
 	private String cp;
-	
+
+	public Direccion() {
+	}
+
 	public Direccion (String calle, int altura, String cp) {
 		this.calle = calle;
 		this.altura = altura;

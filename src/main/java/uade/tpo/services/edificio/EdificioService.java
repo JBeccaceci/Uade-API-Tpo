@@ -1,4 +1,4 @@
-package uade.tpo.services;
+package uade.tpo.services.edificio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,21 +10,24 @@ import java.util.List;
 @Service
 public class EdificioService implements IEdificioService {
     @Autowired
-    private DaoEdificioImpl daoEdificio;
+    private DaoEdificioImpl daoEdificioImpl;
+
+    public EdificioService() {
+    }
 
     @Override
     public List<Edificio> findAll() {
-        return daoEdificio.getAll();
+        return daoEdificioImpl.getAll();
     }
 
     @Override
     public Edificio findById(int id) {
-        return daoEdificio.findById(id);
+        return daoEdificioImpl.findById(id);
     }
 
     @Override
     public void save(Edificio edificio) {
-        daoEdificio.save(edificio);
+        this.daoEdificioImpl.save(edificio);
     }
 
     @Override
@@ -34,6 +37,6 @@ public class EdificioService implements IEdificioService {
 
     @Override
     public void deleteById(int id) {
-        daoEdificio.delete(id);
+        daoEdificioImpl.delete(id);
     }
 }

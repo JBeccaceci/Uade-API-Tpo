@@ -1,4 +1,4 @@
-package uade.tpo.services;
+package uade.tpo.services.edificio;
 
 import uade.tpo.models.Edificio;
 
