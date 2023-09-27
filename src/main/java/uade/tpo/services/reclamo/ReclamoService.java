@@ -10,41 +10,40 @@ import uade.tpo.dao.DaoReclamoImpl;
 import uade.tpo.models.Reclamo;
 
 
-
 @Service
 public class ReclamoService implements IReclamoService {
-	@Autowired
-	 private DaoReclamoImpl daoReclamoImpl;
+    @Autowired
+    private DaoReclamoImpl daoReclamoImpl;
 
-	
-	public ReclamoService() {
-		
-	}
-	  @Override
-	    public List<Reclamo> findAll() {
-	        return daoReclamoImpl.getAll();
-	    }
 
-	    @Override
-	    public Reclamo findById(int id) {
-	        return daoReclamoImpl.findById(id);
-	    }
+    public ReclamoService() {
 
-	    @Override
-	    public void save(Reclamo reclamo) {
-	        this.daoReclamoImpl.save(reclamo);
-	    }
+    }
 
-	    @Override
-	    public void update(int id, Reclamo reclamo) {
+    @Override
+    public List<Reclamo> findAll() {
+        return daoReclamoImpl.getAll();
+    }
 
-	    }
+    @Override
+    public Reclamo findById(int id) {
+        return daoReclamoImpl.findById(id);
+    }
 
-	    @Override
-	    public void deleteById(int id) {
-	        daoReclamoImpl.delete(id);
-	    }
-	
+    @Override
+    public void save(Reclamo reclamo) {
+        this.daoReclamoImpl.save(reclamo);
+    }
+
+    @Override
+    public void update(int id, Reclamo reclamo) {
+
+    }
+
+    @Override
+    public void deleteById(int id) {
+        daoReclamoImpl.delete(id);
+    }
 
 
 }

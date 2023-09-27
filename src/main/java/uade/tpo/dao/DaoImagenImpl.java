@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import uade.tpo.dao.definition.DAO;
 import uade.tpo.models.Imagen;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package uade.tpo.dao;
+package uade.tpo.dao.definition;
 
 import uade.tpo.models.Edificio;
 

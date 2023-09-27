@@ -23,6 +23,7 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
+    /*
     @PostConstruct
     public void init() {
         Edificio edificio1 = new Edificio("Las Lilas", new Direccion("Av Libertador", 200, "23"), 25, true);
@@ -34,4 +35,5 @@ public class App {
         Inquilino inquilino1 = new Inquilino("Juan", "123", "Perez","40247775", "jhon", "10/23/64", "100", 10);
         inquilinoService.save(inquilino1);
     }
+     */
 }
