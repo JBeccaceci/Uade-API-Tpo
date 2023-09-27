@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uade.tpo.dao.DaoPropietarioImpl;
-import uade.tpo.models.Propietario;
+import uade.tpo.models.entity.Propietario;
 @Service
 public class PropietarioService implements IPropietarioService {
 	@Autowired

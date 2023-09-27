@@ -1,4 +1,4 @@
-package uade.tpo.models;
+package uade.tpo.models.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -10,10 +10,8 @@ public class Propietario extends Usuario {
     public Propietario() {
     }
 
-	public Propietario(String nombre, String password, String apellido, String dni, String nombreUsuario) {
-		super(nombre, password, apellido, dni, nombreUsuario);
+	public Propietario(String nombre, String password, String apellido, String dni, String username) {
+		super(nombre, password, apellido, dni, username);
 	}
-    
-	
 
 }

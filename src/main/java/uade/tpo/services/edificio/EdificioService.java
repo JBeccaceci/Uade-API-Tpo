@@ -3,7 +3,7 @@ package uade.tpo.services.edificio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uade.tpo.dao.DaoEdificioImpl;
-import uade.tpo.models.Edificio;
+import uade.tpo.models.entity.Edificio;
 
 import java.util.List;
 

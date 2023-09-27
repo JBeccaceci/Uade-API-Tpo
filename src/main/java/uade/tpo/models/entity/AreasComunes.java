@@ -1,4 +1,4 @@
-package uade.tpo.models;
+package uade.tpo.models.entity;
 
 // TODO: Posibilidad de que sea un ENUM?
 public class AreasComunes {

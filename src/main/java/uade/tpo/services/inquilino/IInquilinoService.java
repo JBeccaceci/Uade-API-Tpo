@@ -1,6 +1,6 @@
 package uade.tpo.services.inquilino;
 
-import uade.tpo.models.Inquilino;
+import uade.tpo.models.entity.Inquilino;
 
 import java.util.List;
 

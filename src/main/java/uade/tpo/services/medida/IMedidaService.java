@@ -3,7 +3,7 @@ package uade.tpo.services.medida;
 import java.util.List;
 
 
-import uade.tpo.models.Medida;
+import uade.tpo.models.entity.Medida;
 
 public interface IMedidaService {
 	

@@ -3,8 +3,7 @@ package uade.tpo.services.medida;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uade.tpo.dao.DaoMedidaImpl;
-import uade.tpo.models.Edificio;
-import uade.tpo.models.Medida;
+import uade.tpo.models.entity.Medida;
 
 import java.util.List; 
 

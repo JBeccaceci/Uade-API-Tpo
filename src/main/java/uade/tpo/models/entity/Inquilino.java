@@ -1,4 +1,4 @@
-package uade.tpo.models;
+package uade.tpo.models.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -10,8 +10,11 @@ public class Inquilino extends Usuario {
     private String ingreso;
     private float montoAlquiler;
 
-    public Inquilino(String nombre, String password, String apellido, String dni, String nombreUsuario, String vencimiento, String ingreso, float montoAlquiler) {
-        super(nombre, password, apellido, dni, nombreUsuario);
+    public Inquilino() {
+    }
+
+    public Inquilino(String nombre, String password, String apellido, String dni, String username, String vencimiento, String ingreso, float montoAlquiler) {
+        super(nombre, password, apellido, dni, username);
         this.vencimiento = vencimiento;
         this.ingreso = ingreso;
         this.montoAlquiler = montoAlquiler;

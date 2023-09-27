@@ -2,7 +2,7 @@ package uade.tpo.services.reclamo;
 
 import java.util.List;
 
-import uade.tpo.models.Reclamo;
+import uade.tpo.models.entity.Reclamo;
 
 public interface IReclamoService {
     public List<Reclamo> findAll();

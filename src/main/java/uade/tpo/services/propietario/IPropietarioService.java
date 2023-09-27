@@ -2,7 +2,7 @@ package uade.tpo.services.propietario;
 
 import java.util.List;
 
-import uade.tpo.models.Propietario;
+import uade.tpo.models.entity.Propietario;
 
 public interface IPropietarioService {
     public List<Propietario> findAll();

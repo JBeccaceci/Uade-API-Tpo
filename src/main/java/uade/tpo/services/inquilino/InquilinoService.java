@@ -1,9 +1,10 @@
 package uade.tpo.services.inquilino;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import uade.tpo.dao.DaoInquilinoImpl;
-import uade.tpo.models.Inquilino;
+import uade.tpo.models.entity.Inquilino;
 
 import java.util.List;
 
@@ -27,6 +28,11 @@ public class InquilinoService implements IInquilinoService {
 
     @Override
     public void save(Inquilino inquilino) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPassword = passwordEncoder.encode(inquilino.getPassword());
+
+        inquilino.setPassword(encodedPassword);
+
         this.daoInquilino.save(inquilino);
     }
 

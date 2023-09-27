@@ -1,8 +1,9 @@
-package uade.tpo.models;
+package uade.tpo.models.entity;
 
-import java.util.*;
 import jakarta.persistence.*;
-import uade.tpo.models.types.TipoUsuario;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -19,9 +20,8 @@ public abstract class Usuario {
     private String password;
     private String apellido;
     private String dni;
-    private String nombreUsuario;
+    private String username;
     private List<String> permisos;
-    private TipoUsuario tipo_usuario;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
@@ -30,12 +30,12 @@ public abstract class Usuario {
     @JoinColumn(name = "unidad_id")
     private Unidad unidad;
 
-    public Usuario(String nombre, String password, String apellido, String dni, String nombreUsuario) {
+    public Usuario(String nombre, String password, String apellido, String dni, String username) {
         this.nombre = nombre;
         this.password = password;
         this.apellido = apellido;
         this.dni = dni;
-        this.nombreUsuario = nombreUsuario;
+        this.username = username;
         this.permisos = new ArrayList<>();
         this.reclamos = new ArrayList<>();
     }
@@ -79,12 +79,12 @@ public abstract class Usuario {
         this.dni = dni;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<String> getPermisos() {
@@ -111,7 +111,7 @@ public abstract class Usuario {
                 ", password='" + password + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", dni='" + dni + '\'' +
-                ", nombreUsuario='" + nombreUsuario + '\'' +
+                ", username='" + username + '\'' +
                 ", permisos=" + permisos +
                 '}';
     }

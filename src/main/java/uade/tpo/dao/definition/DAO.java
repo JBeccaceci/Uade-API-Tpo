@@ -1,7 +1,5 @@
 package uade.tpo.dao.definition;
 
-import uade.tpo.models.Edificio;
-
 import java.util.List;
 
 public interface DAO<T> {

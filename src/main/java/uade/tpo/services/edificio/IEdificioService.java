@@ -1,6 +1,6 @@
 package uade.tpo.services.edificio;
 
-import uade.tpo.models.Edificio;
+import uade.tpo.models.entity.Edificio;
 
 import java.util.List;
 

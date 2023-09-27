@@ -2,7 +2,7 @@ package uade.tpo.services.unidad;
 
 import java.util.List;
 
-import uade.tpo.models.Unidad;
+import uade.tpo.models.entity.Unidad;
 
 public interface IUnidadService {
 	  public List<Unidad> findAll();

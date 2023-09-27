@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uade.tpo.dao.DaoUnidadImpl;
-import uade.tpo.models.Unidad;
+import uade.tpo.models.entity.Unidad;
 
 @Service
 public class UnidadService implements IUnidadService {

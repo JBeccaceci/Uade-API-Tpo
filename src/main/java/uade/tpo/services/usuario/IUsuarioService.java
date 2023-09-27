@@ -2,7 +2,7 @@ package uade.tpo.services.usuario;
 
 import java.util.List;
 
-import uade.tpo.models.Usuario;
+import uade.tpo.models.entity.Usuario;
 
 public interface IUsuarioService {
     public List<Usuario> findAll();
@@ -15,4 +15,5 @@ public interface IUsuarioService {
 
     public void deleteById(int id);
 
+    public Usuario findByUserAndPassword(String username, String password);
 }

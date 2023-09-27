@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import uade.tpo.dao.definition.DAO;
-import uade.tpo.models.Propietario;
+import uade.tpo.models.entity.Propietario;
 
 @Repository
 public class DaoPropietarioImpl implements DAO<Propietario> {

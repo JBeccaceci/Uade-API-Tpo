@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import uade.tpo.dao.DaoReclamoImpl;
 
-import uade.tpo.models.Reclamo;
+import uade.tpo.models.entity.Reclamo;
 
 
 @Service
