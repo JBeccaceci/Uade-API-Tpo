@@ -3,3 +3,4 @@ target/
 .idea/
 tpo.iml
 src/main/resources/application.properties
+.vs/

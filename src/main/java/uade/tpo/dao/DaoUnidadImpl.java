@@ -3,11 +3,10 @@ package uade.tpo.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import uade.tpo.models.Reclamo;
+import uade.tpo.dao.definition.DAO;
 import uade.tpo.models.Unidad;
 
 import java.util.List;

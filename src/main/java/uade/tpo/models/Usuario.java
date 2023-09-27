@@ -2,6 +2,7 @@ package uade.tpo.models;
 
 import java.util.*;
 import jakarta.persistence.*;
+import uade.tpo.models.types.TipoUsuario;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -20,6 +21,7 @@ public abstract class Usuario {
     private String dni;
     private String nombreUsuario;
     private List<String> permisos;
+    private TipoUsuario tipo_usuario;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
