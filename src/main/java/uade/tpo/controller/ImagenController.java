@@ -31,7 +31,7 @@ public class ImagenController {
 	public ResponseEntity<String> upload(@RequestParam("archivo") MultipartFile archivo) {
 		try {
 			Imagen imagen = new Imagen();
-			imagen.setDatosImagen(archivo.getBytes());
+			imagen.setImagen(archivo.getBytes());
 			imagenService.save(imagen);
 			return ResponseEntity.ok("Imagen subida exitosamente.");
 		} catch (IOException e) {
@@ -44,7 +44,7 @@ public class ImagenController {
 	public ResponseEntity<byte[]> download(@PathVariable Long id) {
 		Imagen imagen = imagenService.findById(id);
 		if (imagen != null) {
-			return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagen.getDatosImagen());
+			return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imagen.getImagen());
 		} else {
 			return ResponseEntity.notFound().build();
 		}

@@ -25,6 +25,8 @@ public class App {
     public void init() {
         Inquilino inquilino1 = new Inquilino("Juan", "123", "Perez","40247775", "jhon", "10/23/64", "100", 10);
         inquilinoService.save(inquilino1);
+        
+        
     }
 
 }

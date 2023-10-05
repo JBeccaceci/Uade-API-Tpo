@@ -1,6 +1,7 @@
 package uade.tpo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,7 @@ public class InquilinoController {
 	 * @return
 	 */
 	private UsuarioDTO convertToDTO(Inquilino inquilino) {
-		UsuarioDTO inquilinoDTO = new UsuarioDTO(inquilino.getNombre(), inquilino.getApellido());
+		UsuarioDTO inquilinoDTO = new UsuarioDTO(inquilino.getNombre(), inquilino.getApellido(), inquilino.getDni(), inquilino.getUsername(), inquilino.getPassword());
 		return inquilinoDTO ;
 	}
 	//Tenemos que cambiar el tema de los dto para que sean iguales los parametros al constructor, para poder crear los 
@@ -130,8 +131,11 @@ public class InquilinoController {
 	 */
 	private Inquilino convertToEntity(UsuarioDTO clienteDTO) {
 		Inquilino cliente = new Inquilino();
-		cliente.setNombre(clienteDTO.getUsername());
-		cliente.setApellido(clienteDTO.getPassword());
+		cliente.setNombre(clienteDTO.getNombre());
+		cliente.setApellido(clienteDTO.getApellido());
+		cliente.setDni(clienteDTO.getDni());
+		cliente.setUsername(clienteDTO.getUsername());
+		cliente.setPassword(clienteDTO.getPassword());
 	
 		return cliente;
 	}
