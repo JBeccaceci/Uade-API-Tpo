@@ -134,6 +134,7 @@ public class ReclamoController {
 		reclamo.setEstadoReclamo(reclamoDTO.getEstadoReclamo());
 	
 		return reclamo;
+		
 	}
 
 
