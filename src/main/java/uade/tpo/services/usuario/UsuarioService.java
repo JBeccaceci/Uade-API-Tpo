@@ -23,12 +23,29 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public Usuario findById(int id) {
-        return daoUsuarioImpl.findById(id);
+    public <T extends Usuario> T findById(int id, Class<T> userType) {
+        Usuario usuario = this.daoUsuarioImpl.findById(id);
+
+        if (usuario != null && userType.isInstance(usuario)) {
+            return userType.cast(usuario);
+        }
+
+        return null;
     }
 
     @Override
-    public void save(Usuario usuario) {
+    public <T extends Usuario> T findByUsername(String username, Class<T> userType) {
+        Usuario usuario = this.daoUsuarioImpl.findByUsername(username);
+
+        if (usuario != null && userType.isInstance(usuario)) {
+            return userType.cast(usuario);
+        }
+
+        return null;
+    }
+
+    @Override
+    public <T extends Usuario> void save(T usuario) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(usuario.getPassword());
 
@@ -38,8 +55,8 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public void update(int id, Usuario cliente) {
-
+    public <T extends Usuario> void update(int id, T usuario) {
+        daoUsuarioImpl.update(usuario);
     }
 
     @Override

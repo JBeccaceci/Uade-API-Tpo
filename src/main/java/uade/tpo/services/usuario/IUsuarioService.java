@@ -7,11 +7,12 @@ import uade.tpo.models.entity.Usuario;
 public interface IUsuarioService {
     public List<Usuario> findAll();
 
-    public Usuario findById(int id);
+    public <T extends Usuario> T findById(int id, Class<T> userType);
+    public <T extends Usuario> T findByUsername(String username, Class<T> userType);
 
-    public void save(Usuario cliente);
+    public <T extends Usuario> void save(T cliente);
 
-    public void update(int id, Usuario cliente);
+    public <T extends Usuario> void update(int id, T cliente);
 
     public void deleteById(int id);
 
