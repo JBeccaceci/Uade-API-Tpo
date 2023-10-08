@@ -1,6 +1,7 @@
 package uade.tpo.models.entity;
 
 import jakarta.persistence.*;
+import uade.tpo.models.types.TipoUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public abstract class Usuario {
     @JoinColumn(name = "unidad_id")
     private Unidad unidad;
 
-    public Usuario(String nombre, String password, String apellido, String dni, String username) {
+    public Usuario(String username, String password, String nombre, String apellido, String dni) {
         this.nombre = nombre;
         this.password = password;
         this.apellido = apellido;
@@ -102,6 +103,8 @@ public abstract class Usuario {
     public void setReclamos(List<Reclamo> reclamos) {
         this.reclamos = reclamos;
     }
+
+    public abstract TipoUsuario getType();
 
     @Override
     public String toString() {

@@ -2,37 +2,45 @@ package uade.tpo.models.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import uade.tpo.models.types.TipoUsuario;
+
+import java.util.Date;
 
 @Entity
 @DiscriminatorValue("IN")
 public class Inquilino extends Usuario {
-    private String vencimiento;
-    private String ingreso;
+    private Date vencimiento;
+    private float ingreso;
     private float montoAlquiler;
 
     public Inquilino() {
     }
 
-    public Inquilino(String nombre, String password, String apellido, String dni, String username, String vencimiento, String ingreso, float montoAlquiler) {
-        super(nombre, password, apellido, dni, username);
+    public Inquilino(String username, String password, String nombre,String apellido, String dni, Date vencimiento, float ingreso, float montoAlquiler) {
+        super(username, password, nombre, apellido, dni);
         this.vencimiento = vencimiento;
         this.ingreso = ingreso;
         this.montoAlquiler = montoAlquiler;
     }
 
-    public String getVencimiento() {
+    @Override
+    public TipoUsuario getType() {
+        return TipoUsuario.INQUILINO;
+    }
+
+    public Date getVencimiento() {
         return vencimiento;
     }
 
-    public void setVencimiento(String vencimiento) {
+    public void setVencimiento(Date vencimiento) {
         this.vencimiento = vencimiento;
     }
 
-    public String getIngreso() {
+    public float getIngreso() {
         return ingreso;
     }
 
-    public void setIngreso(String ingreso) {
+    public void setIngreso(float ingreso) {
         this.ingreso = ingreso;
     }
 
@@ -46,7 +54,17 @@ public class Inquilino extends Usuario {
 
     @Override
     public String toString() {
-        return "Inquilino [vencimiento=" + vencimiento + ", ingreso=" + ingreso + ", montoAlquiler=" + montoAlquiler
-                + "]";
+        return "Inquilino{" +
+                "id=" + this.getId() +
+                ", nombre='" + this.getNombre() + '\'' +
+                ", password='" + this.getPassword() + '\'' +
+                ", apellido='" + this.getApellido() + '\'' +
+                ", dni='" + this.getDni() + '\'' +
+                ", username='" + this.getUsername() + '\'' +
+                ", permisos=" + this.getPermisos() +
+                ", vencimiento=" + vencimiento +
+                ", ingreso=" + ingreso +
+                ", montoAlquiler=" + montoAlquiler +
+                '}';
     }
 }

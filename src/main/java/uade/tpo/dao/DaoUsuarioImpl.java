@@ -21,6 +21,7 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Usuario> getAll() {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Usuario> getQuery = currentSession.createQuery("FROM Usuario", Usuario.class);
@@ -36,21 +37,21 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void save(Usuario persistible) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.persist(persistible);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void update(Usuario persistible) {
         Session currentSession = entityManager.unwrap(Session.class);
         currentSession.update(persistible);
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
         Query theQuery = currentSession.createQuery("delete from Usuario where id=:idUsuario");
@@ -59,6 +60,7 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Usuario findByUserAndPassword(String username, String password) {
         Session currentSession = entityManager.unwrap(Session.class);
 
@@ -74,6 +76,17 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
         }
 
         return user;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Usuario findByUsername(String username) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<Usuario> query = currentSession.createQuery("FROM Usuario WHERE username=:username", Usuario.class);
+        query.setParameter("username", username);
+
+        return query.uniqueResult();
     }
 
     private boolean checkPassword(String password, String passwordDB) {
