@@ -31,7 +31,7 @@ public class InquilinoController {
 	@Autowired
 	private IInquilinoService inquilinoService;
 	
-	@GetMapping("/clientes")
+	@GetMapping("/usuarios")
 	public List<UsuarioDTO> findAll() {
 		List<Inquilino> listaInquilinos = inquilinoService.findAll();
         List<UsuarioDTO> listaInquilinosDTOs = new ArrayList<>();
@@ -78,7 +78,7 @@ public class InquilinoController {
 		
 		UsuarioDTO nuevoUsuarioDTO = convertToDTO(inquilino);
 
-		return new ResponseEntity<>(nuevoClienteDTO, HttpStatus.CREATED);
+		return new ResponseEntity<>(nuevoUsuarioDTO, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/clientes/{clienteId}")
