@@ -14,7 +14,7 @@ public class Imagen {
     private Date fecha;
 
 	@ManyToOne
-	@JoinColumn(name = "imagen_id")
+	@JoinColumn(name = "reclamo_id")
 	private Reclamo reclamo;
 
 	public Imagen() { }
