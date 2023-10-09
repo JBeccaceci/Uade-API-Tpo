@@ -20,12 +20,12 @@ import uade.tpo.models.entity.Imagen;
 import uade.tpo.services.Imagen.ImagenServiceImpl;
 
 @RestController
-@RequestMapping("/imagenes")
+@RequestMapping("/api")
 public class ImagenController {
 	@Autowired
 	private ImagenServiceImpl imagenService;
 
-	@PostMapping("/subir") // TODO: Finalizado OK
+	@PostMapping("/imagen/subir")
 	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo) {
 		try {
 			Imagen imagen = new Imagen();
@@ -38,7 +38,7 @@ public class ImagenController {
 		}
 	}
 
-	@GetMapping("/{id}") // TODO: Finalizado OK
+	@GetMapping("/imagen/{id}")
 	public ResponseEntity<byte[]> download(@PathVariable Long id) {
 		Imagen imagen = imagenService.findById(id);
 		if (imagen != null) {

@@ -2,24 +2,22 @@ package uade.tpo.models.dto;
 
 import uade.tpo.models.types.TipoUsuario;
 
-public class UsuarioDTO {
+public class PropietarioDTO {
 	private String nombre;
 	private String username;
     private String password;
     private String apellido;
     private String dni;
-    private TipoUsuario tipoUsuario;
 
-    public UsuarioDTO() {
+    public PropietarioDTO() {
     }
 
-	public UsuarioDTO(String nombre, String username, String password, String apellido, String dni, TipoUsuario tipoUsuario) {
+	public PropietarioDTO(String nombre, String username, String password, String apellido, String dni) {
 		this.nombre = nombre;
 		this.username = username;
 		this.password = password;
 		this.apellido = apellido;
 		this.dni = dni;
-		this.tipoUsuario = tipoUsuario;
 	}
 
 	public String getUsername() {
@@ -63,20 +61,9 @@ public class UsuarioDTO {
 		this.dni = dni;
 	}
 
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
-	}
-
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
-
 	@Override
 	public String toString() {
 		return "UsuarioDTO [nombre=" + nombre + ", username=" + username + ", password=" + password + ", apellido="
 				+ apellido + ", dni=" + dni + "]";
 	}
-
-	
-    
 }

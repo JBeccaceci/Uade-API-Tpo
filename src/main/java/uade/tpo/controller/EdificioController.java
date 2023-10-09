@@ -1,30 +1,17 @@
 package uade.tpo.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import uade.tpo.services.edificio.IEdificioService;
-import uade.tpo.services.unidad.IUnidadService;
+import org.springframework.web.bind.annotation.*;
 import uade.tpo.models.dto.EdificioDTO;
-import uade.tpo.models.entity.Direccion;
 import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Unidad;
+import uade.tpo.services.edificio.IEdificioService;
+import uade.tpo.services.unidad.IUnidadService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -36,7 +23,7 @@ public class EdificioController {
 	@Autowired
     private IUnidadService unidadService;
 
-    @GetMapping("/edificios") // TODO: Finalizado OK
+    @GetMapping("/edificio")
     public List<EdificioDTO> findAll() {
         List<Edificio> listaEdificios = edificioService.findAll();
         List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();
@@ -49,7 +36,7 @@ public class EdificioController {
         return listaEdificioDTOs;
     }
 
-    @GetMapping("/edificio/{edificioId}") // TODO: Finalizado OK
+    @GetMapping("/edificio/{edificioId}")
     public ResponseEntity<?> get(@PathVariable int edificioId) {
         Edificio edificio = edificioService.findById(edificioId);
 
@@ -62,7 +49,7 @@ public class EdificioController {
         return new ResponseEntity<>(edificioDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/edificios") // TODO: Finalizado OK
+    @PostMapping("/edificio")
     public ResponseEntity<EdificioDTO> add(@RequestBody EdificioDTO edificioDTO) {
         Edificio edificio = convertToEntity(edificioDTO);
 
@@ -73,7 +60,7 @@ public class EdificioController {
         return new ResponseEntity<>(nuevoEdificioDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("/edificio/{edificioId}") // TODO: Finalizado OK
+    @PutMapping("/edificio/{edificioId}")
     public ResponseEntity<?> update(@PathVariable int edificioId, @RequestBody EdificioDTO edificioDTO) {
         Edificio edificioOld = edificioService.findById(edificioId);
         if (edificioOld == null) {
@@ -88,7 +75,7 @@ public class EdificioController {
         return new ResponseEntity<>(edificioUpdatedDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("edificio/{edificioId}") // TODO: Finalizado OK
+    @DeleteMapping("/edificio/{edificioId}")
     public ResponseEntity<String> deleteEdificio(@PathVariable int edificioId) {
         Edificio edificio = edificioService.findById(edificioId);
         if (edificio == null) {
@@ -114,44 +101,6 @@ public class EdificioController {
         edificio.setTieneAscensor(edificioDTO.isTieneAscensor());
         return edificio;
     }
-
-	@PostMapping("/edificio/{edificioId}/unidad")
-	public ResponseEntity<String> addUnidad(int edificioID, int unidadID ) {
-		Edificio edificio = edificioService.findById(edificioID);
-		if (edificio == null) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Edificio no existe");
-		}
-		Unidad unidad = unidadService.findById(unidadID);
-		if (unidad == null) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unidad no existe");
-		}
-
-		edificio.getUnidades().add(unidad);
-
-		edificioService.update(edificioID, edificio);
-
-		return new ResponseEntity<>(mensaje, HttpStatus.OK);
-
-		if(edificio != null && unidad != null) {
-			edificio.getUnidades().add(unidad);
-			edificioService.update(edificioID, edificio);
-
-			if(unidad.getEdificio() == null) {
-				unidad.setEdificio(edificio);
-				String mensaje = "La unidad se ha asociado correctamente con el edificio: "+ edificio.getNombre();
-				return new ResponseEntity<>(mensaje, HttpStatus.OK);
-			}
-			else {
-				String mensaje = "La unidad ya se encuentra asociada a un edificio";
-				return new ResponseEntity<>(mensaje, HttpStatus.OK);
-			}
-		}
-		else {
-			String mensaje = "Se ha producido un error";
-			return new ResponseEntity<>(mensaje, HttpStatus.OK);
-		}
-
-	}
 }
 
 
