@@ -15,33 +15,28 @@ public class UnidadDTO {
     private Integer edificio_id;
     private int dpto;
     private int piso;
-    
-    public UnidadDTO(int dpto, int piso, Edificio edificio) {
-		super();
-		this.edificio = edificio;
+
+	public UnidadDTO(Integer usuario_id, Integer edificio_id, int dpto, int piso) {
+		this.usuario_id = usuario_id;
+		this.edificio_id = edificio_id;
 		this.dpto = dpto;
 		this.piso = piso;
-		this.habitantes = new ArrayList<>();
-		}
-    
-    public UnidadDTO() {
-		super();
 	}
 
-	public List<Usuario> getHabitantes() {
-		return habitantes;
+	public Integer getUsuario_id() {
+		return usuario_id;
 	}
 
-	public void setHabitantes(List<Usuario> habitantes) {
-		this.habitantes = habitantes;
+	public void setUsuario_id(Integer usuario_id) {
+		this.usuario_id = usuario_id;
 	}
 
-	public Edificio getEdificio() {
-		return edificio;
+	public Integer getEdificio_id() {
+		return edificio_id;
 	}
 
-	public void setEdificio(Edificio edificio) {
-		this.edificio = edificio;
+	public void setEdificio_id(Integer edificio_id) {
+		this.edificio_id = edificio_id;
 	}
 
 	public int getDpto() {
@@ -58,5 +53,15 @@ public class UnidadDTO {
 
 	public void setPiso(int piso) {
 		this.piso = piso;
+	}
+
+	@Override
+	public String toString() {
+		return "UnidadDTO{" +
+				"usuario_id=" + usuario_id +
+				", edificio_id=" + edificio_id +
+				", dpto=" + dpto +
+				", piso=" + piso +
+				'}';
 	}
 }
