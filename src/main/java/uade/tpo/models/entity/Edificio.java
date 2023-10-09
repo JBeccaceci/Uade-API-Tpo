@@ -9,7 +9,6 @@ public class Edificio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String nombre;
     private Direccion direccion;
     private int numeroPisos;
