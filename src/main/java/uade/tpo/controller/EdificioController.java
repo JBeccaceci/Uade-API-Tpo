@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import uade.tpo.services.edificio.IEdificioService;
+import uade.tpo.services.unidad.IUnidadService;
 import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.entity.Direccion;
 import uade.tpo.models.entity.Edificio;
@@ -31,6 +32,9 @@ import uade.tpo.models.entity.Unidad;
 public class EdificioController {
 		@Autowired
 		private IEdificioService edificioService;
+		
+		@Autowired
+		private IUnidadService unidadService;
 		
 		@GetMapping("/usuarios")
 		public List<EdificioDTO> findAll() {
@@ -136,8 +140,9 @@ public class EdificioController {
 			return edificio;
 		}
 		
-	public ResponseEntity<String> agregarUnidadEdificio(int edificioID,Unidad unidad ) {
+	public ResponseEntity<String> agregarUnidadEdificio(int edificioID, int unidadID ) {
 		Edificio edificio = edificioService.findById(edificioID);
+		Unidad unidad = unidadService.findById(unidadID);
 		if(edificio != null && unidad != null) {
 			edificio.getUnidades().add(unidad);
 			edificioService.update(edificioID, edificio);
