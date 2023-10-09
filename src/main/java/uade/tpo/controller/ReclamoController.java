@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/reclamos")
+@RequestMapping("/api")
 public class ReclamoController {
     @Autowired
     private IReclamoService reclamoService;
@@ -32,7 +32,7 @@ public class ReclamoController {
     @Autowired
     private IUnidadService unidadService;
 
-    @PostMapping("/add") // TODO: Finalizado OK
+    @PostMapping("/reclamo")
     public ResponseEntity<?> add(@RequestBody ReclamoDTO reclamoDTO) {
         Usuario usuario = usuarioService.findById(reclamoDTO.getUsuarioId());
         if (usuario == null) {
@@ -59,7 +59,7 @@ public class ReclamoController {
         return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
     }
 
-    @GetMapping("/find") // TODO: Finalizado OK
+    @GetMapping("/reclamo")
     public ResponseEntity<?> getAll(@RequestParam(required = false) String estado) {
         EstadoReclamo estadoReclamo = EstadoReclamo.get(estado).orElse(EstadoReclamo.NUEVO);
         List<Reclamo> reclamoList = reclamoService.findAll()
@@ -75,9 +75,9 @@ public class ReclamoController {
         return new ResponseEntity<>(reclamoDTOList, HttpStatus.OK);
     }
 
-    @PostMapping("/update") // TODO: Finalizado OK
-    public ResponseEntity<?> update(@RequestBody UpdateReclamoDTO updateReclamoDTO) {
-        Reclamo reclamo = reclamoService.findById(updateReclamoDTO.getReclamoId());
+    @PutMapping("/reclamo/{reclamoId}")
+    public ResponseEntity<?> update(@PathVariable int reclamoId, @RequestBody UpdateReclamoDTO updateReclamoDTO) {
+        Reclamo reclamo = reclamoService.findById(reclamoId);
         if (reclamo == null) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)

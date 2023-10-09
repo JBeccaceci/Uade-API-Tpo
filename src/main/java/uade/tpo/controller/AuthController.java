@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uade.tpo.models.dto.TokenOutputDTO;
-import uade.tpo.models.dto.UsuarioDTO;
+import uade.tpo.models.dto.PropietarioDTO;
 import uade.tpo.services.usuario.IUsuarioService;
 
 import javax.crypto.SecretKey;
@@ -29,7 +29,7 @@ public class AuthController {
 	private SecretKey secretKey;
 
 	@PostMapping("/login")
-	public ResponseEntity<TokenOutputDTO> login(@RequestBody UsuarioDTO credentials) {
+	public ResponseEntity<TokenOutputDTO> login(@RequestBody PropietarioDTO credentials) {
 		if (usuarioService.findByUserAndPassword(credentials.getUsername(), credentials.getPassword()) != null) {
 			String token = Jwts.builder().setSubject(credentials.getUsername()).setIssuedAt(new Date())
 					.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
