@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.unidad.IUnidadService;
+import uade.tpo.services.usuario.IUsuarioService;
 import uade.tpo.models.dto.UnidadDTO;
+import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Unidad;
+import uade.tpo.models.entity.Usuario;
 
 
 @RestController
@@ -26,7 +30,10 @@ import uade.tpo.models.entity.Unidad;
 public class UnidadController {
     @Autowired
     private IUnidadService unidadService;
-
+    @Autowired
+    private IEdificioService edificioService;
+    @Autowired
+    private IUsuarioService usuarioService;
     @GetMapping("/usuarios")
     public List<UnidadDTO> findAll() {
         List<Unidad> listaUnidades = unidadService.findAll();
@@ -67,17 +74,23 @@ public class UnidadController {
     }
 
     @PostMapping("/unidades")
-    public ResponseEntity<UnidadDTO> addUnidad(@RequestBody UnidadDTO unidadDTO) {
-        Unidad unidad = convertToEntity(unidadDTO);
-
-        unidadService.save(unidad);
-
-        UnidadDTO nuevoUnidadDTO = convertToDTO(unidad);
-
-        return new ResponseEntity<>(nuevoUnidadDTO, HttpStatus.CREATED);
+    public ResponseEntity<?> addUnidad(@RequestBody UnidadDTO unidadDTO) {
+		Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
+        if (edificio == null) {
+        	String mensaje = "edificio not found: " + unidadDTO.getEdificio_id();
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        }
+        Usuario usuario = usuarioService.findById(unidadDTO.getUsuario_id());
+        if(usuario == null) {
+        	String mensaje = "usuario not found: " + unidadDTO.getEdificio_id();
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        }
+        Unidad nuevaUnidad = convertToEntity(unidadDTO, edificio);
+        unidadService.save(nuevaUnidad);
+        return new ResponseEntity<>(nuevaUnidad, HttpStatus.CREATED);
     }
 
-    @PutMapping("/unidadess/{unidadId}")
+    @PutMapping("/unidades/{unidadId}")
     public ResponseEntity<?> updateUnidad(@PathVariable int unidadId, @RequestBody UnidadDTO unidadDTO) {
         Unidad unidadOld = unidadService.findById(unidadId);
 
@@ -86,7 +99,7 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        Unidad unidadToUpdate = convertToEntity(unidadDTO);
+        Unidad unidadToUpdate = convertToEntity(unidadDTO,unidadOld.getEdificio());//Revisar si el getEdificio() esta bien 
         unidadService.update(unidadId, unidadToUpdate);
 
         UnidadDTO unidadUpdatedDTO = convertToDTO(unidadToUpdate);
@@ -115,16 +128,16 @@ public class UnidadController {
      * @return
      */
     private UnidadDTO convertToDTO(Unidad unidad) {
-        UnidadDTO unidadDTO = new UnidadDTO(unidad.getDpto(), unidad.getPiso(), unidad.getEdificio());
+        UnidadDTO unidadDTO = new UnidadDTO(unidad.getDpto(),unidad.getPiso());
         return unidadDTO;
     }
 
 
-    private Unidad convertToEntity(UnidadDTO unidadDTO) {
+    private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio) {
         Unidad unidad = new Unidad();
         unidad.setDpto(unidadDTO.getDpto());
         unidad.setPiso(unidadDTO.getPiso());
-        unidad.setEdificio(unidadDTO.getEdificio());
+        unidad.setEdificio(edificio);
 
         return unidad;
     }
