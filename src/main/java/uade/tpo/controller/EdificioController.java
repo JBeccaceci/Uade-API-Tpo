@@ -22,6 +22,7 @@ import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.entity.Direccion;
 import uade.tpo.models.entity.Edificio;
+import uade.tpo.models.entity.Unidad;
 
 
 
@@ -135,9 +136,32 @@ public class EdificioController {
 			return edificio;
 		}
 		
+	public ResponseEntity<String> agregarUnidadEdificio(int edificioID,Unidad unidad ) {
+		Edificio edificio = edificioService.findById(edificioID);
+		if(edificio != null && unidad != null) {
+			edificio.getUnidades().add(unidad);
+			edificioService.update(edificioID, edificio);
+			
+			if(unidad.getEdificio() == null) {
+			unidad.setEdificio(edificio);
+			String mensaje = "La unidad se ha asociado correctamente con el edificio: "+ edificio.getNombre();
+			return new ResponseEntity<>(mensaje, HttpStatus.OK);
+			}
+			else {
+				String mensaje = "La unidad ya se encuentra asociada a un edificio";
+				return new ResponseEntity<>(mensaje, HttpStatus.OK);
+			}
+		}
+		else {
+			String mensaje = "Se ha producido un error";
+			return new ResponseEntity<>(mensaje, HttpStatus.OK);
+		}
+		
+	}
 		
 
 	}
+
 
 
 
