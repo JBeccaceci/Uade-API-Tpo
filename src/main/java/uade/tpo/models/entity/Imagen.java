@@ -40,6 +40,10 @@ public class Imagen {
 		this.fecha = fecha;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	@Override
 	public String toString() {
 		return "Imagen{" +

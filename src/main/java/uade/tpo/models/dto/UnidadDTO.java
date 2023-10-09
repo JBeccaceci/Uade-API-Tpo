@@ -11,13 +11,8 @@ import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Usuario;
 
 public class UnidadDTO {
-    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
-    private List<Usuario> habitantes;
-
-    @ManyToOne
-    @JoinColumn(name = "edificio_id")
-    private Edificio edificio;
-
+    private Integer usuario_id;
+    private Integer edificio_id;
     private int dpto;
     private int piso;
     

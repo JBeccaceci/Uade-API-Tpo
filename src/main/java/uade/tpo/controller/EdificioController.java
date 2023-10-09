@@ -1,4 +1,5 @@
 package uade.tpo.controller;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,142 +26,115 @@ import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Unidad;
 
 
-
 @RestController
 @RequestMapping("/api")
 public class EdificioController {
-		@Autowired
-		private IEdificioService edificioService;
-		
-		@GetMapping("/usuarios")
-		public List<EdificioDTO> findAll() {
-			List<Edificio> listaEdificios = edificioService.findAll();
-	        List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();
+    @Autowired
+    private IEdificioService edificioService;
 
-	        for (Edificio edificio: listaEdificios) {
-	            EdificioDTO edificioDTO = convertToDTO(edificio);
-	            listaEdificioDTOs.add(edificioDTO);
-	        }
+    @GetMapping("/edificios") // TODO: Finalizado OK
+    public List<EdificioDTO> findAll() {
+        List<Edificio> listaEdificios = edificioService.findAll();
+        List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();
 
-	        return listaEdificioDTOs;
-		}
+        for (Edificio edificio : listaEdificios) {
+            EdificioDTO edificioDTO = convertToDTO(edificio);
+            listaEdificioDTOs.add(edificioDTO);
+        }
 
-		@GetMapping("/edificios/{edificioId}")
-		public ResponseEntity<?> getCliente(@PathVariable int edificioId) {
-			Edificio edificio = edificioService.findById(edificioId);		
+        return listaEdificioDTOs;
+    }
 
-			if (edificio == null) {
-				String mensaje = "edificio no encontrado con ID: " + edificioId;
-				return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-			}
+    @GetMapping("/edificio/{edificioId}") // TODO: Finalizado OK
+    public ResponseEntity<?> get(@PathVariable int edificioId) {
+        Edificio edificio = edificioService.findById(edificioId);
 
-			EdificioDTO edificioDTO = convertToDTO(edificio);
-			return new ResponseEntity<>(edificioDTO, HttpStatus.OK);
-		}
+        if (edificio == null) {
+            String mensaje = "edificio no encontrado con ID: " + edificioId;
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        }
 
-		@GetMapping("/edificiosParam")
-		public ResponseEntity<?> getEdificioParam(@RequestParam("edificioId") int edificioId) {
-			Edificio edifcio = edificioService.findById(edificioId);
+        EdificioDTO edificioDTO = convertToDTO(edificio);
+        return new ResponseEntity<>(edificioDTO, HttpStatus.OK);
+    }
 
-			if (edifcio == null) {
-				String mensaje = "Inquilino no encontrado con ID: " + edificioId;
-				return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-			}
+    @PostMapping("/edificios") // TODO: Finalizado OK
+    public ResponseEntity<EdificioDTO> add(@RequestBody EdificioDTO edificioDTO) {
+        Edificio edificio = convertToEntity(edificioDTO);
 
-			EdificioDTO edificioDTO = convertToDTO(edifcio);
-			return new ResponseEntity<>(edificioDTO, HttpStatus.OK);
-		}
+        edificioService.save(edificio);
 
-		@PostMapping("/edificios")
-		public ResponseEntity<EdificioDTO> addEdificio(@RequestBody EdificioDTO edificioDTO) {
-			Edificio edificio = convertToEntity(edificioDTO);
-			
-			edificioService.save(edificio);
-			
-			EdificioDTO nuevoEdificioDTO = convertToDTO(edificio);
+        EdificioDTO nuevoEdificioDTO = convertToDTO(edificio);
 
-			return new ResponseEntity<>(nuevoEdificioDTO, HttpStatus.CREATED);
-		}
+        return new ResponseEntity<>(nuevoEdificioDTO, HttpStatus.CREATED);
+    }
 
-		@PutMapping("/clientes/{clienteId}")
-		public ResponseEntity<?> updateEdificio(@PathVariable int edificioId, @RequestBody EdificioDTO edificioDTO) {
-			Edificio edificioOld = edificioService.findById(edificioId);
+    @PutMapping("/edificio/{edificioId}") // TODO: Finalizado OK
+    public ResponseEntity<?> update(@PathVariable int edificioId, @RequestBody EdificioDTO edificioDTO) {
+        Edificio edificioOld = edificioService.findById(edificioId);
+        if (edificioOld == null) {
+            String mensaje = "edificio no encontrado con ID: " + edificioId;
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        }
 
-			if (edificioOld == null) {
-				String mensaje = "edificio no encontrado con ID: " + edificioId;
-				return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-			}
+        Edificio edificioToUpdate = convertToEntity(edificioDTO);
+        edificioService.update(edificioId, edificioToUpdate);
 
-			Edificio edificioToUpdate = convertToEntity(edificioDTO);
-			edificioService.update(edificioId, edificioToUpdate);
-			
-	        EdificioDTO edificioUpdatedDTO = convertToDTO(edificioToUpdate);
-			return new ResponseEntity<>(edificioUpdatedDTO, HttpStatus.OK);
-		}
+        EdificioDTO edificioUpdatedDTO = convertToDTO(edificioToUpdate);
+        return new ResponseEntity<>(edificioUpdatedDTO, HttpStatus.OK);
+    }
 
-		@DeleteMapping("edificios/{edificioId}")
-		public ResponseEntity<String> deleteEdificio(@PathVariable int edificioId) {
-			Edificio edificio= edificioService.findById(edificioId);
+    @DeleteMapping("edificio/{edificioId}") // TODO: Finalizado OK
+    public ResponseEntity<String> deleteEdificio(@PathVariable int edificioId) {
+        Edificio edificio = edificioService.findById(edificioId);
+        if (edificio == null) {
+            String mensaje = "edificio no encontrado con ID: " + edificioId;
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        }
 
-			if (edificio == null) {
-				String mensaje = "edificio no encontrado con ID: " + edificioId;
-				return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-			}
+        edificioService.deleteById(edificioId);
 
-			edificioService.deleteById(edificioId);
+        String mensaje = "edificio eliminado [EdificioID: " + edificioId + "]";
+        return new ResponseEntity<>(mensaje, HttpStatus.OK);
+    }
 
-			String mensaje = "edificio eliminado [EdificioID: " + edificioId + "]";
-			return new ResponseEntity<>(mensaje, HttpStatus.OK);
-		}
+    private EdificioDTO convertToDTO(Edificio edificio) {
+        return new EdificioDTO(edificio.getNombre(), edificio.getDireccion(), edificio.getNumeroPisos(), edificio.isTieneAscensor());
+    }
 
-		/**
-		 * Método auxiliar para convertir a ClienteDTO
-		 * @param cliente
-		 * @return
-		 */
-		private EdificioDTO convertToDTO(Edificio edificio) {
-			EdificioDTO edificioDTO = new EdificioDTO( edificio.getNombre(),edificio.getDireccion(), edificio.getNumeroPisos(), edificio.isTieneAscensor());
-			return edificioDTO ;
-		}
-		
-		
-		private Edificio convertToEntity(EdificioDTO edificioDTO) {
-			Edificio edificio = new Edificio();
-			edificio.setDireccion(edificioDTO.getDireccion());
-			edificio.setNombre(edificioDTO.getNombre());
-			edificio.setNumeroPisos(edificioDTO.getNumeroPisos());
-			edificio.setTieneAscensor(edificioDTO.isTieneAscensor());
-			
-			
-		
-			return edificio;
-		}
-		
-	public ResponseEntity<String> agregarUnidadEdificio(int edificioID,Unidad unidad ) {
-		Edificio edificio = edificioService.findById(edificioID);
-		if(edificio != null && unidad != null) {
-			edificio.getUnidades().add(unidad);
-			edificioService.update(edificioID, edificio);
-			
-			if(unidad.getEdificio() == null) {
-			unidad.setEdificio(edificio);
-			String mensaje = "La unidad se ha asociado correctamente con el edificio: "+ edificio.getNombre();
-			return new ResponseEntity<>(mensaje, HttpStatus.OK);
-			}
-			else {
-				String mensaje = "La unidad ya se encuentra asociada a un edificio";
-				return new ResponseEntity<>(mensaje, HttpStatus.OK);
-			}
-		}
-		else {
-			String mensaje = "Se ha producido un error";
-			return new ResponseEntity<>(mensaje, HttpStatus.OK);
-		}
-		
-	}
-		
+    private Edificio convertToEntity(EdificioDTO edificioDTO) {
+        Edificio edificio = new Edificio();
+        edificio.setDireccion(edificioDTO.getDireccion());
+        edificio.setNombre(edificioDTO.getNombre());
+        edificio.setNumeroPisos(edificioDTO.getNumeroPisos());
+        edificio.setTieneAscensor(edificioDTO.isTieneAscensor());
+        return edificio;
+    }
 
-	}
+    @PostMapping("/edificio/{edificioId}/unidad")
+    public ResponseEntity<String> agregarUnidadEdificio(int edificioID, Unidad unidad) {
+        Edificio edificio = edificioService.findById(edificioID);
+        if (edificio != null && unidad != null) {
+            edificio.getUnidades().add(unidad);
+            edificioService.update(edificioID, edificio);
+
+            if (unidad.getEdificio() == null) {
+                unidad.setEdificio(edificio);
+                String mensaje = "La unidad se ha asociado correctamente con el edificio: " + edificio.getNombre();
+                return new ResponseEntity<>(mensaje, HttpStatus.OK);
+            } else {
+                String mensaje = "La unidad ya se encuentra asociada a un edificio";
+                return new ResponseEntity<>(mensaje, HttpStatus.OK);
+            }
+        } else {
+            String mensaje = "Se ha producido un error";
+            return new ResponseEntity<>(mensaje, HttpStatus.OK);
+        }
+
+    }
+
+
+}
 
 
 

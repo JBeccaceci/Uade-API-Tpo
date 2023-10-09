@@ -21,8 +21,8 @@ public class ImagenServiceImpl implements IImagenService {
 	}
 
 	@Override
-	public void save(Imagen imagen) {
-		imagenRepository.save(imagen);
+	public Imagen save(Imagen imagen) {
+		return imagenRepository.save(imagen);
 	}
 
 }

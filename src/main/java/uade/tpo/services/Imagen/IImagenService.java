@@ -5,5 +5,5 @@ import uade.tpo.models.entity.Imagen;
 public interface IImagenService {
 	public Imagen findById(Long id);
 
-	public void save(Imagen imagen);
+	public Imagen save(Imagen imagen);
 }

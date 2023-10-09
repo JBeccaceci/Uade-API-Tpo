@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import uade.tpo.models.dto.ImagenOutputDTO;
 import uade.tpo.models.entity.Imagen;
 import uade.tpo.services.Imagen.ImagenServiceImpl;
-
-/*import api.curso.api_clase_6_spring_imagenes.app.model.entity.Imagen;
-import api.curso.api_clase_6_spring_imagenes.app.service.ImagenServiceImpl;*/
 
 @RestController
 @RequestMapping("/imagenes")
@@ -27,20 +25,20 @@ public class ImagenController {
 	@Autowired
 	private ImagenServiceImpl imagenService;
 
-	@PostMapping("/subir")
-	public ResponseEntity<String> upload(@RequestParam("archivo") MultipartFile archivo) {
+	@PostMapping("/subir") // TODO: Finalizado OK
+	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile archivo) {
 		try {
 			Imagen imagen = new Imagen();
 			imagen.setImagen(archivo.getBytes());
-			imagenService.save(imagen);
-			return ResponseEntity.ok("Imagen subida exitosamente.");
+			Imagen newImage = imagenService.save(imagen);
+			return ResponseEntity.ok(new ImagenOutputDTO(newImage.getId()));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al subir la imagen.");
 		}
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{id}") // TODO: Finalizado OK
 	public ResponseEntity<byte[]> download(@PathVariable Long id) {
 		Imagen imagen = imagenService.findById(id);
 		if (imagen != null) {
