@@ -11,10 +11,6 @@ public class Unidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    //TODO: Preguntar al profe como se hace en estos casos..
-    //private Usuario propietario;
-
-    //TODO: Preguntar al profe como se hace en estos casos..
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Usuario> habitantes;
 
@@ -22,14 +18,16 @@ public class Unidad {
     @JoinColumn(name = "edificio_id")
     private Edificio edificio;
 
+    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
+    private List<Reclamo> reclamos;
+
     private int dpto;
     private int piso;
 
     public Unidad() {
     }
 
-    public Unidad(Usuario propietario, List<Usuario> habitantes, Edificio edificio, int dpto, int piso) {
-        //this.propietario = propietario;
+    public Unidad(List<Usuario> habitantes, Edificio edificio, int dpto, int piso) {
         this.habitantes = habitantes;
         this.edificio = edificio;
         this.dpto = dpto;
@@ -39,16 +37,6 @@ public class Unidad {
     public int getId() {
         return id;
     }
-
-    /*
-    public Usuario getPropietario() {
-        return propietario;
-    }
-
-    public void setPropietario(Usuario propietario) {
-        this.propietario = propietario;
-    }
-     */
 
     public List<Usuario> getHabitantes() {
         return habitantes;
@@ -86,7 +74,6 @@ public class Unidad {
     public String toString() {
         return "Unidad{" +
                 "id=" + id +
-                //", propietario=" + propietario +
                 ", habitantes=" + habitantes +
                 ", edificio=" + edificio +
                 ", dpto=" + dpto +

@@ -9,105 +9,118 @@ import uade.tpo.models.types.EstadoReclamo;
 import uade.tpo.models.types.TipoReclamo;
 
 public class ReclamoDTO {
-		private int id;
-	    private TipoReclamo tipoReclamo;
-	    private String descripcion;
-	    private Date creado;
-	    private Date actualizado;
-	    private Usuario usuario;
-	    private List<Imagen> imagenes;
+    private TipoReclamo tipoReclamo;
+    private String descripcion;
+    private Date creado;
+    private Date actualizado;
+    private Integer usuario_id;
+    private Integer unidad_id;
+    private Integer edificio_id;
+    private List<Integer> imagenes;
 
-	    private EstadoReclamo estadoReclamo;
+    private EstadoReclamo estadoReclamo;
 
-		public ReclamoDTO(int id, TipoReclamo tipoReclamo, String descripcion, Date creado, Date actualizado,
-				Usuario usuario, List<Imagen> imagenes, EstadoReclamo estadoReclamo) {
-			super();
-			this.id = id;
-			this.tipoReclamo = tipoReclamo;
-			this.descripcion = descripcion;
-			this.creado = creado;
-			this.actualizado = actualizado;
-			this.usuario = usuario;
-			this.imagenes = imagenes;
-			this.estadoReclamo = estadoReclamo;
-		}
-	    
-		public ReclamoDTO() {
-			
-		}
+    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id, Integer unidad_id, Integer edificio_id, List<Integer> imagenes, EstadoReclamo estadoReclamo) {
+        this.tipoReclamo = tipoReclamo;
+        this.descripcion = descripcion;
+        this.creado = new Date();
+        this.actualizado = new Date();
+        this.usuario_id = usuario_id;
+        this.unidad_id = unidad_id;
+        this.edificio_id = edificio_id;
+        this.imagenes = imagenes;
+        this.estadoReclamo = estadoReclamo;
+    }
 
-		public int getId() {
-			return id;
-		}
+    public ReclamoDTO() {
+    }
 
-		public void setId(int id) {
-			this.id = id;
-		}
+    public Integer getUsuario_id() {
+        return usuario_id;
+    }
 
-		public TipoReclamo getTipoReclamo() {
-			return tipoReclamo;
-		}
+    public void setUsuario_id(Integer usuario_id) {
+        this.usuario_id = usuario_id;
+    }
 
-		public void setTipoReclamo(TipoReclamo tipoReclamo) {
-			this.tipoReclamo = tipoReclamo;
-		}
+    public Integer getUnidad_id() {
+        return unidad_id;
+    }
 
-		public String getDescripcion() {
-			return descripcion;
-		}
+    public void setUnidad_id(Integer unidad_id) {
+        this.unidad_id = unidad_id;
+    }
 
-		public void setDescripcion(String descripcion) {
-			this.descripcion = descripcion;
-		}
+    public Integer getEdificio_id() {
+        return edificio_id;
+    }
 
-		public Date getCreado() {
-			return creado;
-		}
+    public void setEdificio_id(Integer edificio_id) {
+        this.edificio_id = edificio_id;
+    }
 
-		public void setCreado(Date creado) {
-			this.creado = creado;
-		}
+    public TipoReclamo getTipoReclamo() {
+        return tipoReclamo;
+    }
 
-		public Date getActualizado() {
-			return actualizado;
-		}
+    public void setTipoReclamo(TipoReclamo tipoReclamo) {
+        this.tipoReclamo = tipoReclamo;
+    }
 
-		public void setActualizado(Date actualizado) {
-			this.actualizado = actualizado;
-		}
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-		public Usuario getUsuario() {
-			return usuario;
-		}
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-		public void setUsuario(Usuario usuario) {
-			this.usuario = usuario;
-		}
+    public Date getCreado() {
+        return creado;
+    }
 
-		public List<Imagen> getImagenes() {
-			return imagenes;
-		}
+    public void setCreado(Date creado) {
+        this.creado = creado;
+    }
 
-		public void setImagenes(List<Imagen> imagenes) {
-			this.imagenes = imagenes;
-		}
+    public Date getActualizado() {
+        return actualizado;
+    }
 
-		public EstadoReclamo getEstadoReclamo() {
-			return estadoReclamo;
-		}
+    public void setActualizado(Date actualizado) {
+        this.actualizado = actualizado;
+    }
 
-		public void setEstadoReclamo(EstadoReclamo estadoReclamo) {
-			this.estadoReclamo = estadoReclamo;
-		}
+    public int getUsuarioId() {
+        return usuario_id;
+    }
 
-		@Override
-		public String toString() {
-			return "ReclamoDTO [id=" + id + ", tipoReclamo=" + tipoReclamo + ", descripcion=" + descripcion
-					+ ", creado=" + creado + ", actualizado=" + actualizado + ", usuario=" + usuario + ", imagenes="
-					+ imagenes + ", estadoReclamo=" + estadoReclamo + "]";
-		}
-	    
-		
+    public void setUsuarioId(int usuario_id) {
+        this.usuario_id = usuario_id;
+    }
+
+    public List<Integer> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<Integer> imagenes) {
+        this.imagenes = imagenes;
+    }
+
+    public EstadoReclamo getEstadoReclamo() {
+        return estadoReclamo;
+    }
+
+    public void setEstadoReclamo(EstadoReclamo estadoReclamo) {
+        this.estadoReclamo = estadoReclamo;
+    }
+
+    @Override
+    public String toString() {
+        return "ReclamoDTO [" +  "tipoReclamo=" + tipoReclamo + ", descripcion=" + descripcion
+                + ", creado=" + creado + ", actualizado=" + actualizado + ", usuario=" + usuario_id + ", imagenes="
+                + imagenes + ", estadoReclamo=" + estadoReclamo + "]";
+    }
 
 
 }

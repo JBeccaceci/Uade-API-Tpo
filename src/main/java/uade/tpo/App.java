@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import uade.tpo.models.entity.Inquilino;
 import uade.tpo.models.entity.Propietario;
+import uade.tpo.models.entity.Usuario;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.usuario.IUsuarioService;
 
@@ -42,6 +43,9 @@ public class App {
 
         Inquilino inq1 = usuarioService.findByUsername("juan1", Inquilino.class);
         System.out.println(inq1.toString());
+
+        Usuario user1 = usuarioService.findByUsername("pedro4", Usuario.class);
+        System.out.println(user1.getType());
     }
 
 }

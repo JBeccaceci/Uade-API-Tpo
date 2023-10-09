@@ -34,6 +34,11 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
+    public Usuario findById(int id) {
+        return this.daoUsuarioImpl.findById(id);
+    }
+
+    @Override
     public <T extends Usuario> T findByUsername(String username, Class<T> userType) {
         Usuario usuario = this.daoUsuarioImpl.findByUsername(username);
 

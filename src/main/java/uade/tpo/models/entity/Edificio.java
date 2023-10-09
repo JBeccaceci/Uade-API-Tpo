@@ -18,6 +18,9 @@ public class Edificio {
     @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
     private List<Unidad> unidades;
 
+	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
+	private List<Reclamo> reclamos;
+
     public Edificio(String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
         this.nombre = nombre;
         this.direccion = direccion;
@@ -64,6 +67,10 @@ public class Edificio {
 
 	public void setUnidades(List<Unidad> unidades) {
 		this.unidades = unidades;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override

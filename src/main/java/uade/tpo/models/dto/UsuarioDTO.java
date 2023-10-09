@@ -1,24 +1,28 @@
 package uade.tpo.models.dto;
 
+import uade.tpo.models.types.TipoUsuario;
+
 public class UsuarioDTO {
 	private String nombre;
 	private String username;
     private String password;
     private String apellido;
     private String dni;
+    private TipoUsuario tipoUsuario;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String nombre,String apellido,String dni,String username, String password) {
-    	this.nombre = nombre;
-    	this.apellido = apellido;
-    	this.dni = dni;
-        this.username = username;
-        this.password = password;
-    }
+	public UsuarioDTO(String nombre, String username, String password, String apellido, String dni, TipoUsuario tipoUsuario) {
+		this.nombre = nombre;
+		this.username = username;
+		this.password = password;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.tipoUsuario = tipoUsuario;
+	}
 
-    public String getUsername() {
+	public String getUsername() {
         return username;
     }
 
@@ -57,6 +61,14 @@ public class UsuarioDTO {
 
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+
+	public TipoUsuario getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 
 	@Override

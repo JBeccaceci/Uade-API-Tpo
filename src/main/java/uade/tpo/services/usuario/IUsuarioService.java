@@ -8,6 +8,7 @@ public interface IUsuarioService {
     public List<Usuario> findAll();
 
     public <T extends Usuario> T findById(int id, Class<T> userType);
+    public Usuario findById(int id);
     public <T extends Usuario> T findByUsername(String username, Class<T> userType);
 
     public <T extends Usuario> void save(T cliente);

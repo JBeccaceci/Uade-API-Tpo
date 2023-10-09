@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import uade.tpo.models.types.EstadoReclamo;
 import uade.tpo.models.types.TipoReclamo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class Reclamo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private TipoReclamo tipoReclamo;
     private String descripcion;
     private Date creado;
@@ -22,6 +24,14 @@ public class Reclamo {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "unidad_id")
+    private Unidad unidad;
+
+    @ManyToOne
+    @JoinColumn(name = "edificio_id")
+    private Edificio edificio;
+
     @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
     private List<Imagen> imagenes;
 
@@ -30,22 +40,18 @@ public class Reclamo {
     @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
     private List<Medida> medidas;
 
-    public Reclamo(TipoReclamo tipoReclamo, String descripcion,
-                   Usuario usuario, List<Imagen> imagenes, EstadoReclamo estadoReclamo,
-                   List<Medida> medidas) {
+    public Reclamo(TipoReclamo tipoReclamo, String descripcion, Usuario usuario, Unidad unidad, Edificio edificio) {
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
         this.actualizado = new Date();
         this.usuario = usuario;
-        this.imagenes = imagenes;
-        this.estadoReclamo = estadoReclamo;
-        this.medidas = medidas;
+        this.unidad = unidad;
+        this.edificio = edificio;
+        this.imagenes = new ArrayList<>();
+        this.estadoReclamo = EstadoReclamo.NUEVO;
+        this.medidas = new ArrayList<>();
     }
-
-    public Reclamo() {
-    }
-
 
     public TipoReclamo getTipoReclamo() {
         return tipoReclamo;
@@ -113,6 +119,22 @@ public class Reclamo {
 
     public int getId() {
         return id;
+    }
+
+    public Unidad getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(Unidad unidad) {
+        this.unidad = unidad;
+    }
+
+    public Edificio getEdificio() {
+        return edificio;
+    }
+
+    public void setEdificio(Edificio edificio) {
+        this.edificio = edificio;
     }
 
     @Override

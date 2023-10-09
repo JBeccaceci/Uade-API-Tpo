@@ -19,7 +19,12 @@ public class Medida {
     public Medida(String descripcion) {
 		this.descripcion = descripcion;
 	}
-    
+
+	public Medida(String descripcion, Reclamo reclamo) {
+		this.descripcion = descripcion;
+		this.reclamo = reclamo;
+	}
+
 	public String getDescripcion() {
 		return descripcion;
 	}
