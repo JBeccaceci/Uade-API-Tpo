@@ -1,14 +1,14 @@
-package uade.tpo.models.entity;
-import jakarta.persistence.*;
+package uade.tpo.models.dto;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
-@Table(name = "edificios")
-public class Edificio {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
+import uade.tpo.models.entity.Direccion;
+import uade.tpo.models.entity.Unidad;
+
+public class EdificioDTO {
     private String nombre;
     private Direccion direccion;
     private int numeroPisos;
@@ -17,19 +17,17 @@ public class Edificio {
     @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
     private List<Unidad> unidades;
 
-	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
-	private List<Reclamo> reclamos;
+	public EdificioDTO(String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
+		super();
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.numeroPisos = numeroPisos;
+		this.tieneAscensor = tieneAscensor;
+		this.unidades = new ArrayList<>();
+	}
 
-    public Edificio(String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.numeroPisos = numeroPisos;
-        this.tieneAscensor = tieneAscensor;
-        this.unidades = new ArrayList<>();
-    }
-
-	public Edificio() {
-		// TODO Auto-generated constructor stub
+	public EdificioDTO() {
+		super();
 	}
 
 	public String getNombre() {
@@ -72,13 +70,12 @@ public class Edificio {
 		this.unidades = unidades;
 	}
 
-	public int getId() {
-		return id;
-	}
-
 	@Override
 	public String toString() {
-		return "Edificio [nombre=" + nombre + ", direccion=" + direccion + ", numeroPisos=" + numeroPisos
+		return "EdificioDTO [nombre=" + nombre + ", direccion=" + direccion + ", numeroPisos=" + numeroPisos
 				+ ", tieneAscensor=" + tieneAscensor + ", unidades=" + unidades + "]";
 	}
+
+    
+
 }
