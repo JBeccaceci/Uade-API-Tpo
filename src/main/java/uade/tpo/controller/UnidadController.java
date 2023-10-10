@@ -34,7 +34,8 @@ public class UnidadController {
     private IEdificioService edificioService;
     @Autowired
     private IUsuarioService usuarioService;
-    @GetMapping("/usuarios")
+
+    @GetMapping("/unidad")
     public List<UnidadDTO> findAll() {
         List<Unidad> listaUnidades = unidadService.findAll();
         List<UnidadDTO> listaUnidadDTOs = new ArrayList<>();
@@ -47,8 +48,8 @@ public class UnidadController {
         return listaUnidadDTOs;
     }
 
-    @GetMapping("/unidades/{unidadId}")
-    public ResponseEntity<?> getUnidad(@PathVariable int unidadId) {
+    @GetMapping("/unidad/{unidadId}")
+    public ResponseEntity<?> get(@PathVariable int unidadId) {
         Unidad unidad = unidadService.findById(unidadId);
 
         if (unidad == null) {
@@ -60,21 +61,8 @@ public class UnidadController {
         return new ResponseEntity<>(unidadDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/unidadesParam")
-    public ResponseEntity<?> getUnidadParam(@RequestParam("unidadId") int unidadId) {
-        Unidad unidad = unidadService.findById(unidadId);
-
-        if (unidad == null) {
-            String mensaje = "Inquilino no encontrado con ID: " + unidadId;
-            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-        }
-
-        UnidadDTO unidadDTO = convertToDTO(unidad);
-        return new ResponseEntity<>(unidadDTO, HttpStatus.OK);
-    }
-
-    @PostMapping("/unidades")
-    public ResponseEntity<?> addUnidad(@RequestBody UnidadDTO unidadDTO) {
+    @PostMapping("/unidad")
+    public ResponseEntity<?> add(@RequestBody UnidadDTO unidadDTO) {
 		Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
         if (edificio == null) {
         	String mensaje = "edificio not found: " + unidadDTO.getEdificio_id();
@@ -90,8 +78,8 @@ public class UnidadController {
         return new ResponseEntity<>(nuevaUnidad, HttpStatus.CREATED);
     }
 
-    @PutMapping("/unidades/{unidadId}")
-    public ResponseEntity<?> updateUnidad(@PathVariable int unidadId, @RequestBody UnidadDTO unidadDTO) {
+    @PutMapping("/unidad/{unidadId}")
+    public ResponseEntity<?> update(@PathVariable int unidadId, @RequestBody UnidadDTO unidadDTO) {
         Unidad unidadOld = unidadService.findById(unidadId);
 
         if (unidadOld == null) {
@@ -106,8 +94,8 @@ public class UnidadController {
         return new ResponseEntity<>(unidadUpdatedDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("unidades/{unidadId}")
-    public ResponseEntity<String> deleteUnidad(@PathVariable int unidadId) {
+    @DeleteMapping("unidad/{unidadId}")
+    public ResponseEntity<String> delete(@PathVariable int unidadId) {
         Unidad unidad = unidadService.findById(unidadId);
 
         if (unidad == null) {
@@ -121,28 +109,18 @@ public class UnidadController {
         return new ResponseEntity<>(mensaje, HttpStatus.OK);
     }
 
-    /**
-     * Método auxiliar para convertir a UnidadDTO
-     *
-     * @param unidad
-     * @return
-     */
     private UnidadDTO convertToDTO(Unidad unidad) {
         UnidadDTO unidadDTO = new UnidadDTO(unidad.getDpto(),unidad.getPiso());
         return unidadDTO;
     }
-
 
     private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio) {
         Unidad unidad = new Unidad();
         unidad.setDpto(unidadDTO.getDpto());
         unidad.setPiso(unidadDTO.getPiso());
         unidad.setEdificio(edificio);
-
         return unidad;
     }
-
-
 }
 
 
