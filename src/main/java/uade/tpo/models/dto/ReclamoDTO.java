@@ -1,5 +1,6 @@
 package uade.tpo.models.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class ReclamoDTO {
 
     private EstadoReclamo estadoReclamo;
 
-    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id,String objetoReclamo ,Integer unidad_id, Integer edificio_id,Integer areaComun_id, List<Integer> imagenes, EstadoReclamo estadoReclamo) {
+    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id,String objetoReclamo ,Integer unidad_id, Integer edificio_id,Integer areaComun_id, EstadoReclamo estadoReclamo) {
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
@@ -30,7 +31,7 @@ public class ReclamoDTO {
         this.usuario_id = usuario_id;
         this.unidad_id = unidad_id;
         this.edificio_id = edificio_id;
-        this.imagenes = imagenes;
+        this.imagenes = new ArrayList<>();
         this.estadoReclamo = estadoReclamo;
         this.areaComun_id = areaComun_id;
         this.objetoReclamo = objetoReclamo;
