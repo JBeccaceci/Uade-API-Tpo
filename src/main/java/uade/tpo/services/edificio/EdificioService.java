@@ -32,6 +32,7 @@ public class EdificioService implements IEdificioService {
 
     @Override
     public void update(int id, Edificio cliente) {
+    	
 
     }
 

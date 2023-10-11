@@ -20,6 +20,9 @@ public class Unidad {
 
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
+    
+    @OneToOne
+    private Usuario propietario;
 
     private int dpto;
     private int piso;
@@ -70,7 +73,20 @@ public class Unidad {
         this.piso = piso;
     }
 
-    @Override
+    
+    public Usuario getPropietario() {
+		return propietario;
+	}
+
+	public void setPropietario(Usuario propietario) {
+		this.propietario = propietario;
+	}
+
+	public List<Reclamo> getReclamos() {
+		return reclamos;
+	}
+
+	@Override
     public String toString() {
         return "Unidad{" +
                 "id=" + id +

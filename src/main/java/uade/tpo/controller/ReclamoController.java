@@ -8,6 +8,8 @@ import uade.tpo.models.dto.ReclamoDTO;
 import uade.tpo.models.dto.UpdateReclamoDTO;
 import uade.tpo.models.entity.*;
 import uade.tpo.models.types.EstadoReclamo;
+import uade.tpo.services.areascomunes.AreaComunService;
+import uade.tpo.services.areascomunes.IAreaComunService;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.reclamo.IReclamoService;
 import uade.tpo.services.unidad.IUnidadService;
@@ -31,10 +33,13 @@ public class ReclamoController {
 
     @Autowired
     private IUnidadService unidadService;
+    
+    @Autowired
+    private IAreaComunService areaComunService;
 
     @PostMapping("/reclamo")
     public ResponseEntity<?> add(@RequestBody ReclamoDTO reclamoDTO) {
-        Usuario usuario = usuarioService.findById(reclamoDTO.getUsuarioId());
+    	Usuario usuario = usuarioService.findById(reclamoDTO.getUsuarioId());
         if (usuario == null) {
             String mensaje = "usuario not found: " + reclamoDTO.getUsuarioId();
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
@@ -43,6 +48,38 @@ public class ReclamoController {
         if (reclamoDTO.getEdificio_id() != null) {
             edificio = edificioService.findById(reclamoDTO.getEdificio_id());
         }
+        
+        
+    	if(reclamoDTO.getObjetoReclamo().equalsIgnoreCase("AreaComun")) {
+    		AreaComun areaComun = areaComunService.findById(reclamoDTO.getAreaComun_id());
+    		if(areaComun != null) {
+    			if(areaComun.getEdificio().getId() == edificio.getId()) {
+    				List<Unidad>unidadesEdificio = edificio.getUnidades();
+    				for(Unidad unidad : unidadesEdificio) {
+    					if(unidad.getPropietario().getId() == usuario.getId() || unidad.getHabitantes().contains(usuario)) {
+    						Reclamo reclamo = convertToEntity(reclamoDTO, usuario, edificio, unidad);
+    		                reclamoService.save(reclamo);
+    		                ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
+    		                return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
+    					}
+    					else {
+    						String mensaje = "El Usuario no pertenece al edificio: " ;
+    	                    return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+    					}
+    				}
+    			}
+    			else {
+    				String mensaje = "El Area Comun no pertenece al edificio: " ;
+                    return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+    				
+    			}
+    		}
+    		else {
+    			String mensaje = "Area Comun not found: " + reclamoDTO.getAreaComun_id();
+                return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+    		}
+    	}
+    	else {
         Unidad unidad = null;
         if (reclamoDTO.getUnidad_id() != null) {
             unidad = unidadService.findById(reclamoDTO.getUnidad_id());
@@ -52,11 +89,33 @@ public class ReclamoController {
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        Reclamo reclamo = convertToEntity(reclamoDTO, usuario, edificio, unidad);
-        reclamoService.save(reclamo);
+        if(unidad.getHabitantes().isEmpty()) {
+        	if(usuario.getId() == unidad.getPropietario().getId()) {
+        		Reclamo reclamo = convertToEntity(reclamoDTO, usuario, edificio, unidad);
+                reclamoService.save(reclamo);
+                ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
+                return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
+        	}
+        	else {
+        		 String mensaje = "No esta enlazado con la unidad";
+                 return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        		
+        	}
+        }
+        else {
+        	if(unidad.getHabitantes().contains(usuario)) {
+        		Reclamo reclamo = convertToEntity(reclamoDTO, usuario, edificio, unidad);
+                reclamoService.save(reclamo);
+                ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
+                return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
+        	}
+        	 String mensaje = "No esta enlazado con la unidad";
+             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        	}
+      }
+        
 
-        ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
-        return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
+        
     }
 
     @GetMapping("/reclamo")

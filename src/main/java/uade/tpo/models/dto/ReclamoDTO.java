@@ -16,11 +16,13 @@ public class ReclamoDTO {
     private Integer usuario_id;
     private Integer unidad_id;
     private Integer edificio_id;
+    private Integer areaComun_id;
+    private String objetoReclamo;
     private List<Integer> imagenes;
 
     private EstadoReclamo estadoReclamo;
 
-    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id, Integer unidad_id, Integer edificio_id, List<Integer> imagenes, EstadoReclamo estadoReclamo) {
+    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id,String objetoReclamo ,Integer unidad_id, Integer edificio_id,Integer areaComun_id, List<Integer> imagenes, EstadoReclamo estadoReclamo) {
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
@@ -30,6 +32,8 @@ public class ReclamoDTO {
         this.edificio_id = edificio_id;
         this.imagenes = imagenes;
         this.estadoReclamo = estadoReclamo;
+        this.areaComun_id = areaComun_id;
+        this.objetoReclamo = objetoReclamo;
     }
 
     public ReclamoDTO() {
@@ -115,12 +119,24 @@ public class ReclamoDTO {
         this.estadoReclamo = estadoReclamo;
     }
 
-    @Override
-    public String toString() {
-        return "ReclamoDTO [" +  "tipoReclamo=" + tipoReclamo + ", descripcion=" + descripcion
-                + ", creado=" + creado + ", actualizado=" + actualizado + ", usuario=" + usuario_id + ", imagenes="
-                + imagenes + ", estadoReclamo=" + estadoReclamo + "]";
-    }
+    
+    public Integer getAreaComun_id() {
+		return areaComun_id;
+	}
+
+	public String getObjetoReclamo() {
+		return objetoReclamo;
+	}
+
+	@Override
+	public String toString() {
+		return "ReclamoDTO [tipoReclamo=" + tipoReclamo + ", descripcion=" + descripcion + ", creado=" + creado
+				+ ", actualizado=" + actualizado + ", usuario_id=" + usuario_id + ", unidad_id=" + unidad_id
+				+ ", edificio_id=" + edificio_id + ", areaComun_id=" + areaComun_id + ", objetoReclamo=" + objetoReclamo
+				+ ", imagenes=" + imagenes + ", estadoReclamo=" + estadoReclamo + "]";
+	}
+
+
 
 
 }

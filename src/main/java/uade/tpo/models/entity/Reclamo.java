@@ -2,6 +2,7 @@ package uade.tpo.models.entity;
 
 import jakarta.persistence.*;
 import uade.tpo.models.types.EstadoReclamo;
+import uade.tpo.models.types.ObjetoReclamo;
 import uade.tpo.models.types.TipoReclamo;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Reclamo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    private ObjetoReclamo objetoReclamo;
     private TipoReclamo tipoReclamo;
     private String descripcion;
     private Date creado;
@@ -29,6 +31,10 @@ public class Reclamo {
     private Unidad unidad;
 
     @ManyToOne
+    @JoinColumn
+    private AreaComun areaComun;
+    
+    @ManyToOne
     @JoinColumn(name = "edificio_id")
     private Edificio edificio;
 
@@ -40,7 +46,7 @@ public class Reclamo {
     @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
     private List<Medida> medidas;
 
-    public Reclamo(TipoReclamo tipoReclamo, String descripcion, Usuario usuario, Unidad unidad, Edificio edificio) {
+    public Reclamo(TipoReclamo tipoReclamo, String descripcion, Usuario usuario, ObjetoReclamo objetoReclamo ,Unidad unidad,AreaComun areaComun ,Edificio edificio) {
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
@@ -48,6 +54,8 @@ public class Reclamo {
         this.usuario = usuario;
         this.unidad = unidad;
         this.edificio = edificio;
+        this.objetoReclamo = objetoReclamo;
+        this.areaComun = areaComun;
         this.imagenes = new ArrayList<>();
         this.estadoReclamo = EstadoReclamo.NUEVO;
         this.medidas = new ArrayList<>();
@@ -137,18 +145,25 @@ public class Reclamo {
         this.edificio = edificio;
     }
 
-    @Override
-    public String toString() {
-        return "Reclamo{" +
-                "id=" + id +
-                ", tipoReclamo=" + tipoReclamo +
-                ", descripcion='" + descripcion + '\'' +
-                ", creado=" + creado +
-                ", actualizado=" + actualizado +
-                ", usuario=" + usuario +
-                ", imagenes=" + imagenes +
-                ", estadoReclamo=" + estadoReclamo +
-                ", medidas=" + medidas +
-                '}';
-    }
+	public ObjetoReclamo getObjetoReclamo() {
+		return objetoReclamo;
+	}
+
+	public void setObjetoReclamo(ObjetoReclamo objetoReclamo) {
+		this.objetoReclamo = objetoReclamo;
+	}
+
+	public AreaComun getAreaComun() {
+		return areaComun;
+	}
+
+	@Override
+	public String toString() {
+		return "Reclamo [id=" + id + ", objetoReclamo=" + objetoReclamo + ", tipoReclamo=" + tipoReclamo
+				+ ", descripcion=" + descripcion + ", creado=" + creado + ", actualizado=" + actualizado + ", usuario="
+				+ usuario + ", unidad=" + unidad + ", areaComun=" + areaComun + ", edificio=" + edificio + ", imagenes="
+				+ imagenes + ", estadoReclamo=" + estadoReclamo + ", medidas=" + medidas + "]";
+	}
+
+   
 }
