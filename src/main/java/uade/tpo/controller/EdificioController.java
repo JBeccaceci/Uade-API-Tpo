@@ -3,6 +3,7 @@ package uade.tpo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.entity.Edificio;
@@ -24,6 +25,7 @@ public class EdificioController {
     private IUnidadService unidadService;
 
     @GetMapping("/edificio")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<EdificioDTO> findAll() {
         List<Edificio> listaEdificios = edificioService.findAll();
         List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();

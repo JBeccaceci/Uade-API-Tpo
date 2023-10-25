@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uade.tpo.models.dto.TokenOutputDTO;
 import uade.tpo.models.dto.PropietarioDTO;
+import uade.tpo.models.entity.Usuario;
 import uade.tpo.services.usuario.IUsuarioService;
 
 import javax.crypto.SecretKey;
@@ -30,8 +31,12 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<TokenOutputDTO> login(@RequestBody PropietarioDTO credentials) {
-		if (usuarioService.findByUserAndPassword(credentials.getUsername(), credentials.getPassword()) != null) {
-			String token = Jwts.builder().setSubject(credentials.getUsername()).setIssuedAt(new Date())
+		Usuario user = usuarioService.findByUserAndPassword(credentials.getUsername(), credentials.getPassword());
+		if (user != null) {
+			String token = Jwts.builder()
+					.setSubject(credentials.getUsername())
+					.setIssuedAt(new Date())
+					.claim("rol", user.getRole())
 					.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
 					.signWith(secretKey, SignatureAlgorithm.HS256).compact();
 

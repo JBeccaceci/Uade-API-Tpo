@@ -1,6 +1,7 @@
 package uade.tpo.models.entity;
 
 import jakarta.persistence.*;
+import uade.tpo.models.types.TipoRole;
 import uade.tpo.models.types.TipoUsuario;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public abstract class Usuario {
     private String apellido;
     private String dni;
     private String username;
-    private List<String> permisos;
+    private TipoRole role;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
@@ -37,7 +38,6 @@ public abstract class Usuario {
         this.apellido = apellido;
         this.dni = dni;
         this.username = username;
-        this.permisos = new ArrayList<>();
         this.reclamos = new ArrayList<>();
     }
 
@@ -88,14 +88,6 @@ public abstract class Usuario {
         this.username = username;
     }
 
-    public List<String> getPermisos() {
-        return permisos;
-    }
-
-    public void setPermisos(List<String> permisos) {
-        this.permisos = permisos;
-    }
-
     public List<Reclamo> getReclamos() {
         return reclamos;
     }
@@ -106,6 +98,14 @@ public abstract class Usuario {
 
     public abstract TipoUsuario getType();
 
+    public TipoRole getRole() {
+        return role;
+    }
+
+    public void setRole(TipoRole role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
@@ -115,7 +115,7 @@ public abstract class Usuario {
                 ", apellido='" + apellido + '\'' +
                 ", dni='" + dni + '\'' +
                 ", username='" + username + '\'' +
-                ", permisos=" + permisos +
+                ", role=" + role +
                 '}';
     }
 }
