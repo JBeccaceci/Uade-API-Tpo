@@ -54,7 +54,16 @@ public class ReclamoController {
 	    		    				List<Unidad>unidadesEdificio = edificio.getUnidades();
 	    		    				for(Unidad unidad : unidadesEdificio) {
 	    		    					if(unidad.getPropietario().getId() == usuario.getId() || unidad.getHabitantes().contains(usuario)) {
+											if(reclamoDTO.getImagenes() != null){
+												List<Imagen> imagenes = new ArrayList<>();
+												for (byte[] imagenBytes : reclamoDTO.getImagenes()) {
+													Imagen imagen = new Imagen();
+													imagen.setImagen(imagenBytes);
+													imagenes.add(imagen);
+												}
+											}
 	    		    						Reclamo reclamo = convertToEntity(reclamoDTO, ObjetoReclamo.AreaComun, usuario, edificio, null, areaComun);
+											reclamo.setImagenes(imagenes);
 	    		    		                reclamoService.save(reclamo);
 	    		    		                ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
 	    		    		                return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
@@ -177,7 +186,23 @@ public class ReclamoController {
         for (String medida : updateReclamoDTO.getMedidas()) {
             medidaList.add(new Medida(medida, reclamo));
         }
-
+		List<Imagen> imagenes = new ArrayList<>();
+		if(reclamo.getImagenes() != null){
+			for (byte[] imagenBytes : reclamo.getImagenes()) {
+				Imagen imagen = new Imagen();
+				imagen.setImagen(imagenBytes);
+				imagenes.add(imagen);
+			}
+		}
+		if(updateReclamoDTO.getImagenes() != null){
+			for (byte[] imagenBytes : reclamo.getImagenes()) {
+				Imagen imagen = new Imagen();
+				imagen.setImagen(imagenBytes);
+				imagenes.add(imagen);
+			}
+		}
+		
+		reclamo.setImagenes(imagenes);
         reclamo.setEstadoReclamo(updateReclamoDTO.getEstadoReclamo());
         reclamo.setMedidas(medidaList);
         reclamoService.update(reclamo.getId(), reclamo);
