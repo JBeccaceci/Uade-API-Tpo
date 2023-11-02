@@ -29,7 +29,7 @@ public class Propietario extends Usuario {
 				", apellido='" + this.getApellido() + '\'' +
 				", dni='" + this.getDni() + '\'' +
 				", username='" + this.getUsername() + '\'' +
-				", permisos=" + this.getPermisos() +
+				", permisos=" + this.getRole() +
 				'}';
 	}
 }

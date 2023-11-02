@@ -61,7 +61,7 @@ public class Inquilino extends Usuario {
                 ", apellido='" + this.getApellido() + '\'' +
                 ", dni='" + this.getDni() + '\'' +
                 ", username='" + this.getUsername() + '\'' +
-                ", permisos=" + this.getPermisos() +
+                ", permisos=" + this.getRole() +
                 ", vencimiento=" + vencimiento +
                 ", ingreso=" + ingreso +
                 ", montoAlquiler=" + montoAlquiler +
