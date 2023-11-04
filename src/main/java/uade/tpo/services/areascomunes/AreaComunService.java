@@ -3,11 +3,12 @@ package uade.tpo.services.areascomunes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import uade.tpo.dao.DaoAreaComunImpl;
 import uade.tpo.models.entity.AreaComun;
 
-
+@Service
 public class AreaComunService implements IAreaComunService {
 	@Autowired
 	private DaoAreaComunImpl daoAreaComunImpl;
