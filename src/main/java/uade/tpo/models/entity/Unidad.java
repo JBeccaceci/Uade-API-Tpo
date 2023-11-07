@@ -12,22 +12,25 @@ public class Unidad {
     private int id;
 
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
-    private List<Usuario> habitantes;
+    private List<Usuario> habitantes; // ok
 
     @ManyToOne
-    @JoinColumn(name = "edificio_id")
+    @JoinColumn(name = "edificio_id",  unique = true, nullable = false)
     private Edificio edificio;
 
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
-    
+
     @OneToOne
+    @JoinColumn(name = "propietario_id", unique = true, nullable = false)
     private Usuario propietario;
 
     private int dpto;
     private int piso;
 
     public Unidad() {
+        this.habitantes = new ArrayList<>();
+        this.reclamos = new ArrayList<>();
     }
 
     public Unidad(List<Usuario> habitantes, Edificio edificio, int dpto, int piso) {
@@ -43,10 +46,6 @@ public class Unidad {
 
     public List<Usuario> getHabitantes() {
         return habitantes;
-    }
-
-    public void setHabitantes(List<Usuario> habitantes) {
-        this.habitantes = habitantes;
     }
 
     public Edificio getEdificio() {
@@ -73,20 +72,30 @@ public class Unidad {
         this.piso = piso;
     }
 
-    
     public Usuario getPropietario() {
 		return propietario;
-	}
-
-	public void setPropietario(Usuario propietario) {
-		this.propietario = propietario;
 	}
 
 	public List<Reclamo> getReclamos() {
 		return reclamos;
 	}
 
-	@Override
+    public void setPropietario(Usuario propietario) {
+        this.propietario = propietario;
+    }
+
+    public void setHabitantes(List<Usuario> habitantes) {
+        this.habitantes = habitantes;
+    }
+
+    public void setHabitante(Usuario usuario) {
+        if (habitantes == null) {
+            habitantes = new ArrayList<>();
+        }
+        habitantes.add(usuario);
+    }
+
+    @Override
     public String toString() {
         return "Unidad{" +
                 "id=" + id +

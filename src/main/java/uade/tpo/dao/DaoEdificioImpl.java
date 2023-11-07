@@ -23,7 +23,7 @@ public class DaoEdificioImpl implements DAO<Edificio> {
     public List<Edificio> getAll() {
         Session currentSession = this.entityManager.unwrap(Session.class);
 
-        Query<Edificio> getQuery = currentSession.createQuery("FROM edificios", Edificio.class);
+        Query<Edificio> getQuery = currentSession.createQuery("FROM Edificio", Edificio.class);
         return getQuery.list();
     }
 

@@ -10,7 +10,10 @@ public class Imagen {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Lob
+	@Column(columnDefinition = "LONGBLOB")
     private byte[] imagen;
+
     private Date fecha;
 
 	@ManyToOne

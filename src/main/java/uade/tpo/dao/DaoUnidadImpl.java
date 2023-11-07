@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.DAO;
+import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Unidad;
 
 import java.util.List;
@@ -58,5 +59,12 @@ public class DaoUnidadImpl implements DAO<Unidad> {
         Query theQuery = currentSession.createQuery("delete from reclamos where id=:idUnidad");
         theQuery.setParameter("idUnidad", id);
         theQuery.executeUpdate();
+    }
+
+    public List<Unidad> getUnitsByOccupant(int usuarioId) {
+        String jpql = "SELECT u FROM Unidad u INNER JOIN u.habitantes h WHERE h.id = :usuarioId";
+        return entityManager.createQuery(jpql, Unidad.class)
+                .setParameter("usuarioId", usuarioId)
+                .getResultList();
     }
 }

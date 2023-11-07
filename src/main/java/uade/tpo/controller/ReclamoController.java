@@ -34,131 +34,77 @@ public class ReclamoController {
 
     @Autowired
     private IUnidadService unidadService;
-    
+
     @Autowired
     private IAreaComunService areaComunService;
 
 
     @PostMapping("/reclamo")
-    public ResponseEntity<?> add(@RequestBody ReclamoDTO reclamoDTO){
-    	if(reclamoDTO.getUsuario_id() != null) {
-    		Usuario usuario = usuarioService.findById(reclamoDTO.getUsuarioId());
-    		if(reclamoDTO.getEdificio_id() != null) {
-    			Edificio edificio = edificioService.findById(reclamoDTO.getEdificio_id());
-    			if(usuario != null && edificio != null) {
-    				if(reclamoDTO.getObjetoReclamo() == ObjetoReclamo.AreaComun.name()) {
-	    				if(reclamoDTO.getAreaComun_id() != null) {
-	    					AreaComun areaComun = areaComunService.findById(reclamoDTO.getAreaComun_id());
-	    					if(areaComun != null) {
-	    						if(areaComun.getEdificio().getId() == edificio.getId()) {
-	    		    				List<Unidad>unidadesEdificio = edificio.getUnidades();
-	    		    				for(Unidad unidad : unidadesEdificio) {
-	    		    					if(unidad.getPropietario().getId() == usuario.getId() || unidad.getHabitantes().contains(usuario)) {
-											if(reclamoDTO.getImagenes() != null){
-												List<Imagen> imagenes = new ArrayList<>();
-												/*
-												for (byte[] imagenBytes : reclamoDTO.getImagenes()) {
-													Imagen imagen = new Imagen();
-													imagen.setImagen(imagenBytes);
-													imagenes.add(imagen);
-												}
+    public ResponseEntity<?> add(@RequestBody ReclamoDTO reclamoDTO) {
+        if (reclamoDTO.getUsuario_id() != null) {
+            Usuario usuario = usuarioService.findById(reclamoDTO.getUsuarioId());
+            if (reclamoDTO.getEdificio_id() != null) {
+                Edificio edificio = edificioService.findById(reclamoDTO.getEdificio_id());
+                if (usuario != null && edificio != null) {
+                    if (reclamoDTO.getObjetoReclamo() == ObjetoReclamo.AreaComun.name()) {
+                        if (reclamoDTO.getAreaComun_id() != null) {
+                            AreaComun areaComun = areaComunService.findById(reclamoDTO.getAreaComun_id());
+                            if (areaComun != null) {
+                                if (areaComun.getEdificio().getId() == edificio.getId()) {
+                                    List<Unidad> unidadesEdificio = edificio.getUnidades();
+                                    for (Unidad unidad : unidadesEdificio) {
 
-												 */
-											}
-	    		    						Reclamo reclamo = convertToEntity(reclamoDTO, ObjetoReclamo.AreaComun, usuario, edificio, null, areaComun);
-											//reclamo.setImagenes(imagenes);
-	    		    		                reclamoService.save(reclamo);
-	    		    		                ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
-	    		    		                return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
-	    		    					}
-	    		    					else {
-	    		    						String mensaje = "El Usuario no pertenece al edificio: " ;
-	    		    	                    return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    		    					}
-	    		    				}
-	    		    			}
-	    		    			else {
-	    		    				String mensaje = "El Area Comun no pertenece al edificio: " ;
-	    		                    return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    		    				
-	    		    			}
-	    						
-	    					}
-	    					else if(areaComun == null) {
-	    						String mensaje = "No se encontro ese Area Comun: " + reclamoDTO.getAreaComun_id() ;
-		                        return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    					}
-	    						
-	  
-	    				}
-	    				else if (reclamoDTO.getAreaComun_id() == null) {
-	    					String mensaje = "No fue ingresada el area comun";
-	                        return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    				}
-	    			}
-	    			else if(reclamoDTO.getObjetoReclamo() == ObjetoReclamo.Unidad.name()) {
-	    				if(reclamoDTO.getUnidad_id() != null) {
-	    					Unidad unidad = unidadService.findById(reclamoDTO.getUnidad_id());
-	    					if(unidad != null) {
-	    						if(unidad.getHabitantes().isEmpty()) {
-	    							if(unidad.getPropietario().getId() == reclamoDTO.getUsuarioId()) {
-	    								Reclamo reclamo = convertToEntity(reclamoDTO, ObjetoReclamo.Unidad, usuario, edificio, unidad, null);
-    		    		                reclamoService.save(reclamo);
-    		    		                ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
-    		    		                return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
-	    							}
-	    							else if(unidad.getPropietario().getId() != reclamoDTO.getUsuarioId()) {
-	    								String mensaje = "El usuario: "+reclamoDTO.getUsuarioId() +" no tiene relacion con la unidad: "+ reclamoDTO.getAreaComun_id();
-	    		                        return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    							}
-	    						}
-	    						else {
-	    							if(unidad.getHabitantes().contains(usuario)) {
-	    								Reclamo reclamo = convertToEntity(reclamoDTO, ObjetoReclamo.Unidad, usuario, edificio, unidad, null);
-    		    		                reclamoService.save(reclamo);
-    		    		                ReclamoDTO reclamoDTOoutput = convertToDTO(reclamo);
-    		    		                return new ResponseEntity<>(reclamoDTOoutput, HttpStatus.CREATED);
-	    							}
-	    							else {
-	    								String mensaje = "El usuario: "+reclamoDTO.getUsuarioId() +" no es habitante de la unidad: "+ reclamoDTO.getAreaComun_id();
-	    		                        return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    							}
-	    							
-	    						}
-	    						
-	    					}
-	    					else if(unidad == null) {
-	    						String mensaje = "La unidad no existe: "+ reclamoDTO.getUnidad_id();
-		                        return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    					}
-	    				}
-	    				else if(reclamoDTO.getUnidad_id() == null) {
-	    					String mensaje = "No fue ingresada la unidad: "+ reclamoDTO.getUnidad_id();
-	                        return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-	    				}
-	    				
-	    			}
-    		
-    			}
-    			else if(usuario == null || edificio == null) {
-    				String mensaje = "Uno de los datos no existe";
+                                    }
+                                } else {
+                                    String mensaje = "El Area Comun no pertenece al edificio: ";
+                                    return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+
+                                }
+
+                            } else if (areaComun == null) {
+                                String mensaje = "No se encontro ese Area Comun: " + reclamoDTO.getAreaComun_id();
+                                return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+                            }
+
+
+                        } else if (reclamoDTO.getAreaComun_id() == null) {
+                            String mensaje = "No fue ingresada el area comun";
+                            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+                        }
+                    } else if (reclamoDTO.getObjetoReclamo() == ObjetoReclamo.Unidad.name()) {
+                        if (reclamoDTO.getUnidad_id() != null) {
+                            Unidad unidad = unidadService.findById(reclamoDTO.getUnidad_id());
+                            if (unidad != null) {
+
+
+                            } else if (unidad == null) {
+                                String mensaje = "La unidad no existe: " + reclamoDTO.getUnidad_id();
+                                return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+                            }
+                        } else if (reclamoDTO.getUnidad_id() == null) {
+                            String mensaje = "No fue ingresada la unidad: " + reclamoDTO.getUnidad_id();
+                            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+                        }
+
+                    }
+
+                } else if (usuario == null || edificio == null) {
+                    String mensaje = "Uno de los datos no existe";
                     return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-    			}
-    			
-	    			
-    		}
-    		else {
-    			 String mensaje = "El edificio no fue ingresado";
-                 return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-    		}
-    	}
-    	
-    	
-    	
-    	String mensaje = "Ocurrio un error";
+                }
+
+
+            } else {
+                String mensaje = "El edificio no fue ingresado";
+                return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+            }
+        }
+
+
+        String mensaje = "Ocurrio un error";
         return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
     }
-    
+
 
     @GetMapping("/reclamo")
     public ResponseEntity<?> getAll(@RequestParam(required = false) String estado) {
@@ -169,7 +115,7 @@ public class ReclamoController {
                 .collect(Collectors.toList());
 
         List<ReclamoDTO> reclamoDTOList = new ArrayList<>();
-        for (Reclamo reclamo: reclamoList) {
+        for (Reclamo reclamo : reclamoList) {
             reclamoDTOList.add(this.convertToDTO(reclamo));
         }
 
@@ -189,8 +135,8 @@ public class ReclamoController {
         for (String medida : updateReclamoDTO.getMedidas()) {
             medidaList.add(new Medida(medida, reclamo));
         }
-		List<Imagen> imagenes = new ArrayList<>();
-		if(reclamo.getImagenes() != null){
+        List<Imagen> imagenes = new ArrayList<>();
+        if (reclamo.getImagenes() != null) {
 			/*
 			for (byte[] imagenBytes : reclamo.getImagenes()) {
 				Imagen imagen = new Imagen();
@@ -199,7 +145,7 @@ public class ReclamoController {
 			}
 
 			 */
-		}
+        }
 		/*
 		if(updateReclamoDTO.getImagenes() != null){
 			for (byte[] imagenBytes : reclamo.getImagenes()) {
@@ -208,9 +154,10 @@ public class ReclamoController {
 				imagenes.add(imagen);
 			}
 		}
+
 		 */
-		
-		reclamo.setImagenes(imagenes);
+
+        reclamo.setImagenes(imagenes);
         reclamo.setEstadoReclamo(updateReclamoDTO.getEstadoReclamo());
         reclamo.setMedidas(medidaList);
         reclamoService.update(reclamo.getId(), reclamo);
@@ -219,12 +166,18 @@ public class ReclamoController {
 
     private ReclamoDTO convertToDTO(Reclamo reclamo) {
         return new ReclamoDTO(
-                 reclamo.getTipoReclamo(),
-                reclamo.getDescripcion(), reclamo.getUsuario().getId(),reclamo.getObjetoReclamo().name(),
-                reclamo.getUnidad().getId(), reclamo.getEdificio().getId(),reclamo.getAreaComun().getId() , reclamo.getEstadoReclamo());
+                reclamo.getTipoReclamo(),
+                reclamo.getDescripcion(),
+                reclamo.getUsuario().getId(),
+                reclamo.getObjetoReclamo().name(),
+                reclamo.getUnidad().getId(),
+                reclamo.getEdificio().getId(),
+                reclamo.getAreaComun().getId(),
+                reclamo.getEstadoReclamo(),
+                reclamo.getImagenes());
     }
 
-    private Reclamo convertToEntity(ReclamoDTO reclamoDTO,ObjetoReclamo objetoReclamo ,Usuario usuario, Edificio edificio, Unidad unidad, AreaComun areaComun) {
+    private Reclamo convertToEntity(ReclamoDTO reclamoDTO, ObjetoReclamo objetoReclamo, Usuario usuario, Edificio edificio, Unidad unidad, AreaComun areaComun) {
         return new Reclamo(reclamoDTO.getTipoReclamo(), reclamoDTO.getDescripcion(), usuario, objetoReclamo, unidad, areaComun, edificio);
     }
 }

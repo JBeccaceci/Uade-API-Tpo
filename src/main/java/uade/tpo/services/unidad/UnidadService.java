@@ -13,38 +13,33 @@ public class UnidadService implements IUnidadService {
 	@Autowired
 	private DaoUnidadImpl daoUnidadImpl;
 	
-	public UnidadService() {
-		
-	}
+	public UnidadService() { }
 
 	@Override
 	public List<Unidad> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return daoUnidadImpl.getAll();
 	}
 
 	@Override
 	public Unidad findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		return daoUnidadImpl.findById(id);
 	}
 
 	@Override
-	public void save(Unidad cliente) {
-		// TODO Auto-generated method stub
-		
+	public void save(Unidad unidad) {
+		this.daoUnidadImpl.save(unidad);
 	}
 
 	@Override
-	public void update(int id, Unidad cliente) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void update(int id, Unidad unidad) { }
 
 	@Override
 	public void deleteById(int id) {
-		// TODO Auto-generated method stub
-		
+		daoUnidadImpl.delete(id);
 	}
-	
+
+	public List<Unidad> getUnitsByOccupant(int usuarioId) {
+		return daoUnidadImpl.getUnitsByOccupant(usuarioId);
+	}
+
 }

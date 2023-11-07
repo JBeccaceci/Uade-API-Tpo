@@ -19,11 +19,11 @@ public class ReclamoDTO {
     private Integer edificio_id;
     private Integer areaComun_id;
     private String objetoReclamo;
-    private List<Integer> imagenes;
+    private List<Imagen> imagen;
 
     private EstadoReclamo estadoReclamo;
 
-    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id,String objetoReclamo ,Integer unidad_id, Integer edificio_id,Integer areaComun_id, EstadoReclamo estadoReclamo) {
+    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id, String objetoReclamo, Integer unidad_id, Integer edificio_id, Integer areaComun_id, EstadoReclamo estadoReclamo, List<Imagen> imagen) {
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
@@ -31,13 +31,14 @@ public class ReclamoDTO {
         this.usuario_id = usuario_id;
         this.unidad_id = unidad_id;
         this.edificio_id = edificio_id;
-        this.imagenes = new ArrayList<>();
+        this.imagen = imagen;
         this.estadoReclamo = estadoReclamo;
         this.areaComun_id = areaComun_id;
         this.objetoReclamo = objetoReclamo;
     }
 
     public ReclamoDTO() {
+        this.imagen = new ArrayList<>();
     }
 
     public Integer getUsuario_id() {
@@ -104,12 +105,12 @@ public class ReclamoDTO {
         this.usuario_id = usuario_id;
     }
 
-    public List<Integer> getImagenes() {
-        return imagenes;
+    public List<Imagen> getImagenes() {
+        return imagen;
     }
 
-    public void setImagenes(List<Integer> imagenes) {
-        this.imagenes = imagenes;
+    public void setImagenes(List<Imagen> imagenes) {
+        this.imagen = imagenes;
     }
 
     public EstadoReclamo getEstadoReclamo() {
@@ -120,24 +121,21 @@ public class ReclamoDTO {
         this.estadoReclamo = estadoReclamo;
     }
 
-    
     public Integer getAreaComun_id() {
-		return areaComun_id;
-	}
+        return areaComun_id;
+    }
 
-	public String getObjetoReclamo() {
-		return objetoReclamo;
-	}
+    public String getObjetoReclamo() {
+        return objetoReclamo;
+    }
 
-	@Override
-	public String toString() {
-		return "ReclamoDTO [tipoReclamo=" + tipoReclamo + ", descripcion=" + descripcion + ", creado=" + creado
-				+ ", actualizado=" + actualizado + ", usuario_id=" + usuario_id + ", unidad_id=" + unidad_id
-				+ ", edificio_id=" + edificio_id + ", areaComun_id=" + areaComun_id + ", objetoReclamo=" + objetoReclamo
-				+ ", imagenes=" + imagenes + ", estadoReclamo=" + estadoReclamo + "]";
-	}
-
-
+    @Override
+    public String toString() {
+        return "ReclamoDTO [tipoReclamo=" + tipoReclamo + ", descripcion=" + descripcion + ", creado=" + creado
+                + ", actualizado=" + actualizado + ", usuario_id=" + usuario_id + ", unidad_id=" + unidad_id
+                + ", edificio_id=" + edificio_id + ", areaComun_id=" + areaComun_id + ", objetoReclamo=" + objetoReclamo
+                + ", imagenes=" + imagen + ", estadoReclamo=" + estadoReclamo + "]";
+    }
 
 
 }

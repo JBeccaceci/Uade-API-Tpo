@@ -14,7 +14,6 @@ import uade.tpo.services.unidad.IUnidadService;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api")
 public class EdificioController {
@@ -24,8 +23,7 @@ public class EdificioController {
 	@Autowired
     private IUnidadService unidadService;
 
-    @GetMapping("/edificio")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/edificios")
     public List<EdificioDTO> findAll() {
         List<Edificio> listaEdificios = edificioService.findAll();
         List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();

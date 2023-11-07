@@ -32,6 +32,9 @@ public abstract class Usuario {
     @JoinColumn(name = "unidad_id")
     private Unidad unidad;
 
+    @OneToOne(mappedBy = "propietario", cascade = CascadeType.ALL)
+    private Unidad propietario;
+
     public Usuario(String username, String password, String nombre, String apellido, String dni) {
         this.nombre = nombre;
         this.password = password;
@@ -92,10 +95,6 @@ public abstract class Usuario {
         return reclamos;
     }
 
-    public void setReclamos(List<Reclamo> reclamos) {
-        this.reclamos = reclamos;
-    }
-
     public abstract TipoUsuario getType();
 
     public TipoRole getRole() {
@@ -104,6 +103,17 @@ public abstract class Usuario {
 
     public void setRole(TipoRole role) {
         this.role = role;
+    }
+
+    public void setUnidad(Unidad unidad) {
+        this.unidad = unidad;
+        if (unidad != null && !unidad.getHabitantes().contains(this)) {
+            unidad.setHabitante(this);
+        }
+    }
+
+    public Unidad getUnidad() {
+        return unidad;
     }
 
     @Override
