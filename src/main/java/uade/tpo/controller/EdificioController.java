@@ -35,6 +35,18 @@ public class EdificioController {
 
         return listaEdificioDTOs;
     }
+    
+    @GetMapping("/edificio/{usuarioId}")
+    public List<EdificioDTO> devolverRelacionado(@PathVariable int usuarioId){
+    	List<Edificio> listaEdificiosRelacionados = edificioService.findAllRelacionados(usuarioId);
+        List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();
+        
+        for(Edificio edificio : listaEdificiosRelacionados) {
+        	EdificioDTO edificioDTO = convertToDTO(edificio);
+        	listaEdificioDTOs.add(edificioDTO);
+        }
+        return listaEdificioDTOs;
+    }
 
     @GetMapping("/edificio/{edificioId}")
     public ResponseEntity<?> get(@PathVariable int edificioId) {

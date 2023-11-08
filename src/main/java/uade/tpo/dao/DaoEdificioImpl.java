@@ -62,6 +62,24 @@ public class DaoEdificioImpl implements DAO<Edificio> {
         theQuery.setParameter("idEdificio", id);
         theQuery.executeUpdate();
     }
+    
+    @Override
+    @Transactional
+    public List<Edificio> getEdificiosRelacionados(int usuarioId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        // Utilizamos una consulta HQL para seleccionar los edificios relacionados con el usuario como habitante
+        String hql = "SELECT DISTINCT e FROM Edificio e " +
+                     "INNER JOIN e.unidades u on e.id == u.id " +
+                     "INNER JOIN u.usuarios us on u.id == us.id " +
+                     "WHERE us.id == " + usuarioId + " ";
+
+        Query<Edificio> theQuery = currentSession.createQuery(hql, Edificio.class);
+        theQuery.setParameter("usuarioId", usuarioId);
+
+        return theQuery.getResultList();
+    }
+
 }
 
 

@@ -40,4 +40,10 @@ public class EdificioService implements IEdificioService {
     public void deleteById(int id) {
         daoEdificioImpl.delete(id);
     }
+
+	@Override
+	public List<Edificio> findAllRelacionados(int usuarioId) {
+		// TODO Auto-generated method stub
+		return daoEdificioImpl.getEdificiosRelacionados(usuarioId);
+	}
 }
