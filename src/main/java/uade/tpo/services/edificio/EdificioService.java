@@ -31,19 +31,10 @@ public class EdificioService implements IEdificioService {
     }
 
     @Override
-    public void update(int id, Edificio cliente) {
-    	
-
-    }
+    public void update(int id, Edificio cliente) { }
 
     @Override
     public void deleteById(int id) {
         daoEdificioImpl.delete(id);
     }
-
-	@Override
-	public List<Edificio> findAllRelacionados(int usuarioId) {
-		// TODO Auto-generated method stub
-		return daoEdificioImpl.getEdificiosRelacionados(usuarioId);
-	}
 }
