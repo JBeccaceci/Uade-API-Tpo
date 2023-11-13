@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IEdificioService {
     public List<Edificio> findAll();
+    
 
     public Edificio findById(int id);
 
@@ -14,4 +15,6 @@ public interface IEdificioService {
     public void update(int id, Edificio cliente);
 
     public void deleteById(int id);
+
+	public List<Edificio> findAllRelacionados(int usuarioId);
 }
