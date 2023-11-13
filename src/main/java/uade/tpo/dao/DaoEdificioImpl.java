@@ -63,7 +63,7 @@ public class DaoEdificioImpl implements DAO<Edificio> {
         theQuery.executeUpdate();
     }
     
-    @Override
+    /*@Override
     @Transactional
     public List<Edificio> getEdificiosRelacionados(int usuarioId) {
         Session currentSession = entityManager.unwrap(Session.class);
@@ -78,7 +78,7 @@ public class DaoEdificioImpl implements DAO<Edificio> {
         theQuery.setParameter("usuarioId", usuarioId);
 
         return theQuery.getResultList();
-    }
+    }*/
 
 }
 

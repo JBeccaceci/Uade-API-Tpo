@@ -12,6 +12,6 @@ public interface DAO<T> {
 	void delete(int id) throws Exception;	
 	
 	
-	List<Edificio> getEdificiosRelacionados(int usuarioId);
+	
 }
 
