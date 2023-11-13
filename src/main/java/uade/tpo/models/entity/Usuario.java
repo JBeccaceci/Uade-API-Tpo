@@ -47,7 +47,7 @@ public abstract class Usuario {
     public Usuario() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

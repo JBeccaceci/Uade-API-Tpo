@@ -71,16 +71,30 @@ public class App {
 
     @PostConstruct
     public void init() {
-        // Crear direcciones
-        Direccion direccion1 = new Direccion("Calle 123", 123, "12345");
 
         // Crear edificios
         Edificio edificio1 = new Edificio();
-        edificio1.setNombre("Edificio 1");
-        edificio1.setDireccion(direccion1);
+        edificio1.setNombre("Laminar Plaza");
+        edificio1.setDireccion(new Direccion("Av. Santa Fe", 900, "12345"));
         edificio1.setNumeroPisos(10);
         edificio1.setTieneAscensor(true);
         edificioService.save(edificio1);
+
+        // Crear edificios
+        Edificio edificio2 = new Edificio();
+        edificio2.setNombre("Torre Madero");
+        edificio2.setDireccion(new Direccion("Libertador", 3000, "12345"));
+        edificio2.setNumeroPisos(10);
+        edificio2.setTieneAscensor(true);
+        edificioService.save(edificio2);
+
+        // Crear edificios
+        Edificio edificio3 = new Edificio();
+        edificio3.setNombre("Alvear Palace");
+        edificio3.setDireccion(new Direccion("Reconquista", 23, "12345"));
+        edificio3.setNumeroPisos(10);
+        edificio3.setTieneAscensor(true);
+        edificioService.save(edificio3);
 
 
         /*
@@ -107,6 +121,8 @@ public class App {
         usuarioService.save(inquilino1);
 
         System.out.println("Edificio id" + inquilino1.getUnidad().getEdificio().getId());
+
+        unidadService.getUnitsByOccupant(propietario1.getId(), edificio1.getId());
     }
 
 }

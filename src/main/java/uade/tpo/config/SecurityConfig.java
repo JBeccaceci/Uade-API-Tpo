@@ -8,10 +8,9 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.crypto.SecretKey;
@@ -19,15 +18,12 @@ import javax.crypto.SecretKey;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalAuthentication
+@EnableWebMvc
 public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests(
-				(auth) -> auth.anyRequest().authenticated())
-				.csrf(AbstractHttpConfigurer::disable)
-				.addFilterBefore(jwtAuth(), UsernamePasswordAuthenticationFilter.class);
-		return http.build();
+		return http.cors().disable().build();
 	}
 
 	@Bean
@@ -36,8 +32,8 @@ public class SecurityConfig {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000")
-						.allowedMethods("GET", "POST", "PUT", "DELETE")
+						.allowedOrigins("http://localhost:3000/")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
 						.allowCredentials(true);
 			}
 		};

@@ -2,6 +2,7 @@ package uade.tpo.services.unidad;
 
 import java.util.List;
 
+import uade.tpo.models.UnidadUsuarioDTO;
 import uade.tpo.models.entity.Unidad;
 
 public interface IUnidadService {
@@ -15,5 +16,5 @@ public interface IUnidadService {
 
     public void deleteById(int id);
 
-    public List<Unidad> getUnitsByOccupant(int usuarioId);
+    public List<UnidadUsuarioDTO> getUnitsByOccupant(int usuarioId, int edificioId);
 }

@@ -3,11 +3,9 @@ package uade.tpo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.entity.Edificio;
-import uade.tpo.models.entity.Unidad;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.unidad.IUnidadService;
 
@@ -27,7 +25,7 @@ public class EdificioController {
     public List<EdificioDTO> findAll() {
         List<Edificio> listaEdificios = edificioService.findAll();
         List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();
-
+        //System.out.println(listaEdificios.toString());
         for (Edificio edificio : listaEdificios) {
             EdificioDTO edificioDTO = convertToDTO(edificio);
             listaEdificioDTOs.add(edificioDTO);
@@ -90,7 +88,7 @@ public class EdificioController {
     }
 
     private EdificioDTO convertToDTO(Edificio edificio) {
-        return new EdificioDTO(edificio.getNombre(), edificio.getDireccion(), edificio.getNumeroPisos(), edificio.isTieneAscensor());
+        return new EdificioDTO(edificio.getId(), edificio.getNombre(), edificio.getDireccion(), edificio.getNumeroPisos(), edificio.isTieneAscensor());
     }
 
     private Edificio convertToEntity(EdificioDTO edificioDTO) {

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uade.tpo.dao.DaoUnidadImpl;
+import uade.tpo.models.UnidadUsuarioDTO;
 import uade.tpo.models.entity.Unidad;
 
 @Service
@@ -38,8 +39,8 @@ public class UnidadService implements IUnidadService {
 		daoUnidadImpl.delete(id);
 	}
 
-	public List<Unidad> getUnitsByOccupant(int usuarioId) {
-		return daoUnidadImpl.getUnitsByOccupant(usuarioId);
+	public List<UnidadUsuarioDTO> getUnitsByOccupant(int usuarioId, int edificioId) {
+		return daoUnidadImpl.getUnitsByOccupant(usuarioId, edificioId);
 	}
 
 }

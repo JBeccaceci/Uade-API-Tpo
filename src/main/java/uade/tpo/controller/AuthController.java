@@ -16,7 +16,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000/")
 public class AuthController {
 
 	private final int EXPIRATION_TIME_IN_MIN = 100;
@@ -33,8 +33,10 @@ public class AuthController {
 		if (user != null) {
 			String token = Jwts.builder()
 					.setSubject(credentials.getUsername())
+					.setId(user.getId().toString())
 					.setIssuedAt(new Date())
 					.claim("rol", user.getRole())
+					.claim("type", user.getType())
 					.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
 					.signWith(secretKey, SignatureAlgorithm.HS256).compact();
 

@@ -7,9 +7,11 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.DAO;
+import uade.tpo.models.UnidadUsuarioDTO;
 import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Unidad;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -61,10 +63,26 @@ public class DaoUnidadImpl implements DAO<Unidad> {
         theQuery.executeUpdate();
     }
 
-    public List<Unidad> getUnitsByOccupant(int usuarioId) {
-        String jpql = "SELECT u FROM Unidad u INNER JOIN u.habitantes h WHERE h.id = :usuarioId";
-        return entityManager.createQuery(jpql, Unidad.class)
-                .setParameter("usuarioId", usuarioId)
-                .getResultList();
+    public List<UnidadUsuarioDTO> getUnitsByOccupant(int usuarioId, int edificioId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        //  Selecciono todas las unidades relacionadas al usuario y al edificio
+        String hql = "SELECT uni.id, uni.edificio.nombre " +
+                "FROM Usuario user " +
+                "INNER JOIN user.unidad uni " +
+                "WITH user.id = :id " +
+                "AND uni.edificio.id = :edificioId";
+
+        Query query = currentSession.createQuery(hql);
+        query.setParameter("id", usuarioId);
+        query.setParameter("edificioId", edificioId);
+
+        List<Object[]> results = query.list();
+
+        List<UnidadUsuarioDTO> userResults = new ArrayList<>();
+        for (Object[] result : results) {
+            userResults.add(new UnidadUsuarioDTO((Integer) result[0], (String) result[1]));
+        }
+        return userResults;
     }
 }

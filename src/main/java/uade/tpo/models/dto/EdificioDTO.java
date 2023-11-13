@@ -1,29 +1,21 @@
 package uade.tpo.models.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
 import uade.tpo.models.entity.Direccion;
-import uade.tpo.models.entity.Unidad;
 
 public class EdificioDTO {
+	private Integer id;
     private String nombre;
     private Direccion direccion;
     private int numeroPisos;
     private boolean tieneAscensor;
 
-    @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
-    private List<Unidad> unidades;
-
-	public EdificioDTO(String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
+	public EdificioDTO(Integer id, String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
 		super();
+		this.id = id;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.numeroPisos = numeroPisos;
 		this.tieneAscensor = tieneAscensor;
-		this.unidades = new ArrayList<>();
 	}
 
 	public EdificioDTO() {
@@ -62,20 +54,18 @@ public class EdificioDTO {
 		this.tieneAscensor = tieneAscensor;
 	}
 
-	public List<Unidad> getUnidades() {
-		return unidades;
-	}
-
-	public void setUnidades(List<Unidad> unidades) {
-		this.unidades = unidades;
+	public Integer getId() {
+		return id;
 	}
 
 	@Override
 	public String toString() {
-		return "EdificioDTO [nombre=" + nombre + ", direccion=" + direccion + ", numeroPisos=" + numeroPisos
-				+ ", tieneAscensor=" + tieneAscensor + ", unidades=" + unidades + "]";
+		return "EdificioDTO{" +
+				"id='" + id + '\'' +
+				", nombre='" + nombre + '\'' +
+				", direccion=" + direccion +
+				", numeroPisos=" + numeroPisos +
+				", tieneAscensor=" + tieneAscensor +
+				'}';
 	}
-
-    
-
 }

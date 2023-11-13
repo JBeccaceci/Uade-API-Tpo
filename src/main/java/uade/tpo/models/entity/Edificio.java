@@ -76,9 +76,20 @@ public class Edificio {
 		return id;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "Edificio [nombre=" + nombre + ", direccion=" + direccion + ", numeroPisos=" + numeroPisos
-				+ ", tieneAscensor=" + tieneAscensor + ", unidades=" + unidades + "]";
+		return "Edificio{" +
+				"id=" + id +
+				", nombre='" + nombre + '\'' +
+				", direccion=" + direccion +
+				", numeroPisos=" + numeroPisos +
+				", tieneAscensor=" + tieneAscensor +
+				", unidades=" + unidades +
+				", reclamos=" + reclamos +
+				'}';
 	}
 }

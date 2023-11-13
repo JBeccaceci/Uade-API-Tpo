@@ -6,16 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
+import uade.tpo.config.JWTAuthInfo;
+import uade.tpo.models.UnidadUsuarioDTO;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.unidad.IUnidadService;
 import uade.tpo.services.usuario.IUsuarioService;
@@ -23,7 +19,6 @@ import uade.tpo.models.dto.UnidadDTO;
 import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Unidad;
 import uade.tpo.models.entity.Usuario;
-
 
 @RestController
 @RequestMapping("/api")
@@ -35,7 +30,7 @@ public class UnidadController {
     @Autowired
     private IUsuarioService usuarioService;
 
-    @GetMapping("/unidad")
+    @GetMapping("/unidades")
     public List<UnidadDTO> findAll() {
         List<Unidad> listaUnidades = unidadService.findAll();
         List<UnidadDTO> listaUnidadDTOs = new ArrayList<>();
@@ -46,6 +41,13 @@ public class UnidadController {
         }
 
         return listaUnidadDTOs;
+    }
+
+    @GetMapping("/unidad")
+    public List<UnidadUsuarioDTO> getByUserAndBuilding(@RequestParam(name = "edificioId") Integer edificioId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        JWTAuthInfo jwtAuthInfo = (JWTAuthInfo) authentication.getPrincipal();
+        return unidadService.getUnitsByOccupant(Integer.parseInt(jwtAuthInfo.getUserId()), edificioId);
     }
 
     @GetMapping("/unidad/{unidadId}")
@@ -61,7 +63,7 @@ public class UnidadController {
         return new ResponseEntity<>(unidadDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/unidad")
+    @PostMapping("/unidad") // TODO: REFACTOR
     public ResponseEntity<?> add(@RequestBody UnidadDTO unidadDTO) {
 		Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
         if (edificio == null) {
@@ -115,6 +117,15 @@ public class UnidadController {
     }
 
     private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio) {
+        /*
+        Unidad unidad1 = new Unidad();
+        unidad1.setPropietario(propietario1);   // TODO: No puede existir una unidad sin antes un propietario
+        unidad1.setEdificio(edificio1);         // TODO: No puede existir una unidad sin antes un edificio
+        unidad1.getHabitantes().add(propietario1);
+        propietario1.setUnidad(unidad1);
+        unidadService.save(unidad1);
+         */
+
         Unidad unidad = new Unidad();
         unidad.setDpto(unidadDTO.getDpto());
         unidad.setPiso(unidadDTO.getPiso());

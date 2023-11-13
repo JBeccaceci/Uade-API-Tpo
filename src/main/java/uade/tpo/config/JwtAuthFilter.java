@@ -35,12 +35,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = extractJwtFromRequest(request);
 
             if (token != null && validateToken(token)) {
-                String username = extractUsernameFromToken(token);
+                JWTAuthInfo principal = this.getPrincipal(token);
                 List<GrantedAuthority> authorities = extractRoleFromToken(token);
 
-                if (username != null) {
+                if (principal != null) {
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                            username, null, authorities);
+                            principal, null, authorities);
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
@@ -90,29 +90,31 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         return expirationDate != null && !expirationDate.before(new Date());
     }
 
-    public String extractUsernameFromToken(String token) {
-        try {
-            Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
-            return claims.getSubject();
-        } catch (Exception e) {
-            System.out.println("extractUsernameFromToken error: " + e.getMessage());
-            return null;
-        }
-    }
-
     private List<GrantedAuthority> extractRoleFromToken(String token) {
         try {
             Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
 
-            String rol = claims.get("rol", String.class);
+            String  rol = claims.get("rol", String.class);
 
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(rol));
-
             return authorities;
-
         } catch (Exception e) {
             return null;
         }
     }
+
+    private JWTAuthInfo getPrincipal(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
+            String username = claims.getSubject();
+            String userId = claims.getId();
+            String role = claims.get("rol", String.class);
+            String type = claims.get("type", String.class);
+            return new JWTAuthInfo(username, userId, role, type);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
