@@ -28,12 +28,12 @@ public abstract class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
 
-    @ManyToOne
-    @JoinColumn(name = "unidad_id")
+    @ManyToMany(mappedBy = "propietario", cascade = CascadeType.ALL)
     private Unidad unidad;
-
-    @OneToOne(mappedBy = "propietario", cascade = CascadeType.ALL)
-    private Unidad propietario;
+    
+    @ManyToMany
+    @JoinTable(name = "Usuario_Unidad", joinColumns = @JoinColumn(name = "usuario_FK_id"), inverseJoinColumns = @JoinColumn(name = "unidad_FK_id"))
+    private List<Unidad> unidades = new ArrayList<>();
 
     public Usuario(String username, String password, String nombre, String apellido, String dni) {
         this.nombre = nombre;
@@ -103,17 +103,6 @@ public abstract class Usuario {
 
     public void setRole(TipoRole role) {
         this.role = role;
-    }
-
-    public void setUnidad(Unidad unidad) {
-        this.unidad = unidad;
-        if (unidad != null && !unidad.getHabitantes().contains(this)) {
-            unidad.setHabitante(this);
-        }
-    }
-
-    public Unidad getUnidad() {
-        return unidad;
     }
 
     @Override

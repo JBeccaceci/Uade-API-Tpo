@@ -17,6 +17,7 @@ import uade.tpo.services.unidad.IUnidadService;
 import uade.tpo.services.usuario.IUsuarioService;
 import uade.tpo.models.dto.UnidadDTO;
 import uade.tpo.models.entity.Edificio;
+import uade.tpo.models.entity.Propietario;
 import uade.tpo.models.entity.Unidad;
 import uade.tpo.models.entity.Usuario;
 
@@ -76,7 +77,7 @@ public class UnidadController {
         	String mensaje = "usuario not found: " + unidadDTO.getEdificio_id();
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
-        Unidad nuevaUnidad = convertToEntity(unidadDTO, edificio);
+        Unidad nuevaUnidad = convertToEntity(unidadDTO, edificio, usuario);
         unidadService.save(nuevaUnidad);
         return new ResponseEntity<>(nuevaUnidad, HttpStatus.CREATED);
     }
@@ -90,7 +91,7 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        Unidad unidadToUpdate = convertToEntity(unidadDTO,unidadOld.getEdificio());//Revisar si el getEdificio() esta bien 
+        Unidad unidadToUpdate = convertToEntity(unidadDTO,unidadOld.getEdificio(),unidadOld.getPropietario());//Revisar si el getEdificio() esta bien 
         unidadService.update(unidadId, unidadToUpdate);
 
         UnidadDTO unidadUpdatedDTO = convertToDTO(unidadToUpdate);
@@ -117,7 +118,7 @@ public class UnidadController {
         return unidadDTO;
     }
 
-    private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio) {
+    private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio, Usuario propietario) {
         /*
         Unidad unidad1 = new Unidad();
         unidad1.setPropietario(propietario1);   // TODO: No puede existir una unidad sin antes un propietario
@@ -131,6 +132,7 @@ public class UnidadController {
         unidad.setDpto(unidadDTO.getDpto());
         unidad.setPiso(unidadDTO.getPiso());
         unidad.setEdificio(edificio);
+        unidad.setPropietario(propietario);        
         return unidad;
     }
 }
