@@ -33,11 +33,12 @@ public class Unidad {
         this.reclamos = new ArrayList<>();
     }
 
-    public Unidad(List<Usuario> habitantes, Edificio edificio, int dpto, int piso) {
-        this.habitantes = habitantes;
+    public Unidad(Edificio edificio, int dpto, int piso) {
         this.edificio = edificio;
         this.dpto = dpto;
         this.piso = piso;
+        this.habitantes = new ArrayList<>();
+        this.reclamos = new ArrayList<>();
     }
 
     public int getId() {

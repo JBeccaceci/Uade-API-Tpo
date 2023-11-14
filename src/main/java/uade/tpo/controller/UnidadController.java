@@ -67,7 +67,8 @@ public class UnidadController {
     public ResponseEntity<?> add(@RequestBody UnidadDTO unidadDTO) {
 		Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
         if (edificio == null) {
-        	String mensaje = "edificio not found: " + unidadDTO.getEdificio_id();
+        	String mensaje ="esta es la unidad dto " + unidadDTO.getUsuario_id();
+        	/*String mensaje = "edificio not found: " + unidadDTO.getEdificio_id();*/
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
         Usuario usuario = usuarioService.findById(unidadDTO.getUsuario_id());
@@ -112,7 +113,7 @@ public class UnidadController {
     }
 
     private UnidadDTO convertToDTO(Unidad unidad) {
-        UnidadDTO unidadDTO = new UnidadDTO(unidad.getDpto(),unidad.getPiso());
+        UnidadDTO unidadDTO = new UnidadDTO(unidad.getPropietario().getId(),unidad.getEdificio().getId(),unidad.getDpto(),unidad.getPiso());
         return unidadDTO;
     }
 
