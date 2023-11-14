@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import uade.tpo.models.entity.*;
+import uade.tpo.models.types.TipoRole;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.unidad.IUnidadService;
 import uade.tpo.services.usuario.IUsuarioService;
@@ -27,47 +28,6 @@ public class App {
         SpringApplication.run(App.class, args);
     }
 
-    /*
-    @PostConstruct
-    public void init() {
-        Inquilino inquilino1 = new Inquilino("juan1", "123456", "Juan", "Perez", "40247775", new Date(), 5000, 100);
-        usuarioService.save(inquilino1);
-        Inquilino inquilino2 = new Inquilino("pedro1", "123456", "Pedro", "Perez", "40247775", new Date(), 2000, 300);
-        usuarioService.save(inquilino2);
-
-        Propietario propietario1 = new Propietario("pedro4", "123456", "Pedro", "Perez", "40247775");
-        usuarioService.save(propietario1);
-        Propietario propietario2 = new Propietario("juan5", "123456", "Juan", "Perez", "40247775");
-        usuarioService.save(propietario2);
-
-        // Crear direcciones
-        Direccion direccion1 = new Direccion("Calle 123", 123, "12345");
-        Direccion direccion2 = new Direccion("Avenida XYZ", 123, "67890");
-
-
-        // Crear edificios
-        Edificio edificio1 = new Edificio();
-        edificio1.setNombre("Edificio 1");
-        edificio1.setDireccion(direccion1);
-        edificio1.setNumeroPisos(10);
-        edificio1.setTieneAscensor(true);
-        edificioService.save(edificio1);
-
-        // Crear unidades
-        Unidad unidad1 = new Unidad();
-        unidad1.setPropietario(propietario1);
-        unidad1.setHabitantes(Collections.singletonList(inquilino1));
-        unidad1.setEdificio(edificio1);
-        unidadService.save(unidad1);
-
-        Edificio edificio2 = new Edificio();
-        edificio2.setNombre("Edificio 2");
-        edificio2.setDireccion(direccion2);
-        edificio2.setNumeroPisos(5);
-        edificio2.setTieneAscensor(false);
-        edificioService.save(edificio2);
-    }
-     */
 
     @PostConstruct
     public void init() {
@@ -104,7 +64,8 @@ public class App {
             3. Unidades (porque necesitan un propietario y edificio)
             4. Inquilinos (porque necesitan unidades)
          */
-        Propietario propietario1 = new Propietario("pedro4", "123456", "Pedro", "Perez", "40247775");
+        Propietario propietario1 = new Propietario("pedro4", "123456", "Pedro", "Perez", "40247775", TipoRole.ADMIN);
+        Propietario propietario2 = new Propietario("Juan Maria", "123456", "Juan", "Beccaceci", "40247776", TipoRole.ADMIN);
         //usuarioService.save(propietario1);
 
         // Crear unidades
@@ -114,15 +75,20 @@ public class App {
         unidad1.getHabitantes().add(propietario1);
         propietario1.setUnidad(unidad1);
         unidadService.save(unidad1);
+        System.out.println(unidad1.toString());
 
+        // Crear unidades
+        Unidad unidad2 = new Unidad();
+        unidad2.setPropietario(propietario2);   // TODO: No puede existir una unidad sin antes un propietario
+        unidad2.setEdificio(edificio1);         // TODO: No puede existir una unidad sin antes un edificio
+        unidad2.getHabitantes().add(propietario2);
+        propietario2.setUnidad(unidad2);
+        unidadService.save(unidad2);
+        System.out.println(unidad2.toString());
 
-        Inquilino inquilino1 = new Inquilino("juan1", "123456", "Juan", "Perez", "40247775", new Date(), 5000, 100);
+        Inquilino inquilino1 = new Inquilino("juan1", "123456", "Juan", "Perez", "40247775", TipoRole.ADMIN, new Date(), 5000, 100);
         inquilino1.setUnidad(unidad1); // TODO: Un inquilino si o si debe tener una propiedad asignada
         usuarioService.save(inquilino1);
-
-        System.out.println("Edificio id" + inquilino1.getUnidad().getEdificio().getId());
-
-        unidadService.getUnitsByOccupant(propietario1.getId(), edificio1.getId());
     }
 
 }

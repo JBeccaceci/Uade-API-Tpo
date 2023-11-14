@@ -9,9 +9,6 @@ public interface DAO<T> {
 	T findById(int id);
 	void save(T persistible) throws Exception;
 	void update(T persistible) throws Exception;
-	void delete(int id) throws Exception;	
-	
-	
-	List<Edificio> getEdificiosRelacionados(int usuarioId);
+	void delete(int id) throws Exception;
 }
 

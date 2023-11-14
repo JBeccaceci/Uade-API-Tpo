@@ -2,6 +2,7 @@ package uade.tpo.models.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import uade.tpo.models.types.TipoRole;
 import uade.tpo.models.types.TipoUsuario;
 
 @Entity
@@ -11,8 +12,8 @@ public class Propietario extends Usuario {
     public Propietario() {
     }
 
-	public Propietario(String username, String password, String nombre, String apellido, String dni) {
-		super(username, password, nombre, apellido, dni);
+	public Propietario(String username, String password, String nombre, String apellido, String dni, TipoRole role) {
+		super(username, password, nombre, apellido, dni, role);
 	}
 
 	@Override

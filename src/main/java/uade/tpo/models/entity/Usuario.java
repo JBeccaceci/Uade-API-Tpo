@@ -23,6 +23,8 @@ public abstract class Usuario {
     private String apellido;
     private String dni;
     private String username;
+
+    @Enumerated(EnumType.STRING)
     private TipoRole role;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
@@ -35,13 +37,14 @@ public abstract class Usuario {
     @OneToOne(mappedBy = "propietario", cascade = CascadeType.ALL)
     private Unidad propietario;
 
-    public Usuario(String username, String password, String nombre, String apellido, String dni) {
+    public Usuario(String username, String password, String nombre, String apellido, String dni, TipoRole role) {
         this.nombre = nombre;
         this.password = password;
         this.apellido = apellido;
         this.dni = dni;
         this.username = username;
         this.reclamos = new ArrayList<>();
+        this.role = role;
     }
 
     public Usuario() {

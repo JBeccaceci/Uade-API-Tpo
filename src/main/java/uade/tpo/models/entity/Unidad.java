@@ -15,14 +15,14 @@ public class Unidad {
     private List<Usuario> habitantes; // ok
 
     @ManyToOne
-    @JoinColumn(name = "edificio_id",  unique = true, nullable = false)
+    @JoinColumn(name = "edificio_id", nullable = false)
     private Edificio edificio;
 
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
 
     @OneToOne
-    @JoinColumn(name = "propietario_id", unique = true, nullable = false)
+    @JoinColumn(name = "propietario_id", nullable = false)
     private Usuario propietario;
 
     private int dpto;

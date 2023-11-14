@@ -2,6 +2,7 @@ package uade.tpo.models.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import uade.tpo.models.types.TipoRole;
 import uade.tpo.models.types.TipoUsuario;
 
 import java.util.Date;
@@ -16,8 +17,8 @@ public class Inquilino extends Usuario {
     public Inquilino() {
     }
 
-    public Inquilino(String username, String password, String nombre,String apellido, String dni, Date vencimiento, float ingreso, float montoAlquiler) {
-        super(username, password, nombre, apellido, dni);
+    public Inquilino(String username, String password, String nombre, String apellido, String dni, TipoRole role, Date vencimiento, float ingreso, float montoAlquiler) {
+        super(username, password, nombre, apellido, dni, role);
         this.vencimiento = vencimiento;
         this.ingreso = ingreso;
         this.montoAlquiler = montoAlquiler;

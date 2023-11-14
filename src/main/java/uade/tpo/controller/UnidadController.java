@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -63,21 +64,28 @@ public class UnidadController {
         return new ResponseEntity<>(unidadDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/unidad") // TODO: REFACTOR
+    @PostMapping("/unidad")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> add(@RequestBody UnidadDTO unidadDTO) {
-		Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        JWTAuthInfo jwtAuthInfo = (JWTAuthInfo) authentication.getPrincipal();
+
+        Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
         if (edificio == null) {
-        	String mensaje = "edificio not found: " + unidadDTO.getEdificio_id();
+            String mensaje = "edificio not found: " + unidadDTO.getEdificio_id();
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
-        Usuario usuario = usuarioService.findById(unidadDTO.getUsuario_id());
-        if(usuario == null) {
-        	String mensaje = "usuario not found: " + unidadDTO.getEdificio_id();
+        Usuario propietario = usuarioService.findById(Integer.parseInt(jwtAuthInfo.getUserId()));
+        if(propietario == null) {
+            String mensaje = "usuario not found: " + unidadDTO.getEdificio_id();
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
-        Unidad nuevaUnidad = convertToEntity(unidadDTO, edificio);
-        unidadService.save(nuevaUnidad);
-        return new ResponseEntity<>(nuevaUnidad, HttpStatus.CREATED);
+
+        Unidad unidad2 = new Unidad();
+        unidad2.setPropietario(propietario);
+        unidad2.setEdificio(edificio);
+        unidadService.save(unidad2);
+        return new ResponseEntity<>(unidad2, HttpStatus.CREATED);
     }
 
     @PutMapping("/unidad/{unidadId}")

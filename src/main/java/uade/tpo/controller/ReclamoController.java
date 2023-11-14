@@ -66,7 +66,6 @@ public class ReclamoController {
                                 return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
                             }
 
-
                         } else if (reclamoDTO.getAreaComun_id() == null) {
                             String mensaje = "No fue ingresada el area comun";
                             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
