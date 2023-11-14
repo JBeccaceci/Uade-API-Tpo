@@ -72,7 +72,7 @@ public class UnidadController {
 
         Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
         if (edificio == null) {
-            String mensaje = "edificio not found: " + unidadDTO.getEdificio_id();
+        	String mensaje ="esta es la unidad dto " + unidadDTO.getUsuario_id();
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
         Usuario propietario = usuarioService.findById(Integer.parseInt(jwtAuthInfo.getUserId()));
@@ -97,7 +97,7 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        Unidad unidadToUpdate = convertToEntity(unidadDTO,unidadOld.getEdificio());//Revisar si el getEdificio() esta bien 
+        Unidad unidadToUpdate = convertToEntity(unidadDTO,unidadOld.getEdificio(),unidadOld.getPropietario());//Revisar si el getEdificio() esta bien 
         unidadService.update(unidadId, unidadToUpdate);
 
         UnidadDTO unidadUpdatedDTO = convertToDTO(unidadToUpdate);
@@ -120,11 +120,11 @@ public class UnidadController {
     }
 
     private UnidadDTO convertToDTO(Unidad unidad) {
-        UnidadDTO unidadDTO = new UnidadDTO(unidad.getDpto(),unidad.getPiso());
+        UnidadDTO unidadDTO = new UnidadDTO(unidad.getPropietario().getId(),unidad.getEdificio().getId(),unidad.getDpto(),unidad.getPiso());
         return unidadDTO;
     }
 
-    private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio) {
+    private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio, Usuario propietario) {
         /*
         Unidad unidad1 = new Unidad();
         unidad1.setPropietario(propietario1);   // TODO: No puede existir una unidad sin antes un propietario
@@ -138,6 +138,7 @@ public class UnidadController {
         unidad.setDpto(unidadDTO.getDpto());
         unidad.setPiso(unidadDTO.getPiso());
         unidad.setEdificio(edificio);
+        unidad.setPropietario(propietario);        
         return unidad;
     }
 }

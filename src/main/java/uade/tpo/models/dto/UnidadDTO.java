@@ -1,32 +1,33 @@
 package uade.tpo.models.dto;
 
 public class UnidadDTO {
-    private Integer usuario_id;
-    private Integer edificio_id;
+    private int usuario_id;
+    private int edificio_id;
     private int dpto;
     private int piso;
 
-	public UnidadDTO(int dpto, int piso) {
-		/*this.usuario_id = usuario_id;
-		this.edificio_id = edificio_id;*REVISAR*/ 
+	public UnidadDTO(int usuario_id,int edificio_id,int dpto, int piso) {
+		this.usuario_id= usuario_id;
+		this.edificio_id = edificio_id;
 		this.dpto = dpto;
 		this.piso = piso;
 	}
 	
-	
-	public Integer getUsuario_id() {
+	public UnidadDTO() {	
+	}
+	public int getUsuario_id() {
 		return usuario_id;
 	}
 
-	public void setUsuario_id(Integer usuario_id) {
+	public void setUsuario_id(int usuario_id) {
 		this.usuario_id = usuario_id;
 	}
 
-	public Integer getEdificio_id() {
+	public int getEdificio_id() {
 		return edificio_id;
 	}
 
-	public void setEdificio_id(Integer edificio_id) {
+	public void setEdificio_id(int edificio_id) {
 		this.edificio_id = edificio_id;
 	}
 

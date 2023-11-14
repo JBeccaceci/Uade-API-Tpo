@@ -64,13 +64,13 @@ public class App {
             3. Unidades (porque necesitan un propietario y edificio)
             4. Inquilinos (porque necesitan unidades)
          */
-        Propietario propietario1 = new Propietario("pedro4", "123456", "Pedro", "Perez", "40247775", TipoRole.ADMIN);
-        Propietario propietario2 = new Propietario("Juan Maria", "123456", "Juan", "Beccaceci", "40247776", TipoRole.ADMIN);
+        Usuario propietario1 = new Usuario("pedro4", "123456", "Pedro", "Perez", "40247775", TipoRole.PROPIETARIO);
+        Usuario propietario2 = new Usuario("Juan Maria", "123456", "Juan", "Beccaceci", "40247776", TipoRole.PROPIETARIO);
         //usuarioService.save(propietario1);
 
         // Crear unidades
         Unidad unidad1 = new Unidad();
-        unidad1.setPropietario(propietario1);   // TODO: No puede existir una unidad sin antes un propietario
+        unidad1.setHabitante(propietario1);   // TODO: No puede existir una unidad sin antes un propietario
         unidad1.setEdificio(edificio1);         // TODO: No puede existir una unidad sin antes un edificio
         unidad1.getHabitantes().add(propietario1);
         propietario1.setUnidad(unidad1);
@@ -79,14 +79,14 @@ public class App {
 
         // Crear unidades
         Unidad unidad2 = new Unidad();
-        unidad2.setPropietario(propietario2);   // TODO: No puede existir una unidad sin antes un propietario
+        unidad2.setHabitante(propietario2);   // TODO: No puede existir una unidad sin antes un propietario
         unidad2.setEdificio(edificio1);         // TODO: No puede existir una unidad sin antes un edificio
         unidad2.getHabitantes().add(propietario2);
         propietario2.setUnidad(unidad2);
         unidadService.save(unidad2);
         System.out.println(unidad2.toString());
 
-        Inquilino inquilino1 = new Inquilino("juan1", "123456", "Juan", "Perez", "40247775", TipoRole.ADMIN, new Date(), 5000, 100);
+        Usuario inquilino1 = new Usuario("juan1", "123456", "Juan", "Perez", "40247775", TipoRole.INQUILINO);
         inquilino1.setUnidad(unidad1); // TODO: Un inquilino si o si debe tener una propiedad asignada
         usuarioService.save(inquilino1);
     }

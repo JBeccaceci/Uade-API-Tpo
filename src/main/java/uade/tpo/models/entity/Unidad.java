@@ -11,7 +11,7 @@ public class Unidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Usuario> habitantes; // ok
 
     @ManyToOne
@@ -21,10 +21,6 @@ public class Unidad {
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
 
-    @OneToOne
-    @JoinColumn(name = "propietario_id", nullable = false)
-    private Usuario propietario;
-
     private int dpto;
     private int piso;
 
@@ -33,11 +29,12 @@ public class Unidad {
         this.reclamos = new ArrayList<>();
     }
 
-    public Unidad(List<Usuario> habitantes, Edificio edificio, int dpto, int piso) {
-        this.habitantes = habitantes;
+    public Unidad(Edificio edificio, int dpto, int piso) {
         this.edificio = edificio;
         this.dpto = dpto;
         this.piso = piso;
+        this.habitantes = new ArrayList<>();
+        this.reclamos = new ArrayList<>();
     }
 
     public int getId() {
@@ -72,17 +69,9 @@ public class Unidad {
         this.piso = piso;
     }
 
-    public Usuario getPropietario() {
-		return propietario;
-	}
-
 	public List<Reclamo> getReclamos() {
 		return reclamos;
 	}
-
-    public void setPropietario(Usuario propietario) {
-        this.propietario = propietario;
-    }
 
     public void setHabitantes(List<Usuario> habitantes) {
         this.habitantes = habitantes;

@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "tipo_usuario", discriminatorType = DiscriminatorType.STRING)
 @Table(name = "usuarios")
-public abstract class Usuario {
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -30,12 +28,9 @@ public abstract class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Reclamo> reclamos;
 
-    @ManyToOne
-    @JoinColumn(name = "unidad_id")
-    private Unidad unidad;
-
-    @OneToOne(mappedBy = "propietario", cascade = CascadeType.ALL)
-    private Unidad propietario;
+    @ManyToMany
+    @JoinTable(name = "Usuario_Unidad", joinColumns = @JoinColumn(name = "usuario_FK_id"), inverseJoinColumns = @JoinColumn(name = "unidad_FK_id"))
+    private List<Unidad> unidades = new ArrayList<>();
 
     public Usuario(String username, String password, String nombre, String apellido, String dni, TipoRole role) {
         this.nombre = nombre;
@@ -98,8 +93,6 @@ public abstract class Usuario {
         return reclamos;
     }
 
-    public abstract TipoUsuario getType();
-
     public TipoRole getRole() {
         return role;
     }
@@ -109,14 +102,10 @@ public abstract class Usuario {
     }
 
     public void setUnidad(Unidad unidad) {
-        this.unidad = unidad;
+        this.unidades.add(unidad);
         if (unidad != null && !unidad.getHabitantes().contains(this)) {
-            unidad.setHabitante(this);
+            unidad.getHabitantes().add(this);
         }
-    }
-
-    public Unidad getUnidad() {
-        return unidad;
     }
 
     @Override

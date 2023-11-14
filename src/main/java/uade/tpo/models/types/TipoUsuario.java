@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public enum TipoUsuario {
     PROPIETARIO("PROPIETARIO"),
-    INQUILINO("PROPIETARIO");
+    INQUILINO("INQUILINO");
 
     private String name;
 

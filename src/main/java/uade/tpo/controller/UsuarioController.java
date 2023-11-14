@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import uade.tpo.models.dto.InquilinoDTO;
 import uade.tpo.models.dto.PropietarioDTO;
 import uade.tpo.models.dto.UsuarioDto;
-import uade.tpo.models.entity.Inquilino;
-import uade.tpo.models.entity.Propietario;
 import uade.tpo.models.entity.Usuario;
 import uade.tpo.models.types.TipoUsuario;
 import uade.tpo.services.usuario.IUsuarioService;

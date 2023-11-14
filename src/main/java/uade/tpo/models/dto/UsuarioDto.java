@@ -26,6 +26,9 @@ public class UsuarioDto {
         this.montoAlquiler = montoAlquiler;
         this.tipoUsuario = tipoUsuario;
     }
+    
+    public UsuarioDto() {
+    }
 
     public String getUsername() {
         return username;
