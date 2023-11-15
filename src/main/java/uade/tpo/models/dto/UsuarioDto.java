@@ -1,5 +1,6 @@
 package uade.tpo.models.dto;
 
+import uade.tpo.models.types.TipoRole;
 import uade.tpo.models.types.TipoUsuario;
 
 import java.util.Date;
@@ -13,17 +14,15 @@ public class UsuarioDto {
     private Date vencimiento;
     private float ingreso;
     private float montoAlquiler;
-    private TipoUsuario tipoUsuario;
+    private TipoRole tipoUsuario;
 
-    public UsuarioDto(String username, String password, String nombre, String apellido, String dni, Date vencimiento, float ingreso, float montoAlquiler, TipoUsuario tipoUsuario) {
+    public UsuarioDto(String username, String password, String nombre, String apellido, String dni,  TipoRole tipoUsuario) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
-        this.vencimiento = vencimiento;
-        this.ingreso = ingreso;
-        this.montoAlquiler = montoAlquiler;
+
         this.tipoUsuario = tipoUsuario;
     }
     
@@ -94,11 +93,11 @@ public class UsuarioDto {
         this.montoAlquiler = montoAlquiler;
     }
 
-    public TipoUsuario getTipoUsuario() {
+    public TipoRole getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+    public void setTipoUsuario(TipoRole tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
