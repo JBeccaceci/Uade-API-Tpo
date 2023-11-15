@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.DAO;
 import uade.tpo.models.entity.Edificio;
+import uade.tpo.models.entity.Usuario;
 
 import java.util.List;
 
@@ -31,10 +32,7 @@ public class DaoEdificioImpl implements DAO<Edificio> {
     @Transactional(readOnly = true)
     public Edificio findById(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
-
-        Edificio edificio = currentSession.get(Edificio.class, id);
-
-        return edificio;
+        return currentSession.get(Edificio.class, id);
     }
 
     @Override

@@ -39,14 +39,8 @@ public class UsuarioService implements IUsuarioService {
     }
 
     @Override
-    public <T extends Usuario> T findByUsername(String username, Class<T> userType) {
-        Usuario usuario = this.daoUsuarioImpl.findByUsername(username);
-
-        if (usuario != null && userType.isInstance(usuario)) {
-            return userType.cast(usuario);
-        }
-
-        return null;
+    public <T extends Usuario> T findByUsername(String username) {
+        return (T)this.daoUsuarioImpl.findByUsername(username);
     }
 
     @Override

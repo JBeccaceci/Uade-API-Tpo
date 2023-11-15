@@ -25,7 +25,6 @@ public class EdificioController {
     public List<EdificioDTO> findAll() {
         List<Edificio> listaEdificios = edificioService.findAll();
         List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();
-        //System.out.println(listaEdificios.toString());
         for (Edificio edificio : listaEdificios) {
             EdificioDTO edificioDTO = convertToDTO(edificio);
             listaEdificioDTOs.add(edificioDTO);

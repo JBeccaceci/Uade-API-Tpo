@@ -11,6 +11,15 @@ public class Direccion {
 	public Direccion() {
 	}
 
+	@Override
+	public String toString() {
+		return "Direccion{" +
+				"calle='" + calle + '\'' +
+				", altura=" + altura +
+				", cp='" + cp + '\'' +
+				'}';
+	}
+
 	public Direccion (String calle, int altura, String cp) {
 		this.calle = calle;
 		this.altura = altura;
@@ -41,8 +50,4 @@ public class Direccion {
 		this.cp = cp;
 	}
 
-	@Override
-	public String toString() {
-		return "Direccion [calle=" + calle + ", altura=" + altura + ", cp=" + cp + "]";
-	}
 }

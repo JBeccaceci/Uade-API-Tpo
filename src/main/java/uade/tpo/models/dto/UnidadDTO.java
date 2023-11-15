@@ -1,16 +1,14 @@
 package uade.tpo.models.dto;
 
-import uade.tpo.models.entity.Usuario;
-
 import java.util.List;
 
 public class UnidadDTO {
-	private List<Usuario> habitantes;
-    private int edificio_id;
-    private int dpto;
-    private int piso;
+	private List<String> habitantes;
+    private String edificio_id;
+    private String dpto;
+    private String piso;
 
-	public UnidadDTO(List<Usuario> habitantes, int edificio_id, int dpto, int piso) {
+	public UnidadDTO(List<String> habitantes, String edificio_id, String dpto, String piso) {
 		this.habitantes = habitantes;
 		this.edificio_id = edificio_id;
 		this.dpto = dpto;
@@ -20,35 +18,35 @@ public class UnidadDTO {
 	public UnidadDTO() {	
 	}
 
-	public List<Usuario> getHabitantes() {
+	public List<String> getHabitantes() {
 		return habitantes;
 	}
 
-	public void setHabitantes(List<Usuario> habitantes) {
+	public void setHabitantes(List<String> habitantes) {
 		this.habitantes = habitantes;
 	}
 
-	public int getEdificio_id() {
+	public String getEdificio_id() {
 		return edificio_id;
 	}
 
-	public void setEdificio_id(int edificio_id) {
+	public void setEdificio_id(String edificio_id) {
 		this.edificio_id = edificio_id;
 	}
 
-	public int getDpto() {
+	public String getDpto() {
 		return dpto;
 	}
 
-	public void setDpto(int dpto) {
+	public void setDpto(String dpto) {
 		this.dpto = dpto;
 	}
 
-	public int getPiso() {
+	public String getPiso() {
 		return piso;
 	}
 
-	public void setPiso(int piso) {
+	public void setPiso(String piso) {
 		this.piso = piso;
 	}
 

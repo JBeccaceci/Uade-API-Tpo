@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uade.tpo.models.dto.LoginDto;
 import uade.tpo.models.dto.TokenOutputDTO;
-import uade.tpo.models.dto.PropietarioDTO;
 import uade.tpo.models.entity.Usuario;
 import uade.tpo.services.usuario.IUsuarioService;
 
@@ -28,7 +28,7 @@ public class AuthController {
 	private SecretKey secretKey;
 
 	@PostMapping("/login")
-	public ResponseEntity<TokenOutputDTO> login(@RequestBody PropietarioDTO credentials) {
+	public ResponseEntity<TokenOutputDTO> login(@RequestBody LoginDto credentials) {
 		Usuario user = usuarioService.findByUserAndPassword(credentials.getUsername(), credentials.getPassword());
 		if (user != null) {
 			String token = Jwts.builder()

@@ -1,4 +1,5 @@
 package uade.tpo.models.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -15,17 +16,17 @@ public class Edificio {
     private boolean tieneAscensor;
 
     @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
-    private List<Unidad> unidades;
+	@JsonIgnore
+    private List<Unidad> unidades = new ArrayList<>();
 
 	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
-	private List<Reclamo> reclamos;
+	private List<Reclamo> reclamos = new ArrayList<>();
 
     public Edificio(String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.numeroPisos = numeroPisos;
         this.tieneAscensor = tieneAscensor;
-        this.unidades = new ArrayList<>();
     }
 
 	public Edificio() {
@@ -88,8 +89,6 @@ public class Edificio {
 				", direccion=" + direccion +
 				", numeroPisos=" + numeroPisos +
 				", tieneAscensor=" + tieneAscensor +
-				", unidades=" + unidades +
-				", reclamos=" + reclamos +
 				'}';
 	}
 }

@@ -157,13 +157,23 @@ public class Reclamo {
 		return areaComun;
 	}
 
-	@Override
-	public String toString() {
-		return "Reclamo [id=" + id + ", objetoReclamo=" + objetoReclamo + ", tipoReclamo=" + tipoReclamo
-				+ ", descripcion=" + descripcion + ", creado=" + creado + ", actualizado=" + actualizado + ", usuario="
-				+ usuario + ", unidad=" + unidad + ", areaComun=" + areaComun + ", edificio=" + edificio + ", imagenes="
-				+ imagenes + ", estadoReclamo=" + estadoReclamo + ", medidas=" + medidas + "]";
-	}
 
-   
+    @Override
+    public String toString() {
+        return "Reclamo{" +
+                "id=" + id +
+                ", objetoReclamo=" + objetoReclamo +
+                ", tipoReclamo=" + tipoReclamo +
+                ", descripcion='" + descripcion + '\'' +
+                ", creado=" + creado +
+                ", actualizado=" + actualizado +
+                ", usuario=" + usuario +
+                ", unidad=" + unidad +
+                ", areaComun=" + areaComun +
+                ", edificio=" + edificio +
+                ", imagenes=" + imagenes +
+                ", estadoReclamo=" + estadoReclamo +
+                ", medidas=" + medidas +
+                '}';
+    }
 }

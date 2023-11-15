@@ -2,6 +2,7 @@ package uade.tpo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import uade.tpo.config.JWTAuthInfo;
 import uade.tpo.models.UnidadUsuarioDTO;
+import uade.tpo.models.dto.UnidadEdificioDto;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.unidad.IUnidadService;
 import uade.tpo.services.usuario.IUsuarioService;
@@ -70,22 +72,37 @@ public class UnidadController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JWTAuthInfo jwtAuthInfo = (JWTAuthInfo) authentication.getPrincipal();
 
-        Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
+        Edificio edificio = edificioService.findById(Integer.parseInt(unidadDTO.getEdificio_id()));
         if (edificio == null) {
-        	String mensaje ="esta es la unidad dto ";
-            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-        }
-        Usuario propietario = usuarioService.findById(Integer.parseInt(jwtAuthInfo.getUserId()));
-        if(propietario == null) {
-            String mensaje = "usuario not found: " + unidadDTO.getEdificio_id();
+            String mensaje = "esta es la unidad dto ";
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        Unidad unidad2 = new Unidad();
-        unidad2.setHabitante(propietario);
-        unidad2.setEdificio(edificio);
-        unidadService.save(unidad2);
-        return new ResponseEntity<>(unidad2, HttpStatus.CREATED);
+        Optional<String> existPropietario = unidadDTO.getHabitantes()
+                .stream()
+                .filter(h -> jwtAuthInfo.getUserName().equals(h))
+                .findAny();
+        if (!existPropietario.isPresent()) {
+            unidadDTO.getHabitantes().add(jwtAuthInfo.getUserName());
+        }
+
+        Unidad nuevaUnidad = new Unidad();
+        nuevaUnidad.setEdificio(edificio);
+        nuevaUnidad.setDpto(Integer.parseInt(unidadDTO.getDpto()));
+        nuevaUnidad.setPiso(Integer.parseInt(unidadDTO.getPiso()));
+        for (String usuario : unidadDTO.getHabitantes()) {
+            Usuario us = usuarioService.findByUsername(usuario);
+            if (us == null) {
+                String mensaje = "usuario not found: " + unidadDTO.getEdificio_id();
+                return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+            }
+            us.setUnidad(nuevaUnidad);
+            nuevaUnidad.setHabitante(us);
+        }
+        unidadService.save(nuevaUnidad);
+
+        UnidadEdificioDto unidadDTOOutput = new UnidadEdificioDto(String.valueOf(nuevaUnidad.getId()), edificio.getNombre());
+        return new ResponseEntity<>(unidadDTOOutput, HttpStatus.CREATED);
     }
 
     @PutMapping("/unidad/{unidadId}")
@@ -120,13 +137,13 @@ public class UnidadController {
     }
 
     private UnidadDTO convertToDTO(Unidad unidad) {
-        return new UnidadDTO(unidad.getHabitantes() ,unidad.getEdificio().getId(),unidad.getDpto(),unidad.getPiso());
+        return new UnidadDTO(null, String.valueOf(unidad.getEdificio().getId()), String.valueOf(unidad.getDpto()), String.valueOf(unidad.getPiso()));
     }
 
     private Unidad convertToEntity(UnidadDTO unidadDTO, Edificio edificio, Usuario usuario) {
         Unidad unidad = new Unidad();
-        unidad.setDpto(unidadDTO.getDpto());
-        unidad.setPiso(unidadDTO.getPiso());
+        unidad.setDpto(Integer.parseInt(unidadDTO.getDpto()));
+        unidad.setPiso(Integer.parseInt(unidadDTO.getPiso()));
         unidad.setEdificio(edificio);
         unidad.setHabitante(usuario);
         return unidad;

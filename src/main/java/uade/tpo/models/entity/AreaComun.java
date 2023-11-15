@@ -58,6 +58,11 @@ public class AreaComun {
 
 	@Override
 	public String toString() {
-		return "AreasComunes [nombre=" + nombre + ", capacidad=" + capacidad + ", edificio=" + edificio + "]";
+		return "AreaComun{" +
+				"id=" + id +
+				", nombre='" + nombre + '\'' +
+				", capacidad=" + capacidad +
+				", edificio=" + edificio +
+				'}';
 	}
 }

@@ -1,5 +1,6 @@
 package uade.tpo.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.*;
@@ -16,6 +17,7 @@ public class Unidad {
 
     @ManyToOne
     @JoinColumn(name = "edificio_id", nullable = false)
+    @JsonIgnore
     private Edificio edificio;
 
     @OneToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
@@ -88,8 +90,6 @@ public class Unidad {
     public String toString() {
         return "Unidad{" +
                 "id=" + id +
-                ", habitantes=" + habitantes +
-                ", edificio=" + edificio +
                 ", dpto=" + dpto +
                 ", piso=" + piso +
                 '}';
