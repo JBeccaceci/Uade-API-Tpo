@@ -14,6 +14,7 @@ import uade.tpo.services.usuario.IUsuarioService;
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {
+	/*
 	@Autowired
 	private IUsuarioService usuarioService;
 
@@ -108,4 +109,5 @@ public class UsuarioController {
 		propietario.setPassword(usuarioDto.getPassword());
 		return propietario;
 	}
+	 */
 }

@@ -72,7 +72,7 @@ public class UnidadController {
 
         Edificio edificio = edificioService.findById(unidadDTO.getEdificio_id());
         if (edificio == null) {
-        	String mensaje ="esta es la unidad dto " + unidadDTO.getUsuario_id();
+        	String mensaje ="esta es la unidad dto ";
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
         Usuario propietario = usuarioService.findById(Integer.parseInt(jwtAuthInfo.getUserId()));
@@ -82,7 +82,7 @@ public class UnidadController {
         }
 
         Unidad unidad2 = new Unidad();
-        unidad2.setPropietario(propietario);
+        unidad2.setHabitante(propietario);
         unidad2.setEdificio(edificio);
         unidadService.save(unidad2);
         return new ResponseEntity<>(unidad2, HttpStatus.CREATED);
@@ -97,11 +97,11 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        Unidad unidadToUpdate = convertToEntity(unidadDTO,unidadOld.getEdificio(),unidadOld.getPropietario());//Revisar si el getEdificio() esta bien 
-        unidadService.update(unidadId, unidadToUpdate);
+        //Unidad unidadToUpdate = convertToEntity(unidadDTO, unidadOld.getEdificio(), unidadOld.getPropietario());//Revisar si el getEdificio() esta bien
+        //unidadService.update(unidadId, unidadToUpdate);
 
-        UnidadDTO unidadUpdatedDTO = convertToDTO(unidadToUpdate);
-        return new ResponseEntity<>(unidadUpdatedDTO, HttpStatus.OK);
+        //UnidadDTO unidadUpdatedDTO = convertToDTO(unidadToUpdate);
+        return new ResponseEntity<>("unidadUpdatedDTO", HttpStatus.OK);
     }
 
     @DeleteMapping("unidad/{unidadId}")
@@ -120,25 +120,15 @@ public class UnidadController {
     }
 
     private UnidadDTO convertToDTO(Unidad unidad) {
-        UnidadDTO unidadDTO = new UnidadDTO(unidad.getPropietario().getId(),unidad.getEdificio().getId(),unidad.getDpto(),unidad.getPiso());
-        return unidadDTO;
+        return new UnidadDTO(unidad.getHabitantes() ,unidad.getEdificio().getId(),unidad.getDpto(),unidad.getPiso());
     }
 
-    private Unidad convertToEntity(UnidadDTO unidadDTO,Edificio edificio, Usuario propietario) {
-        /*
-        Unidad unidad1 = new Unidad();
-        unidad1.setPropietario(propietario1);   // TODO: No puede existir una unidad sin antes un propietario
-        unidad1.setEdificio(edificio1);         // TODO: No puede existir una unidad sin antes un edificio
-        unidad1.getHabitantes().add(propietario1);
-        propietario1.setUnidad(unidad1);
-        unidadService.save(unidad1);
-         */
-
+    private Unidad convertToEntity(UnidadDTO unidadDTO, Edificio edificio, Usuario usuario) {
         Unidad unidad = new Unidad();
         unidad.setDpto(unidadDTO.getDpto());
         unidad.setPiso(unidadDTO.getPiso());
         unidad.setEdificio(edificio);
-        unidad.setPropietario(propietario);        
+        unidad.setHabitante(usuario);
         return unidad;
     }
 }

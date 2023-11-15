@@ -65,24 +65,19 @@ public class DaoUnidadImpl implements DAO<Unidad> {
 
     public List<UnidadUsuarioDTO> getUnitsByOccupant(int usuarioId, int edificioId) {
         Session currentSession = entityManager.unwrap(Session.class);
+        String hql = "SELECT u.id, u.edificio.nombre FROM Unidad u " +
+                "JOIN u.habitantes h " +
+                "WHERE h.id = :usuarioId " +
+                "AND u.edificio.id = :edificioId";
+        List<Object[]> userResults = currentSession.createQuery(hql, Object[].class)
+                .setParameter("usuarioId", usuarioId)
+                .setParameter("edificioId", edificioId)
+                .getResultList();
 
-        //  Selecciono todas las unidades relacionadas al usuario y al edificio
-        String hql = "SELECT uni.id, uni.edificio.nombre " +
-                "FROM Usuario user " +
-                "INNER JOIN user.unidad uni " +
-                "WITH user.id = :id " +
-                "AND uni.edificio.id = :edificioId";
-
-        Query query = currentSession.createQuery(hql);
-        query.setParameter("id", usuarioId);
-        query.setParameter("edificioId", edificioId);
-
-        List<Object[]> results = query.list();
-
-        List<UnidadUsuarioDTO> userResults = new ArrayList<>();
-        for (Object[] result : results) {
-            userResults.add(new UnidadUsuarioDTO((Integer) result[0], (String) result[1]));
+        List<UnidadUsuarioDTO> unidadUsuarioDTOS = new ArrayList<>();
+        for (Object[] obj: userResults) {
+            unidadUsuarioDTOS.add(new UnidadUsuarioDTO((int) obj[0], (String) obj[1]));
         }
-        return userResults;
+        return unidadUsuarioDTOS;
     }
 }

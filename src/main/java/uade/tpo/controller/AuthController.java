@@ -36,7 +36,6 @@ public class AuthController {
 					.setId(user.getId().toString())
 					.setIssuedAt(new Date())
 					.claim("rol", user.getRole())
-					.claim("type", user.getType())
 					.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
 					.signWith(secretKey, SignatureAlgorithm.HS256).compact();
 

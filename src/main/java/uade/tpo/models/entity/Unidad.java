@@ -11,8 +11,8 @@ public class Unidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany(mappedBy = "unidad", cascade = CascadeType.ALL)
-    private List<Usuario> habitantes; // ok
+    @ManyToMany(mappedBy = "unidades", cascade = CascadeType.ALL)
+    private List<Usuario> habitantes = new ArrayList<Usuario>();
 
     @ManyToOne
     @JoinColumn(name = "edificio_id", nullable = false)

@@ -72,16 +72,15 @@ public class App {
         Unidad unidad1 = new Unidad();
         unidad1.setHabitante(propietario1);   // TODO: No puede existir una unidad sin antes un propietario
         unidad1.setEdificio(edificio1);         // TODO: No puede existir una unidad sin antes un edificio
-        unidad1.getHabitantes().add(propietario1);
         propietario1.setUnidad(unidad1);
         unidadService.save(unidad1);
+
         System.out.println(unidad1.toString());
 
         // Crear unidades
         Unidad unidad2 = new Unidad();
         unidad2.setHabitante(propietario2);   // TODO: No puede existir una unidad sin antes un propietario
         unidad2.setEdificio(edificio1);         // TODO: No puede existir una unidad sin antes un edificio
-        unidad2.getHabitantes().add(propietario2);
         propietario2.setUnidad(unidad2);
         unidadService.save(unidad2);
         System.out.println(unidad2.toString());
