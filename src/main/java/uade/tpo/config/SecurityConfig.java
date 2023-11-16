@@ -21,36 +21,36 @@ import javax.crypto.SecretKey;
 @EnableWebMvc
 public class SecurityConfig {
 
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		return http.cors().disable().build();
-	}
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http.cors().disable().csrf().disable().build();
+    }
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:3000/")
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-						.allowCredentials(true);
-			}
-		};
-	}
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000/")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowCredentials(true);
+            }
+        };
+    }
 
-	@Bean
-	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers( "auth/login");
-	}
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("auth/login");
+    }
 
-	@Bean
-	public JwtAuthFilter jwtAuth() {
-		return new JwtAuthFilter(secretKey());
-	}
+    @Bean
+    public JwtAuthFilter jwtAuth() {
+        return new JwtAuthFilter(secretKey());
+    }
 
-	@Bean
-	public SecretKey secretKey() {
-		return Keys.secretKeyFor(SignatureAlgorithm.HS256);
-	}
+    @Bean
+    public SecretKey secretKey() {
+        return Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    }
 }

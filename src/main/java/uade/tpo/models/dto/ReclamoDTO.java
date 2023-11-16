@@ -10,6 +10,7 @@ import uade.tpo.models.types.EstadoReclamo;
 import uade.tpo.models.types.TipoReclamo;
 
 public class ReclamoDTO {
+    private String id;
     private TipoReclamo tipoReclamo;
     private String descripcion;
     private Date creado;
@@ -18,12 +19,12 @@ public class ReclamoDTO {
     private Integer unidad_id;
     private Integer edificio_id;
     private boolean areaComun_id;
-    private String objetoReclamo;
     private List<Imagen> imagen;
 
     private EstadoReclamo estadoReclamo;
 
-    public ReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Integer usuario_id, Integer unidad_id, Integer edificio_id, boolean areaComun_id, EstadoReclamo estadoReclamo, List<Imagen> imagen) {
+    public ReclamoDTO(String id, TipoReclamo tipoReclamo, String descripcion, Integer usuario_id, Integer unidad_id, Integer edificio_id, boolean areaComun_id, EstadoReclamo estadoReclamo, List<Imagen> imagen) {
+        this.id = id;
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
@@ -124,17 +125,26 @@ public class ReclamoDTO {
         return areaComun_id;
     }
 
-    public String getObjetoReclamo() {
-        return objetoReclamo;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "ReclamoDTO [tipoReclamo=" + tipoReclamo + ", descripcion=" + descripcion + ", creado=" + creado
-                + ", actualizado=" + actualizado + ", usuario_id=" + usuario_id + ", unidad_id=" + unidad_id
-                + ", edificio_id=" + edificio_id + ", areaComun_id=" + areaComun_id + ", objetoReclamo=" + objetoReclamo
-                + ", imagenes=" + imagen + ", estadoReclamo=" + estadoReclamo + "]";
+        return "ReclamoDTO{" +
+                "tipoReclamo=" + tipoReclamo +
+                ", descripcion='" + descripcion + '\'' +
+                ", creado=" + creado +
+                ", actualizado=" + actualizado +
+                ", usuario_id=" + usuario_id +
+                ", unidad_id=" + unidad_id +
+                ", edificio_id=" + edificio_id +
+                ", areaComun_id=" + areaComun_id +
+                ", estadoReclamo=" + estadoReclamo +
+                '}';
     }
-
-
 }

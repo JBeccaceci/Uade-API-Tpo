@@ -72,6 +72,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         } catch (Exception e) {
             System.out.println("validateToken error: " + e.getMessage());
+            throw e;
         }
 
         return false;

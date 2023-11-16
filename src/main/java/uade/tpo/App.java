@@ -35,6 +35,7 @@ public class App {
     }
 
 
+    /*
     @PostConstruct
     public void init() {
 
@@ -63,13 +64,13 @@ public class App {
         edificioService.save(edificio3);
 
 
-        /*
+
             Orden
             1. Edificios
             2. Propietarios
             3. Unidades (porque necesitan un propietario y edificio)
             4. Inquilinos (porque necesitan unidades)
-         */
+
         Usuario propietario1 = new Usuario("pedro4", "123456", "Pedro", "Perez", "40247775", TipoRole.PROPIETARIO);
         Usuario propietario2 = new Usuario("Juan Maria", "123456", "Juan", "Beccaceci", "40247776", TipoRole.PROPIETARIO);
         //usuarioService.save(propietario1);
@@ -124,5 +125,7 @@ public class App {
 
         //TipoReclamo tipoReclamo, String descripcion, Usuario usuario,Unidad unidad,AreaComun areaComun ,Edificio edificio
     }
+
+     */
 
 }

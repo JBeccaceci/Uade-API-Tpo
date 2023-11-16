@@ -1,5 +1,6 @@
 package uade.tpo.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.*;
 
@@ -18,13 +19,15 @@ public class Imagen {
 
 	@ManyToOne
 	@JoinColumn(name = "reclamo_id")
+	@JsonIgnore
 	private Reclamo reclamo;
 
 	public Imagen() { }
 
-	public Imagen(byte[] imagen) {
+	public Imagen(byte[] imagen, Reclamo reclamo) {
 		this.imagen = imagen;
 		this.fecha = new Date();
+		this.reclamo = reclamo;
 	}
 
 	public byte[] getImagen() {
@@ -45,6 +48,18 @@ public class Imagen {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Reclamo getReclamo() {
+		return reclamo;
+	}
+
+	public void setReclamo(Reclamo reclamo) {
+		this.reclamo = reclamo;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package uade.tpo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +24,10 @@ import uade.tpo.services.usuario.IUsuarioService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping("/api")
@@ -43,7 +47,7 @@ public class ReclamoController {
     @Autowired
     private IImagenService iImagenService;
 
-    @PostMapping(value = "/reclamo", consumes = "multipart/form-data")
+    @RequestMapping(path = "/reclamo/new", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> add(
             @RequestPart("files") List<MultipartFile> files,
             @RequestPart("data") NewReclamoInputDto data
@@ -56,10 +60,14 @@ public class ReclamoController {
             return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
         }
 
-        Unidad unidad = unidadService.findById(Integer.parseInt(data.getUnidadId()));
-        if (unidad == null) {
-            return new ResponseEntity<>("Unidad no encontrada", HttpStatus.NOT_FOUND);
+        Unidad unidad = null;
+        if (data.getUnidadId() != null) {
+            unidad = unidadService.findById(Integer.parseInt(data.getUnidadId()));
+            if (unidad == null) {
+                return new ResponseEntity<>("Unidad no encontrada", HttpStatus.NOT_FOUND);
+            }
         }
+
         Edificio edificio = edificioService.findById(Integer.parseInt(data.getEdificioId()));
         if (edificio == null) {
             return new ResponseEntity<>("Edificio no encontrado", HttpStatus.NOT_FOUND);
@@ -73,15 +81,15 @@ public class ReclamoController {
 
         if (data.isAreaComun()) {
             try {
-                TipoReclamo tipoReclamo = TipoReclamo.valueOf(data.getTipoReclamo());
+                TipoReclamo tipoReclamo = TipoReclamo.valueOf(data.getTipoReclamo().toUpperCase());
                 Reclamo newReclamo = new Reclamo(tipoReclamo, data.getDescripcion(), usuario, unidad, edificio, data.isAreaComun());
-                unidad.setReclamos(newReclamo);
+                if (unidad != null) unidad.setReclamos(newReclamo);
                 usuario.setReclamos(newReclamo);
                 edificio.setReclamos(newReclamo);
                 reclamoService.save(newReclamo);
 
                 for (MultipartFile file : files) {
-                    Imagen img = new Imagen(file.getBytes());
+                    Imagen img = new Imagen(file.getBytes(), newReclamo);
                     newReclamo.addImagen(img);
                     iImagenService.save(img);
                 }
@@ -89,6 +97,7 @@ public class ReclamoController {
                 ReclamoDTO reclamoDTO = convertToDTO(newReclamo);
                 return new ResponseEntity<>(reclamoDTO, HttpStatus.OK);
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 return new ResponseEntity<>("Error no controlado", HttpStatus.NOT_FOUND);
             }
         }
@@ -108,7 +117,7 @@ public class ReclamoController {
                 reclamoService.save(newReclamo);
 
                 for (MultipartFile file : files) {
-                    Imagen img = new Imagen(file.getBytes());
+                    Imagen img = new Imagen(file.getBytes(), newReclamo);
                     newReclamo.addImagen(img);
                     iImagenService.save(img);
                 }
@@ -194,7 +203,20 @@ public class ReclamoController {
     }
 
     private ReclamoDTO convertToDTO(Reclamo reclamo) {
+        if (reclamo.getUnidad() == null) {
+            return new ReclamoDTO(
+                    String.valueOf(reclamo.getId()),
+                    reclamo.getTipoReclamo(),
+                    reclamo.getDescripcion(),
+                    reclamo.getUsuario().getId(),
+                    null,
+                    reclamo.getEdificio().getId(),
+                    reclamo.isEsAreaComun(),
+                    reclamo.getEstadoReclamo(),
+                    reclamo.getImagenes());
+        }
         return new ReclamoDTO(
+                String.valueOf(reclamo.getId()),
                 reclamo.getTipoReclamo(),
                 reclamo.getDescripcion(),
                 reclamo.getUsuario().getId(),
