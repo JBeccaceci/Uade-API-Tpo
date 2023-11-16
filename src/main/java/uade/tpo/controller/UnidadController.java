@@ -74,7 +74,7 @@ public class UnidadController {
 
         Edificio edificio = edificioService.findById(Integer.parseInt(unidadDTO.getEdificio_id()));
         if (edificio == null) {
-            String mensaje = "esta es la unidad dto ";
+            String mensaje = "Edificio no encontrado ";
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
