@@ -7,8 +7,10 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.DAO;
+import uade.tpo.models.UnidadUsuarioDTO;
 import uade.tpo.models.entity.Reclamo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -57,5 +59,16 @@ public class DaoReclamoImpl implements DAO<Reclamo> {
         Query theQuery = currentSession.createQuery("delete from reclamos where id=:idReclamo");
         theQuery.setParameter("idReclamo", id);
         theQuery.executeUpdate();
+    }
+
+    public List<Reclamo> getReclamosByEdificioId(int edificioId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        String jpql = "SELECT r FROM Reclamo r WHERE r.edificio.id = :edificioId";
+        List<Reclamo> userResults = currentSession.createQuery(jpql, Reclamo.class)
+                .setParameter("edificioId", edificioId)
+                .getResultList();
+
+        return userResults;
     }
 }

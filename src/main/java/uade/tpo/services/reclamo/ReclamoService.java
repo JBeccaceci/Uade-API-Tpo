@@ -15,10 +15,7 @@ public class ReclamoService implements IReclamoService {
     @Autowired
     private DaoReclamoImpl daoReclamoImpl;
 
-
-    public ReclamoService() {
-
-    }
+    public ReclamoService() { }
 
     @Override
     public List<Reclamo> findAll() {
@@ -36,14 +33,15 @@ public class ReclamoService implements IReclamoService {
     }
 
     @Override
-    public void update(int id, Reclamo reclamo) {
-
-    }
+    public void update(int id, Reclamo reclamo) { }
 
     @Override
     public void deleteById(int id) {
         daoReclamoImpl.delete(id);
     }
 
-
+    @Override
+    public List<Reclamo> getReclamosByEdificioId(int edificioId) {
+        return this.daoReclamoImpl.getReclamosByEdificioId(edificioId);
+    }
 }

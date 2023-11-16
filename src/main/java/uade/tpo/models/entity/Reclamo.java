@@ -16,11 +16,11 @@ public class Reclamo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private ObjetoReclamo objetoReclamo;
     private TipoReclamo tipoReclamo;
     private String descripcion;
     private Date creado;
     private Date actualizado;
+    private boolean esAreaComun;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
@@ -30,10 +30,6 @@ public class Reclamo {
     @JoinColumn(name = "unidad_id")
     private Unidad unidad;
 
-    @ManyToOne
-    @JoinColumn
-    private AreaComun areaComun;
-    
     @ManyToOne
     @JoinColumn(name = "edificio_id")
     private Edificio edificio;
@@ -46,7 +42,10 @@ public class Reclamo {
     @OneToMany(mappedBy = "reclamo", cascade = CascadeType.ALL)
     private List<Medida> medidas;
 
-    public Reclamo(TipoReclamo tipoReclamo, String descripcion, Usuario usuario, ObjetoReclamo objetoReclamo ,Unidad unidad,AreaComun areaComun ,Edificio edificio) {
+    public Reclamo() {
+    }
+
+    public Reclamo(TipoReclamo tipoReclamo, String descripcion, Usuario usuario, Unidad unidad, Edificio edificio, boolean esAreaComun) {
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = new Date();
@@ -54,11 +53,10 @@ public class Reclamo {
         this.usuario = usuario;
         this.unidad = unidad;
         this.edificio = edificio;
-        this.objetoReclamo = objetoReclamo;
-        this.areaComun = areaComun;
         this.imagenes = new ArrayList<>();
         this.estadoReclamo = EstadoReclamo.NUEVO;
         this.medidas = new ArrayList<>();
+        this.esAreaComun = esAreaComun;
     }
 
     public TipoReclamo getTipoReclamo() {
@@ -145,31 +143,28 @@ public class Reclamo {
         this.edificio = edificio;
     }
 
-	public ObjetoReclamo getObjetoReclamo() {
-		return objetoReclamo;
-	}
+    public boolean isEsAreaComun() {
+        return esAreaComun;
+    }
 
-	public void setObjetoReclamo(ObjetoReclamo objetoReclamo) {
-		this.objetoReclamo = objetoReclamo;
-	}
+    public void setEsAreaComun(boolean esAreaComun) {
+        this.esAreaComun = esAreaComun;
+    }
 
-	public AreaComun getAreaComun() {
-		return areaComun;
-	}
-
+    public void addImagen(Imagen img) {
+        this.imagenes.add(img);
+    }
 
     @Override
     public String toString() {
         return "Reclamo{" +
                 "id=" + id +
-                ", objetoReclamo=" + objetoReclamo +
                 ", tipoReclamo=" + tipoReclamo +
                 ", descripcion='" + descripcion + '\'' +
                 ", creado=" + creado +
                 ", actualizado=" + actualizado +
                 ", usuario=" + usuario +
                 ", unidad=" + unidad +
-                ", areaComun=" + areaComun +
                 ", edificio=" + edificio +
                 ", imagenes=" + imagenes +
                 ", estadoReclamo=" + estadoReclamo +

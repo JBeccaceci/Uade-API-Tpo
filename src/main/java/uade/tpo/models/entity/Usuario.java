@@ -108,6 +108,10 @@ public class Usuario {
         }
     }
 
+    public void setReclamos(Reclamo reclamo) {
+        this.reclamos.add(reclamo);
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +

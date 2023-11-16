@@ -67,7 +67,7 @@ public class UnidadController {
     }
 
     @PostMapping("/unidad")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<?> add(@RequestBody UnidadDTO unidadDTO) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JWTAuthInfo jwtAuthInfo = (JWTAuthInfo) authentication.getPrincipal();

@@ -86,6 +86,10 @@ public class Unidad {
         habitantes.add(usuario);
     }
 
+    public void setReclamos(Reclamo reclamo) {
+        reclamos.add(reclamo);
+    }
+
     @Override
     public String toString() {
         return "Unidad{" +

@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import uade.tpo.models.entity.*;
+import uade.tpo.models.types.EstadoReclamo;
+import uade.tpo.models.types.TipoReclamo;
 import uade.tpo.models.types.TipoRole;
 import uade.tpo.services.edificio.IEdificioService;
+import uade.tpo.services.reclamo.IReclamoService;
 import uade.tpo.services.unidad.IUnidadService;
 import uade.tpo.services.usuario.IUsuarioService;
 
@@ -23,6 +26,9 @@ public class App {
 
     @Autowired
     private IUnidadService unidadService;
+
+    @Autowired
+    private IReclamoService reclamoService;
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
@@ -88,6 +94,35 @@ public class App {
         Usuario inquilino1 = new Usuario("juan1", "123456", "Juan", "Perez", "40247775", TipoRole.INQUILINO);
         inquilino1.setUnidad(unidad1); // TODO: Un inquilino si o si debe tener una propiedad asignada
         usuarioService.save(inquilino1);
+
+        // String nombre, int capacidad, Edificio edificio
+        Reclamo reclamo1 = new Reclamo(TipoReclamo.ROTURA, "El piso de mi unidad esta roto", propietario1, unidad2, edificio2, false);
+        unidad2.setReclamos(reclamo1);
+        propietario1.setReclamos(reclamo1);
+        edificio2.setReclamos(reclamo1);
+        reclamoService.save(reclamo1);
+
+        Reclamo reclamo2 = new Reclamo(TipoReclamo.PROBLEMA, "Las canaletas estan tapadas", propietario1, unidad2, edificio2, false);
+        unidad2.setReclamos(reclamo2);
+        propietario1.setReclamos(reclamo2);
+        edificio2.setReclamos(reclamo2);
+        reclamoService.save(reclamo2);
+
+        Reclamo reclamo3 = new Reclamo(TipoReclamo.ROTURA, "No hay luz en el piso 3", propietario1, unidad2, edificio2, false);
+        reclamo3.setEstadoReclamo(EstadoReclamo.ABIERTO);
+        unidad2.setReclamos(reclamo3);
+        propietario1.setReclamos(reclamo3);
+        edificio2.setReclamos(reclamo3);
+        reclamoService.save(reclamo3);
+
+        Reclamo reclamo4 = new Reclamo(TipoReclamo.ROTURA, "La parrilla esta sucia", propietario1, unidad2, edificio2, true);
+        reclamo4.setEstadoReclamo(EstadoReclamo.ANULADO);
+        unidad2.setReclamos(reclamo4);
+        propietario1.setReclamos(reclamo4);
+        edificio2.setReclamos(reclamo4);
+        reclamoService.save(reclamo4);
+
+        //TipoReclamo tipoReclamo, String descripcion, Usuario usuario,Unidad unidad,AreaComun areaComun ,Edificio edificio
     }
 
 }

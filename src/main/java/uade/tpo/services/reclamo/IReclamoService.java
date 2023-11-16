@@ -14,6 +14,8 @@ public interface IReclamoService {
     public void update(int id, Reclamo reclamo);
 
     public void deleteById(int id);
+
+    public List<Reclamo> getReclamosByEdificioId(int edificioId);
 }
 
 
