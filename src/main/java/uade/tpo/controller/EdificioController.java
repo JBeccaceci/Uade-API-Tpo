@@ -65,10 +65,14 @@ public class EdificioController {
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        Edificio edificioToUpdate = convertToEntity(edificioDTO);
-        edificioService.update(edificioToUpdate);
+        //Edificio edificioToUpdate = convertToEntity(edificioDTO);
+        edificioOld.setDireccion(edificioDTO.getDireccion());
+        edificioOld.setNombre(edificioDTO.getNombre());
+        edificioOld.setNumeroPisos(edificioDTO.getNumeroPisos());
+        edificioOld.setTieneAscensor(edificioDTO.isTieneAscensor());
+        edificioService.save(edificioOld);
 
-        EdificioDTO edificioUpdatedDTO = convertToDTO(edificioToUpdate);
+        EdificioDTO edificioUpdatedDTO = convertToDTO(edificioOld);
         return new ResponseEntity<>(edificioUpdatedDTO, HttpStatus.OK);
     }
 
