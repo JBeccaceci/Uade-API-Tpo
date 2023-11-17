@@ -123,16 +123,20 @@ public class UnidadController {
 
     @DeleteMapping("unidad/{unidadId}")
     public ResponseEntity<String> delete(@PathVariable int unidadId) {
+        System.out.println("Received DELETE request for unidadId: " + unidadId);
+
         Unidad unidad = unidadService.findById(unidadId);
 
         if (unidad == null) {
             String mensaje = "unidad no encontrado con ID: " + unidadId;
+            System.out.println(mensaje);
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
         unidadService.deleteById(unidadId);
 
         String mensaje = "unidad eliminado [UnidadID: " + unidadId + "]";
+        System.out.println(mensaje);
         return new ResponseEntity<>(mensaje, HttpStatus.OK);
     }
 
