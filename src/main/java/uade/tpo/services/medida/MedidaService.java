@@ -13,8 +13,8 @@ public class MedidaService implements IMedidaService {
 	private DaoMedidaImpl daoMedidaImpl;
 	
 	private MedidaService() {
-		
 	}
+
 	@Override
     public List<Medida> findAll() {
         return daoMedidaImpl.getAll();
@@ -31,15 +31,15 @@ public class MedidaService implements IMedidaService {
     }
 
     @Override
-    public void update(int id, Medida cliente) {
-
-    }
+    public void update(int id, Medida cliente) { }
 
     @Override
     public void deleteById(int id) {
         daoMedidaImpl.delete(id);
     }
 
-	
-
+    @Override
+    public List<Medida> getMedidaReclamo(int reclamoId) {
+        return daoMedidaImpl.getMedidaReclamo(reclamoId);
+    }
 }

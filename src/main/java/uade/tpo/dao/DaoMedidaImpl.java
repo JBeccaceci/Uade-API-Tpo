@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.DAO;
 import uade.tpo.models.entity.Medida;
+import uade.tpo.models.entity.Reclamo;
 
 import java.util.List;
 
@@ -58,6 +59,15 @@ public class DaoMedidaImpl implements DAO<Medida> {
         Query theQuery = currentSession.createQuery("delete from medidas where id=:idMedida");
         theQuery.setParameter("idMedida", id);
         theQuery.executeUpdate();
+    }
+
+    public List<Medida> getMedidaReclamo(int reclamoId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        String jpql = "SELECT m FROM Medida m WHERE m.reclamo.id = :reclamoId";
+        return currentSession.createQuery(jpql, Medida.class)
+                .setParameter("reclamoId", reclamoId)
+                .getResultList();
     }
 }
 

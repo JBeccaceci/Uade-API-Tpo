@@ -1,5 +1,6 @@
 package uade.tpo.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,9 +15,13 @@ public class Medida {
 
 	@ManyToOne
 	@JoinColumn(name="reclamo_id")
+	@JsonIgnore
 	private Reclamo reclamo;
 
-    public Medida(String descripcion) {
+	public Medida() {
+	}
+
+	public Medida(String descripcion) {
 		this.descripcion = descripcion;
 	}
 

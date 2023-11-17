@@ -16,6 +16,8 @@ public interface IMedidaService {
     public void update(int id, Medida cliente);
 
     public void deleteById(int id);
+
+    public List<Medida> getMedidaReclamo(int reclamoId);
 }
 
 

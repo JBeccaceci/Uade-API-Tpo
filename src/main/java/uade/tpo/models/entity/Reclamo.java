@@ -155,6 +155,10 @@ public class Reclamo {
         this.imagenes.add(img);
     }
 
+    public void addMedida(Medida medida) {
+        this.medidas.add(medida);
+    }
+
     @Override
     public String toString() {
         return "Reclamo{" +

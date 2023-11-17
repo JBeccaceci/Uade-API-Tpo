@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.DAO;
 import uade.tpo.models.UnidadUsuarioDTO;
+import uade.tpo.models.entity.AreaComun;
 import uade.tpo.models.entity.Reclamo;
 
 import java.util.ArrayList;
@@ -32,7 +33,8 @@ public class DaoReclamoImpl implements DAO<Reclamo> {
 
     @Override
     public Reclamo findById(int id) {
-        return null;
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.get(Reclamo.class, id);
     }
 
     @Override
