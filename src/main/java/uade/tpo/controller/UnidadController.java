@@ -114,12 +114,22 @@ public class UnidadController {
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
         }
 
-        //Unidad unidadToUpdate = convertToEntity(unidadDTO, unidadOld.getEdificio(), unidadOld.getPropietario());//Revisar si el getEdificio() esta bien
-        //unidadService.update(unidadId, unidadToUpdate);
+        // Obtener el Edificio correspondiente
+        Edificio edificio = edificioService.findById(Integer.parseInt(unidadDTO.getEdificio_id()));
+        if (edificio == null) {
+            String mensaje = "Edificio no encontrado ";
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        }
+        unidadOld.setEdificio(edificio);
+        unidadOld.setDpto(Integer.parseInt(unidadDTO.getDpto()));
+        unidadOld.setPiso(Integer.parseInt(unidadDTO.getPiso()));
 
-        //UnidadDTO unidadUpdatedDTO = convertToDTO(unidadToUpdate);
-        return new ResponseEntity<>("unidadUpdatedDTO", HttpStatus.OK);
+        // Guardar la unidad actualizada
+        unidadService.save(unidadOld);
+        UnidadDTO unidadUpdatedDTO = convertToDTO(unidadOld);
+        return new ResponseEntity<>(unidadUpdatedDTO, HttpStatus.OK);
     }
+
 
     @DeleteMapping("unidad/{unidadId}")
     public ResponseEntity<String> delete(@PathVariable int unidadId) {

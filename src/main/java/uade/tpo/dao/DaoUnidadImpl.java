@@ -46,10 +46,10 @@ public class DaoUnidadImpl implements DAO<Unidad> {
     }
 
     @Override
-    @Transactional // TODO: Update va en el service
+    @Transactional
     public void update(Unidad persistible) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.update(persistible);
+        currentSession.merge(persistible);
     }
 
     @Override
