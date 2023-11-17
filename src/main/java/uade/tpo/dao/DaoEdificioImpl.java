@@ -55,10 +55,11 @@ public class DaoEdificioImpl implements DAO<Edificio> {
     @Transactional
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
+        Edificio edificio = currentSession.get(Edificio.class, id);
 
-        Query theQuery = currentSession.createQuery("delete from edificios where id=:idEdificio");
-        theQuery.setParameter("idEdificio", id);
-        theQuery.executeUpdate();
+        if (edificio != null) {
+            currentSession.remove(edificio);
+        }
     }
 
 }
