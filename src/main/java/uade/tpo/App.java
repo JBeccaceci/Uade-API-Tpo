@@ -35,6 +35,12 @@ public class App {
     }
 
 
+    @PostConstruct
+    public void init() {
+    	Usuario propietario1 = new Usuario("pedro4", "123456", "Pedro", "Perez", "40247775", TipoRole.ADMIN);
+        //Usuario propietario2 = new Usuario("Juan Maria", "123456", "Juan", "Beccaceci", "40247776", TipoRole.PROPIETARIO);
+        usuarioService.save(propietario1);
+    }
     /*
     @PostConstruct
     public void init() {

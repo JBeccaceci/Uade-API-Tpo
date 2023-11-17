@@ -14,16 +14,16 @@ public class UsuarioDto {
     private Date vencimiento;
     private float ingreso;
     private float montoAlquiler;
-    private TipoRole tipoUsuario;
+    private TipoRole role;
 
-    public UsuarioDto(String username, String password, String nombre, String apellido, String dni,  TipoRole tipoUsuario) {
+    public UsuarioDto(String username, String password, String nombre, String apellido, String dni,  TipoRole role) {
         this.username = username;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
 
-        this.tipoUsuario = tipoUsuario;
+        this.role = role;
     }
     
     public UsuarioDto() {
@@ -93,12 +93,12 @@ public class UsuarioDto {
         this.montoAlquiler = montoAlquiler;
     }
 
-    public TipoRole getTipoUsuario() {
-        return tipoUsuario;
+    public TipoRole getRole() {
+        return role;
     }
 
-    public void setTipoUsuario(TipoRole tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+    public void setRole(TipoRole tipoUsuario) {
+        this.role = tipoUsuario;
     }
 
     @Override
@@ -112,7 +112,7 @@ public class UsuarioDto {
                 ", vencimiento=" + vencimiento +
                 ", ingreso=" + ingreso +
                 ", montoAlquiler=" + montoAlquiler +
-                ", tipoUsuario=" + tipoUsuario +
+                ", role=" + role +
                 '}';
     }
 }

@@ -13,7 +13,6 @@ import uade.tpo.services.usuario.IUsuarioService;
 @RestController
 @RequestMapping("/api")
 public class UsuarioController {
-	/*
 	@Autowired
 	private IUsuarioService usuarioService;
 
@@ -21,7 +20,7 @@ public class UsuarioController {
 	public ResponseEntity<?> get(@PathVariable int usuarioId) {
 		Usuario usuario = usuarioService.findById(usuarioId);
 		if (usuario == null) {
-			String mensaje = "Inquilino no encontrado con ID: " + usuarioId;
+			String mensaje = "Usuario no encontrado con ID: " + usuarioId;
 			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
 		}
 		
@@ -45,7 +44,7 @@ public class UsuarioController {
 	public ResponseEntity<?> update(@PathVariable int usuarioId, @RequestBody UsuarioDto usuarioDto) {
 		Usuario usuario = usuarioService.findById(usuarioId);
 		if (usuario == null) {
-			String mensaje = "inquilino no encontrado con ID: " + usuarioId;
+			String mensaje = "Usuario no encontrado con ID: " + usuarioId;
 			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
 		}
 
@@ -88,5 +87,4 @@ public class UsuarioController {
 		usuario.setPassword(usuarioDto.getPassword());
 		return usuario;
 	}
-	 */
 }
