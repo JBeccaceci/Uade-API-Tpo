@@ -11,7 +11,7 @@ public interface IEdificioService {
 
     public void save(Edificio cliente);
 
-    public void update(int id, Edificio cliente);
+    public void update(Edificio cliente);
 
     public void deleteById(int id);
 }

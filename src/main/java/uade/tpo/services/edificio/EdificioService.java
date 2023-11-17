@@ -31,7 +31,9 @@ public class EdificioService implements IEdificioService {
     }
 
     @Override
-    public void update(int id, Edificio cliente) { }
+    public void update(Edificio edificio) {
+        daoEdificioImpl.update(edificio);
+    }
 
     @Override
     public void deleteById(int id) {

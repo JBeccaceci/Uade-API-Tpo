@@ -44,11 +44,10 @@ public class DaoEdificioImpl implements DAO<Edificio> {
     }
 
     @Override
-    @Transactional // TODO: Update va en el service
-    public void update(Edificio persistible) {
+    @Transactional
+    public void update(Edificio edificio) {
         Session currentSession = entityManager.unwrap(Session.class);
-
-        currentSession.update(persistible);
+        currentSession.merge(edificio);
     }
 
     @Override

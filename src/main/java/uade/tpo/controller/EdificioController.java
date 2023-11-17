@@ -66,7 +66,7 @@ public class EdificioController {
         }
 
         Edificio edificioToUpdate = convertToEntity(edificioDTO);
-        edificioService.update(edificioId, edificioToUpdate);
+        edificioService.update(edificioToUpdate);
 
         EdificioDTO edificioUpdatedDTO = convertToDTO(edificioToUpdate);
         return new ResponseEntity<>(edificioUpdatedDTO, HttpStatus.OK);
