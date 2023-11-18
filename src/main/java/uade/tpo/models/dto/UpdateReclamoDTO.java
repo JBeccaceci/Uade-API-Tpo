@@ -1,24 +1,112 @@
 package uade.tpo.models.dto;
 
+import uade.tpo.models.entity.*;
 import uade.tpo.models.types.EstadoReclamo;
+import uade.tpo.models.types.TipoReclamo;
 
+import java.util.Date;
 import java.util.List;
 
 public class UpdateReclamoDTO {
-    private List<String> medidas;
+    private TipoReclamo tipoReclamo;
+    private String descripcion;
+    private Date creado;
+    private Date actualizado;
+    private boolean esAreaComun;
+    private Usuario usuario;
+    private Unidad unidad;
+    private Edificio edificio;
+    private List<Imagen> imagenes;
     private EstadoReclamo estadoReclamo;
+    private List<Medida> medidas;
 
-    public UpdateReclamoDTO(List<String> medidas, EstadoReclamo estadoReclamo) {
-        this.medidas = medidas;
+    public UpdateReclamoDTO() {
+    }
+
+    public UpdateReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Date creado, Date actualizado, boolean esAreaComun, Usuario usuario, Unidad unidad, Edificio edificio, List<Imagen> imagenes, EstadoReclamo estadoReclamo, List<Medida> medidas) {
+        this.tipoReclamo = tipoReclamo;
+        this.descripcion = descripcion;
+        this.creado = creado;
+        this.actualizado = actualizado;
+        this.esAreaComun = esAreaComun;
+        this.usuario = usuario;
+        this.unidad = unidad;
+        this.edificio = edificio;
+        this.imagenes = imagenes;
         this.estadoReclamo = estadoReclamo;
-    }
-
-    public List<String> getMedidas() {
-        return medidas;
-    }
-
-    public void setMedidas(List<String> medidas) {
         this.medidas = medidas;
+    }
+
+    public TipoReclamo getTipoReclamo() {
+        return tipoReclamo;
+    }
+
+    public void setTipoReclamo(TipoReclamo tipoReclamo) {
+        this.tipoReclamo = tipoReclamo;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Date getCreado() {
+        return creado;
+    }
+
+    public void setCreado(Date creado) {
+        this.creado = creado;
+    }
+
+    public Date getActualizado() {
+        return actualizado;
+    }
+
+    public void setActualizado(Date actualizado) {
+        this.actualizado = actualizado;
+    }
+
+    public boolean isEsAreaComun() {
+        return esAreaComun;
+    }
+
+    public void setEsAreaComun(boolean esAreaComun) {
+        this.esAreaComun = esAreaComun;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Unidad getUnidad() {
+        return unidad;
+    }
+
+    public void setUnidad(Unidad unidad) {
+        this.unidad = unidad;
+    }
+
+    public Edificio getEdificio() {
+        return edificio;
+    }
+
+    public void setEdificio(Edificio edificio) {
+        this.edificio = edificio;
+    }
+
+    public List<Imagen> getImagenes() {
+        return imagenes;
+    }
+
+    public void setImagenes(List<Imagen> imagenes) {
+        this.imagenes = imagenes;
     }
 
     public EstadoReclamo getEstadoReclamo() {
@@ -29,11 +117,28 @@ public class UpdateReclamoDTO {
         this.estadoReclamo = estadoReclamo;
     }
 
+    public List<Medida> getMedidas() {
+        return medidas;
+    }
+
+    public void setMedidas(List<Medida> medidas) {
+        this.medidas = medidas;
+    }
+
     @Override
     public String toString() {
         return "UpdateReclamoDTO{" +
-                ", medidas=" + medidas +
+                "tipoReclamo=" + tipoReclamo +
+                ", descripcion='" + descripcion + '\'' +
+                ", creado=" + creado +
+                ", actualizado=" + actualizado +
+                ", esAreaComun=" + esAreaComun +
+                ", usuario=" + usuario +
+                ", unidad=" + unidad +
+                ", edificio=" + edificio +
+                ", imagenes=" + imagenes +
                 ", estadoReclamo=" + estadoReclamo +
+                ", medidas=" + medidas +
                 '}';
     }
 }

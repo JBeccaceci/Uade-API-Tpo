@@ -164,40 +164,21 @@ public class ReclamoController {
     public ResponseEntity<?> update(@PathVariable int reclamoId, @RequestBody UpdateReclamoDTO updateReclamoDTO) {
         Reclamo reclamo = reclamoService.findById(reclamoId);
         if (reclamo == null) {
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Reclamo inexistente");
+            return ResponseEntity.notFound().build();
         }
 
-        List<Medida> medidaList = new ArrayList<>(reclamo.getMedidas());
-        for (String medida : updateReclamoDTO.getMedidas()) {
-            medidaList.add(new Medida(medida, reclamo));
-        }
-        List<Imagen> imagenes = new ArrayList<>();
-        if (reclamo.getImagenes() != null) {
-			/*
-			for (byte[] imagenBytes : reclamo.getImagenes()) {
-				Imagen imagen = new Imagen();
-				imagen.setImagen(imagenBytes);
-				imagenes.add(imagen);
-			}
-
-			 */
-        }
-		/*
-		if(updateReclamoDTO.getImagenes() != null){
-			for (byte[] imagenBytes : reclamo.getImagenes()) {
-				Imagen imagen = new Imagen();
-				imagen.setImagen(imagenBytes);
-				imagenes.add(imagen);
-			}
-		}
-
-		 */
-
-        reclamo.setImagenes(imagenes);
+        reclamo.setTipoReclamo(updateReclamoDTO.getTipoReclamo());
+        reclamo.setDescripcion(updateReclamoDTO.getDescripcion());
+        reclamo.setCreado(updateReclamoDTO.getCreado());
+        reclamo.setActualizado(updateReclamoDTO.getActualizado());
+        reclamo.setEsAreaComun(updateReclamoDTO.isEsAreaComun());
+        reclamo.setUsuario(updateReclamoDTO.getUsuario());
+        reclamo.setUnidad(updateReclamoDTO.getUnidad());
+        reclamo.setEdificio(updateReclamoDTO.getEdificio());
+        reclamo.setImagenes(updateReclamoDTO.getImagenes());
         reclamo.setEstadoReclamo(updateReclamoDTO.getEstadoReclamo());
-        reclamo.setMedidas(medidaList);
+        reclamo.setMedidas(updateReclamoDTO.getMedidas());
+
         reclamoService.update(reclamo.getId(), reclamo);
         return new ResponseEntity<>(updateReclamoDTO, HttpStatus.OK);
     }
