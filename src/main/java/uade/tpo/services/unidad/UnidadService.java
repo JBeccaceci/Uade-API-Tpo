@@ -31,8 +31,9 @@ public class UnidadService implements IUnidadService {
 		this.daoUnidadImpl.save(unidad);
 	}
 
-	@Override
-	public void update(int id, Unidad unidad) { }
+	public void update(int id, Unidad unidad) {
+        daoUnidadImpl.update(unidad);
+    }
 
 	@Override
 	public void deleteById(int id) {

@@ -44,21 +44,21 @@ public class DaoEdificioImpl implements DAO<Edificio> {
     }
 
     @Override
-    @Transactional // TODO: Update va en el service
-    public void update(Edificio persistible) {
+    @Transactional
+    public void update(Edificio edificio) {
         Session currentSession = entityManager.unwrap(Session.class);
-
-        currentSession.update(persistible);
+        currentSession.merge(edificio);
     }
 
     @Override
     @Transactional
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
+        Edificio edificio = currentSession.get(Edificio.class, id);
 
-        Query theQuery = currentSession.createQuery("delete from edificios where id=:idEdificio");
-        theQuery.setParameter("idEdificio", id);
-        theQuery.executeUpdate();
+        if (edificio != null) {
+            currentSession.remove(edificio);
+        }
     }
 
 }

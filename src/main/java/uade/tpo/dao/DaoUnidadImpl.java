@@ -33,8 +33,10 @@ public class DaoUnidadImpl implements DAO<Unidad> {
     @Override
     @Transactional(readOnly = true)
     public Unidad findById(int id) {
-        return null;
+        Session currentSession = entityManager.unwrap(Session.class);
+        return currentSession.get(Unidad.class, id);
     }
+
 
     @Override
     @Transactional
@@ -44,17 +46,17 @@ public class DaoUnidadImpl implements DAO<Unidad> {
     }
 
     @Override
-    @Transactional // TODO: Update va en el service
+    @Transactional
     public void update(Unidad persistible) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.update(persistible);
+        currentSession.merge(persistible);
     }
 
     @Override
     @Transactional
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query theQuery = currentSession.createQuery("delete from reclamos where id=:idUnidad");
+        Query theQuery = currentSession.createQuery("DELETE FROM Unidad u WHERE u.id = :idUnidad");
         theQuery.setParameter("idUnidad", id);
         theQuery.executeUpdate();
     }
