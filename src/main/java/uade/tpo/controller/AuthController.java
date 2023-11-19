@@ -39,7 +39,7 @@ public class AuthController {
 					.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME_IN_MIN * 60 * 1000))
 					.signWith(secretKey, SignatureAlgorithm.HS256).compact();
 
-			TokenOutputDTO output = new TokenOutputDTO(token);
+			TokenOutputDTO output = new TokenOutputDTO(token,user.getId(),user.getRole());
 			return new ResponseEntity<>(output, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
