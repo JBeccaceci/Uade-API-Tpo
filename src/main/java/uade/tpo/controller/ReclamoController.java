@@ -87,6 +87,7 @@ public class ReclamoController {
                 usuario.setReclamos(newReclamo);
                 edificio.setReclamos(newReclamo);
                 reclamoService.save(newReclamo);
+                String numeroReclamo = String.valueOf(newReclamo.getId());
 
                 for (MultipartFile file : files) {
                     Imagen img = new Imagen(file.getBytes(), newReclamo);
@@ -95,6 +96,8 @@ public class ReclamoController {
                 }
 
                 ReclamoDTO reclamoDTO = convertToDTO(newReclamo);
+                reclamoDTO.setId(numeroReclamo);
+
                 return new ResponseEntity<>(reclamoDTO, HttpStatus.OK);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
