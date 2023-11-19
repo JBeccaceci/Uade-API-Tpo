@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.IDaoUsuario;
+import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Usuario;
 
 import java.util.List;
@@ -19,13 +20,21 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
 
     public DaoUsuarioImpl() {
     }
-
+/* 
     @Override
     @Transactional(readOnly = true)
     public List<Usuario> getAll() {
         Session currentSession = entityManager.unwrap(Session.class);
         Query<Usuario> getQuery = currentSession.createQuery("FROM Usuario", Usuario.class);
         getQuery.executeUpdate();
+        return getQuery.list();
+    }*/
+    @Override
+    @Transactional(readOnly = true)
+    public List<Usuario> getAll() {
+        Session currentSession = this.entityManager.unwrap(Session.class);
+
+        Query<Usuario> getQuery = currentSession.createQuery("FROM Usuario", Usuario.class);
         return getQuery.list();
     }
 
@@ -45,18 +54,19 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
 
     @Override
     @Transactional
-    public void update(Usuario persistible) {
+    public void update(Usuario usuario) {
         Session currentSession = entityManager.unwrap(Session.class);
-        currentSession.update(persistible);
+        currentSession.merge(usuario);
     }
 
     @Override
     @Transactional
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query theQuery = currentSession.createQuery("delete from Usuario where id=:idUsuario");
-        theQuery.setParameter("idUsuario", id);
-        theQuery.executeUpdate();
+        Usuario usuario = currentSession.get(Usuario.class, id);
+        if(usuario != null) {
+            currentSession.remove(usuario);
+        }
     }
 
     @Override

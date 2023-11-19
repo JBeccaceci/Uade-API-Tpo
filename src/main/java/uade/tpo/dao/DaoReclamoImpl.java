@@ -46,11 +46,11 @@ public class DaoReclamoImpl implements DAO<Reclamo> {
     }
 
     @Override
-    @Transactional // TODO: Update va en el service
-    public void update(Reclamo persistible) {
+    @Transactional
+    public void update(Reclamo reclamo) {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        currentSession.update(persistible);
+        currentSession.merge(reclamo);
     }
 
     @Override
@@ -58,9 +58,14 @@ public class DaoReclamoImpl implements DAO<Reclamo> {
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query theQuery = currentSession.createQuery("delete from reclamos where id=:idReclamo");
-        theQuery.setParameter("idReclamo", id);
-        theQuery.executeUpdate();
+        //Query theQuery = currentSession.createQuery("delete from reclamos where id=:idReclamo");
+        //theQuery.setParameter("idReclamo", id);
+        //theQuery.executeUpdate();
+        Reclamo reclamo = currentSession.get(Reclamo.class, id);
+        if(reclamo != null) {
+            currentSession.remove(reclamo);
+        }
+
     }
 
     public List<Reclamo> getReclamosByEdificioId(int edificioId) {

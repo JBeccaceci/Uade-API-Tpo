@@ -1,11 +1,16 @@
 package uade.tpo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.dto.UsuarioDto;
+import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Usuario;
 
 import uade.tpo.services.usuario.IUsuarioService;
@@ -16,11 +21,23 @@ public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;
 
+	@GetMapping("/usuarios")
+    public List<UsuarioDto> findAll() {
+        List<Usuario> listaUsuarios = usuarioService.findAll();
+        List<UsuarioDto> listaUsuarioDTOs = new ArrayList<>();
+        for (Usuario usuario : listaUsuarios) {
+            UsuarioDto usuarioDto = convertToUsuarioDto(usuario);
+            listaUsuarioDTOs.add(usuarioDto);
+        }
+
+        return listaUsuarioDTOs;
+    }
+
 	@GetMapping("/usuario/{usuarioId}")
 	public ResponseEntity<?> get(@PathVariable int usuarioId) {
 		Usuario usuario = usuarioService.findById(usuarioId);
 		if (usuario == null) {
-			String mensaje = "Usuario no encontrado con ID: " + usuarioId;
+			String mensaje = "Usuario no encontrado con ID: " + usuarioId; 
 			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
 		}
 		
@@ -73,9 +90,6 @@ public class UsuarioController {
 	private UsuarioDto convertToUsuarioDto(Usuario usuario) {
 		return new UsuarioDto(usuario.getNombre(), usuario.getApellido(), usuario.getDni(), usuario.getUsername(), usuario.getPassword(), usuario.getRole());
 	}
-
-
-
 
 
 	private Usuario dtoToUsuario(UsuarioDto usuarioDto) {

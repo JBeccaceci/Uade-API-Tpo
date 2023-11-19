@@ -5,15 +5,13 @@ import uade.tpo.models.types.TipoUsuario;
 
 import java.util.Date;
 
+
 public class UsuarioDto {
     private String username;
     private String password;
     private String nombre;
     private String apellido;
     private String dni;
-    private Date vencimiento;
-    private float ingreso;
-    private float montoAlquiler;
     private TipoRole role;
 
     public UsuarioDto(String username, String password, String nombre, String apellido, String dni,  TipoRole role) {
@@ -22,7 +20,6 @@ public class UsuarioDto {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
-
         this.role = role;
     }
     
@@ -69,30 +66,6 @@ public class UsuarioDto {
         this.dni = dni;
     }
 
-    public Date getVencimiento() {
-        return vencimiento;
-    }
-
-    public void setVencimiento(Date vencimiento) {
-        this.vencimiento = vencimiento;
-    }
-
-    public float getIngreso() {
-        return ingreso;
-    }
-
-    public void setIngreso(float ingreso) {
-        this.ingreso = ingreso;
-    }
-
-    public float getMontoAlquiler() {
-        return montoAlquiler;
-    }
-
-    public void setMontoAlquiler(float montoAlquiler) {
-        this.montoAlquiler = montoAlquiler;
-    }
-
     public TipoRole getRole() {
         return role;
     }
@@ -109,9 +82,6 @@ public class UsuarioDto {
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", dni='" + dni + '\'' +
-                ", vencimiento=" + vencimiento +
-                ", ingreso=" + ingreso +
-                ", montoAlquiler=" + montoAlquiler +
                 ", role=" + role +
                 '}';
     }
