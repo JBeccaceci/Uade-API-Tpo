@@ -21,12 +21,17 @@ public class Edificio {
 
 	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
 	private List<Reclamo> reclamos = new ArrayList<>();
+	
+	
+	
+	
 
     public Edificio(String nombre, Direccion direccion, int numeroPisos, boolean tieneAscensor) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.numeroPisos = numeroPisos;
         this.tieneAscensor = tieneAscensor;
+       
     }
 
 	public Edificio() {

@@ -52,6 +52,8 @@ public class UsuarioController {
 		
 			Usuario usuario= this.dtoToUsuario(usuarioDto);
 			usuarioService.save(usuario);
+			System.out.println(" ");
+	        System.out.println("Se ha creado el usuario: "+ usuario.getUsername() + " Correctamente");
 		
 		
 		return new ResponseEntity<>(usuarioDto, HttpStatus.CREATED);
@@ -68,6 +70,8 @@ public class UsuarioController {
 		
 			Usuario usuarioUpdated = dtoToUsuario(usuarioDto) ;
 			usuarioService.update(usuarioId, usuarioUpdated);
+			 System.out.println(" ");
+		        System.out.println("Se ha modificado el usuario: "+ usuarioUpdated.getNombre() + " Correctamente");
 		
 		return new ResponseEntity<>(usuarioDto, HttpStatus.OK);
 	}
@@ -82,6 +86,8 @@ public class UsuarioController {
 		}
 
 		usuarioService.deleteById(usuarioId);
+        System.out.println(" ");
+        System.out.println("Se ha eliminado el usuario: "+ usuario.getNombre() + " Correctamente");
 
 		String mensaje = "Usuario eliminado [UsuarioID: " + usuarioId + "]";
 		return new ResponseEntity<>(mensaje, HttpStatus.OK);

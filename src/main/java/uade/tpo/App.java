@@ -43,6 +43,15 @@ public class App {
         
         Usuario propietario2 = new Usuario("thiago1", "123456", "thiago", "juju", "44247775", TipoRole.INQUILINO);
         usuarioService.save(propietario2);
+     
+        Edificio edificio = new Edificio("Uade", new Direccion("Lima", 2213, "1816"), 10, true);
+        edificioService.save(edificio);
+        
+        Edificio edificio2 = new Edificio("Hilton", new Direccion("jackson", 222, "1816"), 8, true);
+        edificioService.save(edificio2);
+        
+        Unidad unidad = new Unidad(edificio, 3, 1);
+        unidadService.save(unidad);
         
     }
     /*

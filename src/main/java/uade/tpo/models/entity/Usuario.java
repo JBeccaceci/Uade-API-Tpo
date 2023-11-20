@@ -40,6 +40,7 @@ public class Usuario {
         this.username = username;
         this.reclamos = new ArrayList<>();
         this.role = role;
+        
     }
 
     public Usuario() {

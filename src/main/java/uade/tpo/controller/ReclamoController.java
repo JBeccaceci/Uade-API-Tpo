@@ -115,6 +115,7 @@ public class ReclamoController {
                 usuario.setReclamos(newReclamo);
                 edificio.setReclamos(newReclamo);
                 reclamoService.save(newReclamo);
+                
 
                 for (MultipartFile file : files) {
                     Imagen img = new Imagen(file.getBytes(), newReclamo);
@@ -123,6 +124,8 @@ public class ReclamoController {
                 }
 
                 ReclamoDTO reclamoDTO = convertToDTO(newReclamo);
+                System.out.println(" ");
+                System.out.println("Se ha creado el reclamo: "+ reclamoDTO.getId()+ " Correctamente");
                 return new ResponseEntity<>(reclamoDTO, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>("Error no controlado", HttpStatus.NOT_FOUND);
@@ -180,6 +183,8 @@ public class ReclamoController {
         reclamo.setMedidas(updateReclamoDTO.getMedidas());
 
         reclamoService.update(reclamo.getId(), reclamo);
+        System.out.println(" ");
+        System.out.println("Se ha modificado el reclamo: "+ reclamo.getId()+ " Correctamente");
         return new ResponseEntity<>(updateReclamoDTO, HttpStatus.OK);
     }
 

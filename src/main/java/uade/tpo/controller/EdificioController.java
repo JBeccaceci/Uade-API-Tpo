@@ -51,6 +51,8 @@ public class EdificioController {
         Edificio edificio = convertToEntity(edificioDTO);
 
         edificioService.save(edificio);
+        System.out.println(" ");
+        System.out.println("Se ha creado el edificio: "+ edificio.getNombre() + " Correctamente");
 
         EdificioDTO nuevoEdificioDTO = convertToDTO(edificio);
 
@@ -71,6 +73,8 @@ public class EdificioController {
         edificioOld.setNumeroPisos(edificioDTO.getNumeroPisos());
         edificioOld.setTieneAscensor(edificioDTO.isTieneAscensor());
         edificioService.save(edificioOld);
+        System.out.println(" ");
+        System.out.println("Se ha modificado el edificio: "+ edificioDTO.getNombre() + " Correctamente");
 
         EdificioDTO edificioUpdatedDTO = convertToDTO(edificioOld);
         return new ResponseEntity<>(edificioUpdatedDTO, HttpStatus.OK);
@@ -85,6 +89,8 @@ public class EdificioController {
         }
 
         edificioService.deleteById(edificioId);
+        System.out.println(" ");
+        System.out.println("Se ha eliminado el edificio: "+ edificio.getNombre() + " Correctamente");
 
         String mensaje = "edificio eliminado [EdificioID: " + edificioId + "]";
         return new ResponseEntity<>(mensaje, HttpStatus.OK);

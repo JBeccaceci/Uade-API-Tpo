@@ -100,6 +100,8 @@ public class UnidadController {
             nuevaUnidad.setHabitante(us);
         }
         unidadService.save(nuevaUnidad);
+        System.out.println(" ");
+        System.out.println("Se ha creado la unidad: "+ nuevaUnidad.getId()+ " Correctamente");
 
         UnidadEdificioDto unidadDTOOutput = new UnidadEdificioDto(String.valueOf(nuevaUnidad.getId()), edificio.getNombre());
         return new ResponseEntity<>(unidadDTOOutput, HttpStatus.CREATED);
@@ -126,6 +128,8 @@ public class UnidadController {
 
         // Guardar la unidad actualizada
         unidadService.save(unidadOld);
+        System.out.println(" ");
+        System.out.println("Se ha modificado el actualizado: "+ unidadOld.getId() + " Correctamente");
         UnidadDTO unidadUpdatedDTO = convertToDTO(unidadOld);
         return new ResponseEntity<>(unidadUpdatedDTO, HttpStatus.OK);
     }
@@ -144,6 +148,8 @@ public class UnidadController {
         }
 
         unidadService.deleteById(unidadId);
+        System.out.println(" ");
+        System.out.println("Se ha eliminado la unidad: "+ unidad.getId()+ " Correctamente");
 
         String mensaje = "unidad eliminado [UnidadID: " + unidadId + "]";
         System.out.println(mensaje);

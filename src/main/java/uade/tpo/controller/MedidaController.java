@@ -46,6 +46,8 @@ public class MedidaController {
         medida.setReclamo(reclamo);
         reclamo.addMedida(medida);
         iMedidaService.save(medida);
+        System.out.println(" ");
+        System.out.println("Se ha creado la medida: "+ medida.getId() + " Correctamente, perteneciente al reclamo " + reclamo.getId());
         return new ResponseEntity<>(new NewMedidaDto(String.valueOf(medida.getId()), medida.getDescripcion(), medidaDto.getReclamoId()), HttpStatus.OK);
     }
 }
