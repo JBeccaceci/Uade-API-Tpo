@@ -11,6 +11,7 @@ import uade.tpo.dao.definition.IDaoUsuario;
 import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -103,4 +104,10 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return passwordEncoder.matches(password, passwordDB);
     }
+	public List<Usuario> findByEdificioId(int edificioId) {
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query<Usuario> query = currentSession.createQuery("FROM Usuario u INNER JOIN usuarios_unidad usun on u.id = usun.usuario_fk_id inner join Unidad uni on uni.id = usun.unidad_fk_id where uni.edificio_id =:edificioId ", Usuario.class);
+		query.setParameter("edificioId", edificioId);
+		return query.getResultList();
+	}
 }

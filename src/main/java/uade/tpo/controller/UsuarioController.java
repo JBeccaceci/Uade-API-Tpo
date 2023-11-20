@@ -12,7 +12,8 @@ import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.dto.UsuarioDto;
 import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Usuario;
-
+import uade.tpo.services.edificio.EdificioService;
+import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.usuario.IUsuarioService;
 
 @RestController
@@ -20,6 +21,7 @@ import uade.tpo.services.usuario.IUsuarioService;
 public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;
+	
 
 	@GetMapping("/usuarios")
     public List<UsuarioDto> findAll() {
@@ -95,6 +97,23 @@ public class UsuarioController {
 
 	private UsuarioDto convertToUsuarioDto(Usuario usuario) {
 		return new UsuarioDto(usuario.getNombre(), usuario.getApellido(), usuario.getDni(), usuario.getUsername(), usuario.getPassword(), usuario.getRole());
+	}
+	
+	@GetMapping("/usuarios/usuariosEdificio/{edificioId}")
+	public ResponseEntity<?> obtenerUsuariosPorEdificio(@PathVariable int edificioId) {
+	    List<Usuario> listaUsuariosEdificios = usuarioService.findByEdificioId(edificioId);
+	    
+	    if (listaUsuariosEdificios.isEmpty()) {
+	        String mensaje = "No pertenece al edificio con ID: " + edificioId;
+	        return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+	    }
+	    List<UsuarioDto> listaUsuarioEdificioDTOs = new ArrayList<>();
+        for (Usuario usuario : listaUsuariosEdificios) {
+            UsuarioDto usuarioDto = convertToUsuarioDto(usuario);
+            listaUsuarioEdificioDTOs.add(usuarioDto);
+        }
+
+	    return new ResponseEntity<>(listaUsuarioEdificioDTOs, HttpStatus.OK);
 	}
 
 

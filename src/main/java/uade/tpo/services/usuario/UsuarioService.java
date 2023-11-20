@@ -1,5 +1,6 @@
 package uade.tpo.services.usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +68,10 @@ public class UsuarioService implements IUsuarioService {
     public Usuario findByUserAndPassword(String username, String password) {
         return this.daoUsuarioImpl.findByUserAndPassword(username, password);
     }
+
+	@Override
+	public List<Usuario> findByEdificioId(int edificioId) {
+		// TODO Auto-generated method stub
+		return this.daoUsuarioImpl.findByEdificioId(edificioId);
+	}
 }

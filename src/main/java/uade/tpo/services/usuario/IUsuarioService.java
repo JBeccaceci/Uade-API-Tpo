@@ -1,5 +1,6 @@
 package uade.tpo.services.usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import uade.tpo.models.entity.Usuario;
@@ -18,4 +19,6 @@ public interface IUsuarioService {
     public void deleteById(int id);
 
     public Usuario findByUserAndPassword(String username, String password);
+
+	public List<Usuario> findByEdificioId(int edificioId);
 }
