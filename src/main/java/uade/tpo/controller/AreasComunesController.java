@@ -31,20 +31,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.multipart.MultipartFile;
 import uade.tpo.models.dto.UsuarioDto;
 import uade.tpo.models.entity.AreaComun;
+import uade.tpo.models.entity.Edificio;
+import uade.tpo.models.entity.Imagen;
 import uade.tpo.models.entity.Usuario;
 import uade.tpo.services.areascomunes.IAreaComunService;
 import uade.tpo.models.dto.AreaComunDto;
+import uade.tpo.services.edificio.IEdificioService;
 
 @RestController
 @RequestMapping("/api")
 public class AreasComunesController {
-    
     @Autowired
     private IAreaComunService areaComunService;
 
-    
+    @Autowired
+    private IEdificioService edificioService;
+
     @GetMapping("/areascomunes")
     public List<AreaComunDto> findAll() {
         List<AreaComun> listaAreasComunes = areaComunService.findAll();
@@ -72,11 +77,17 @@ public class AreasComunesController {
     }
 
     @PostMapping("/areacomun")
-    public ResponseEntity<AreaComunDto> addAreaComun(@RequestBody AreaComunDto areaComunDto) {
-        AreaComun areaComun = dtoToAreaComun(areaComunDto);
+    public ResponseEntity<?> addAreaComun(@RequestBody AreaComunDto areaComunDto) {
+        Edificio edificio = edificioService.findById(areaComunDto.getEdificioId());
+        if (edificio == null) {
+            String mensaje = "Edificio no encontrado ";
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+        }
+
+        AreaComun areaComun = new AreaComun(areaComunDto.getTipoAreaComun(), 0, edificio);
+        edificio.setAreaComun(areaComun);
         areaComunService.save(areaComun);
-        System.out.println(" ");
-        System.out.println("Se ha creado el area comun: " + areaComun.getTipoAreaComun() + " Correctamente");
+
         return new ResponseEntity<>(areaComunDto, HttpStatus.CREATED);
     }
 
@@ -107,10 +118,6 @@ public class AreasComunesController {
     public ResponseEntity<?> obtenerAreasComunesPorEdificio(@PathVariable int edificioId) {
         List<AreaComun> listaAreasComunesEdificio = areaComunService.findByEdificioId(edificioId);
 
-        if (listaAreasComunesEdificio.isEmpty()) {
-            String mensaje = "No pertenece al edificio con ID: " + edificioId;
-            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-        }
         List<AreaComunDto> listaAreasComunesEdificioDTOs = new ArrayList<>();
         for (AreaComun areaComun : listaAreasComunesEdificio) {
             AreaComunDto areaComunDto = convertToAreaComunDto(areaComun);
@@ -123,16 +130,15 @@ public class AreasComunesController {
 
 
     public AreaComunDto convertToAreaComunDto(AreaComun areaComun) {
-      return new AreaComunDto(areaComun.getId(), areaComun.getTipoAreaComun(), areaComun.getCapacidad(), areaComun.getEdificio());
+      return new AreaComunDto(areaComun.getTipoAreaComun(), areaComun.getEdificio().getId(), areaComun.getCapacidad());
     }
 
 
-    private AreaComun dtoToAreaComun(AreaComunDto areaComunDto) {
+    private AreaComun dtoToAreaComun(AreaComunDto areaComunDto, Edificio edificio) {
         AreaComun areaComun = new AreaComun();
-        //areaComun.setId(areaComunDto.getId());
         areaComun.setTipoAreaComun(areaComunDto.getTipoAreaComun());
         areaComun.setCapacidad(areaComunDto.getCapacidad());
-        areaComun.setEdificio(areaComunDto.getEdificio());
+        areaComun.setEdificio(edificio);
         return areaComun;
 
     }

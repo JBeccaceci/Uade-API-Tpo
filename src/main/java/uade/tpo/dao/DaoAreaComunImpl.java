@@ -25,7 +25,7 @@ public class DaoAreaComunImpl implements DAO<AreaComun> {
     public List<AreaComun> getAll() {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query<AreaComun> getQuery = currentSession.createQuery("FROM areasComunes", AreaComun.class);
+        Query<AreaComun> getQuery = currentSession.createQuery("FROM AreaComun", AreaComun.class);
         return getQuery.list();
     }
 
@@ -60,7 +60,7 @@ public class DaoAreaComunImpl implements DAO<AreaComun> {
     public void delete(int id) {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query theQuery = currentSession.createQuery("delete from areasComunes where id=:idAreaComun");
+        Query theQuery = currentSession.createQuery("delete from AreaComun where id=:idAreaComun");
         theQuery.setParameter("idAreaComun", id);
         theQuery.executeUpdate();
     }
@@ -71,7 +71,7 @@ public class DaoAreaComunImpl implements DAO<AreaComun> {
     public List<AreaComun> findByEdificioId(int edificioId) {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query<AreaComun> getQuery = currentSession.createQuery("FROM areasComunes where edificio_id=:edificioId", AreaComun.class);
+        Query<AreaComun> getQuery = currentSession.createQuery("FROM AreaComun where edificio.id=:edificioId", AreaComun.class);
         getQuery.setParameter("edificioId", edificioId);
         return getQuery.list();
     }

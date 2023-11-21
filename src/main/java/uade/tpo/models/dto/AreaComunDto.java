@@ -4,35 +4,18 @@ import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.types.TipoAreaComun;
 
 public class AreaComunDto {
-	private int id;
     private TipoAreaComun tipoAreaComun;
+    private int edificioId;
     private int capacidad;
-	
-    
-    
-    
-    public AreaComunDto(int id, TipoAreaComun tipoAreaComun, int capacidad, Edificio edificio) {
-		super();
-		this.id = id;
-		this.tipoAreaComun = tipoAreaComun;
-		this.capacidad = capacidad;
-		this.edificio = edificio;
-	}
-    
-
-	@Override
-	public String toString() {
-		return "AreaComunDto [id=" + id + ", tipoAreaComun=" + tipoAreaComun + ", capacidad=" + capacidad
-				+ ", edificio=" + edificio + "]";
-	}
-
 
 	public AreaComunDto() {
-		super();
 	}
 
-
-	private Edificio edificio;
+	public AreaComunDto(TipoAreaComun tipoAreaComun, int edificioId, int capacidad) {
+		this.tipoAreaComun = tipoAreaComun;
+		this.edificioId = edificioId;
+		this.capacidad = capacidad;
+	}
 
 	public TipoAreaComun getTipoAreaComun() {
 		return tipoAreaComun;
@@ -40,6 +23,14 @@ public class AreaComunDto {
 
 	public void setTipoAreaComun(TipoAreaComun tipoAreaComun) {
 		this.tipoAreaComun = tipoAreaComun;
+	}
+
+	public int getEdificioId() {
+		return edificioId;
+	}
+
+	public void setEdificioId(int edificioId) {
+		this.edificioId = edificioId;
 	}
 
 	public int getCapacidad() {
@@ -50,18 +41,12 @@ public class AreaComunDto {
 		this.capacidad = capacidad;
 	}
 
-	public Edificio getEdificio() {
-		return edificio;
+	@Override
+	public String toString() {
+		return "AreaComunDto{" +
+				", tipoAreaComun=" + tipoAreaComun +
+				", edificioId='" + edificioId + '\'' +
+				", capacidad=" + capacidad +
+				'}';
 	}
-
-	public void setEdificio(Edificio edificio) {
-		this.edificio = edificio;
-	}
-
-	public int getId() {
-		return id;
-	}
-    
-    
-
 }

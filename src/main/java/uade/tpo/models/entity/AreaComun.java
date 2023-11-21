@@ -18,6 +18,7 @@ public class AreaComun {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private TipoAreaComun tipoAreaComun;
     private int capacidad;
 
@@ -32,28 +33,16 @@ public class AreaComun {
         this.edificio = edificio;
     }
 
-   
-  
-
     public AreaComun() {
     }
-
-
-
 
     public TipoAreaComun getTipoAreaComun() {
 		return tipoAreaComun;
 	}
 
-
-
-
 	public void setTipoAreaComun(TipoAreaComun tipoAreaComun) {
 		this.tipoAreaComun = tipoAreaComun;
 	}
-
-
-
 
 	public int getCapacidad() {
         return capacidad;
