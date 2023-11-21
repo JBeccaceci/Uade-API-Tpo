@@ -81,7 +81,7 @@ public class ReclamoController {
 
         if (data.isAreaComun()) {
             try {
-                TipoReclamo tipoReclamo = TipoReclamo.valueOf(data.getTipoReclamo().toUpperCase());
+                TipoReclamo tipoReclamo = TipoReclamo.get(data.getTipoReclamo().toUpperCase()).orElse(TipoReclamo.PROBLEMA);
                 Reclamo newReclamo = new Reclamo(tipoReclamo, data.getDescripcion(), usuario, unidad, edificio, data.isAreaComun());
                 if (unidad != null) unidad.setReclamos(newReclamo);
                 usuario.setReclamos(newReclamo);
@@ -109,13 +109,12 @@ public class ReclamoController {
                 return new ResponseEntity<>("Debes ser dueño o perteneces a la unidad", HttpStatus.NOT_FOUND);
             }
             try {
-                TipoReclamo tipoReclamo = TipoReclamo.valueOf(data.getTipoReclamo());
+                TipoReclamo tipoReclamo = TipoReclamo.get(data.getTipoReclamo().toUpperCase()).orElse(TipoReclamo.PROBLEMA);
                 Reclamo newReclamo = new Reclamo(tipoReclamo, data.getDescripcion(), usuario, unidad, edificio, data.isAreaComun());
                 unidad.setReclamos(newReclamo);
                 usuario.setReclamos(newReclamo);
                 edificio.setReclamos(newReclamo);
                 reclamoService.save(newReclamo);
-                
 
                 for (MultipartFile file : files) {
                     Imagen img = new Imagen(file.getBytes(), newReclamo);
@@ -170,6 +169,7 @@ public class ReclamoController {
             return ResponseEntity.notFound().build();
         }
 
+        updateReclamoDTO.setId(String.valueOf(reclamoId));
         reclamo.setTipoReclamo(updateReclamoDTO.getTipoReclamo());
         reclamo.setDescripcion(updateReclamoDTO.getDescripcion());
         reclamo.setCreado(updateReclamoDTO.getCreado());
