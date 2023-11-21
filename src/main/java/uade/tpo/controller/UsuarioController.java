@@ -21,7 +21,14 @@ import uade.tpo.services.usuario.IUsuarioService;
 public class UsuarioController {
 	@Autowired
 	private IUsuarioService usuarioService;
+	private static UsuarioController usuarioController;
 	
+	public static UsuarioController getInstance() {
+		if(usuarioController == null) {
+			return new UsuarioController();
+		}
+		return usuarioController;
+	}
 
 	@GetMapping("/usuarios")
     public List<UsuarioDto> findAll() {
@@ -95,7 +102,7 @@ public class UsuarioController {
 		return new ResponseEntity<>(mensaje, HttpStatus.OK);
 	}
 
-	private UsuarioDto convertToUsuarioDto(Usuario usuario) {
+	public UsuarioDto convertToUsuarioDto(Usuario usuario) {
 		return new UsuarioDto(usuario.getNombre(), usuario.getApellido(), usuario.getDni(), usuario.getUsername(), usuario.getPassword(), usuario.getRole());
 	}
 	

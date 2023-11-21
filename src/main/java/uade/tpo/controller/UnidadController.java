@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import uade.tpo.config.JWTAuthInfo;
 import uade.tpo.models.UnidadUsuarioDTO;
 import uade.tpo.models.dto.UnidadEdificioDto;
+import uade.tpo.models.dto.UsuarioDto;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.unidad.IUnidadService;
 import uade.tpo.services.usuario.IUsuarioService;
@@ -167,6 +168,23 @@ public class UnidadController {
         unidad.setEdificio(edificio);
         unidad.setHabitante(usuario);
         return unidad;
+    }
+    
+    @GetMapping("/unidad/habitantes/{unidadId}")
+    public List<UsuarioDto> getHabitantes(@PathVariable int unidadId){
+    	Unidad unidad = unidadService.findById(unidadId);
+    	if(unidad == null) {
+
+             return null;
+    		
+    	}
+    	List<Usuario> usuariosUnidad = unidad.getHabitantes();
+    	ArrayList<UsuarioDto>usuariosUnidadDtos = new ArrayList<UsuarioDto>();
+    	for(Usuario usuario : usuariosUnidad) {
+    		usuariosUnidadDtos.add(UsuarioController.getInstance().convertToUsuarioDto(usuario));
+    	}
+    	String mensaje = "Habitantes de : " + unidadId;
+        return usuariosUnidadDtos;
     }
 }
 
