@@ -106,8 +106,8 @@ public class DaoUsuarioImpl implements IDaoUsuario<Usuario> {
     }
 	public List<Usuario> findByEdificioId(int edificioId) {
 		Session currentSession = entityManager.unwrap(Session.class);
-		Query<Usuario> query = currentSession.createQuery("FROM Usuario u INNER JOIN usuarios_unidad usun on u.id = usun.usuario_fk_id inner join Unidad uni on uni.id = usun.unidad_fk_id where uni.edificio_id =:edificioId ", Usuario.class);
-		query.setParameter("edificioId", edificioId);
+        Query<Usuario> query = currentSession.createQuery("SELECT u FROM Usuario u JOIN u.unidades uni WHERE uni.edificio.id = :edificioId", Usuario.class);		
+        query.setParameter("edificioId", edificioId);
 		return query.getResultList();
 	}
 }

@@ -7,6 +7,8 @@ import uade.tpo.models.types.TipoUsuario;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario {
@@ -32,12 +34,13 @@ public class Usuario {
     @JoinTable(name = "Usuario_Unidad", joinColumns = @JoinColumn(name = "usuario_FK_id"), inverseJoinColumns = @JoinColumn(name = "unidad_FK_id"))
     private List<Unidad> unidades = new ArrayList<>();
 
-    public Usuario(String username, String password, String nombre, String apellido, String dni, TipoRole role) {
+    
+    public Usuario( String nombre, String apellido,String username, String password, String dni, TipoRole role) {
         this.nombre = nombre;
-        this.password = password;
         this.apellido = apellido;
-        this.dni = dni;
         this.username = username;
+        this.password = password;
+        this.dni = dni;
         this.reclamos = new ArrayList<>();
         this.role = role;
         
