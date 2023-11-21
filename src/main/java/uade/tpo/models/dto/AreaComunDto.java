@@ -7,13 +7,16 @@ public class AreaComunDto {
 	private int id;
     private TipoAreaComun tipoAreaComun;
     private int capacidad;
+	
     
     
     
-    public AreaComunDto(TipoAreaComun tipoAreaComun, int capacidad) {
+    public AreaComunDto(int id, TipoAreaComun tipoAreaComun, int capacidad, Edificio edificio) {
 		super();
+		this.id = id;
 		this.tipoAreaComun = tipoAreaComun;
 		this.capacidad = capacidad;
+		this.edificio = edificio;
 	}
     
 

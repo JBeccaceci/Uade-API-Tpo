@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import uade.tpo.dao.definition.DAO;
 import uade.tpo.models.entity.AreaComun;
 
-
 import java.util.List;
 
 @Repository
@@ -49,7 +48,7 @@ public class DaoAreaComunImpl implements DAO<AreaComun> {
     }
 
     @Override
-    @Transactional // TODO: Update va en el service
+    @Transactional
     public void update(AreaComun persistible) {
         Session currentSession = entityManager.unwrap(Session.class);
 
@@ -65,6 +64,19 @@ public class DaoAreaComunImpl implements DAO<AreaComun> {
         theQuery.setParameter("idAreaComun", id);
         theQuery.executeUpdate();
     }
+
+    
+   
+    @Transactional(readOnly = true)
+    public List<AreaComun> findByEdificioId(int edificioId) {
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query<AreaComun> getQuery = currentSession.createQuery("FROM areasComunes where edificio_id=:edificioId", AreaComun.class);
+        getQuery.setParameter("edificioId", edificioId);
+        return getQuery.list();
+    }
+    
+
 }
 
 

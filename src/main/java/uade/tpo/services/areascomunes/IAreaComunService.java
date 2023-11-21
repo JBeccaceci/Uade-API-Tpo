@@ -14,6 +14,7 @@ public interface IAreaComunService {
 	    public void update(int id, AreaComun cliente);
 
 	    public void deleteById(int id);
-	
+
+		public List<AreaComun> findByEdificioId(int edificioId);
 
 }

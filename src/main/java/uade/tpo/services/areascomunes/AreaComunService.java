@@ -30,6 +30,7 @@ public class AreaComunService implements IAreaComunService {
 	@Override
 	public void update(int id, AreaComun cliente) {
 		// TODO Auto-generated method stub
+		daoAreaComunImpl.update(cliente);
 	}
 
 	@Override
@@ -41,4 +42,10 @@ public class AreaComunService implements IAreaComunService {
 	public AreaComun findById(int id) {
 		return daoAreaComunImpl.findById(id);
 	}
+
+	@Override
+	public List<AreaComun> findByEdificioId(int edificioId) {
+		return daoAreaComunImpl.findByEdificioId(edificioId);
+	}
+
 }

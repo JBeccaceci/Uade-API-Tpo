@@ -29,6 +29,12 @@ public class AreaComun {
    
   
 
+    public AreaComun() {
+    }
+
+
+
+
     public TipoAreaComun getTipoAreaComun() {
 		return tipoAreaComun;
 	}
