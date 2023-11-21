@@ -1,6 +1,7 @@
 package uade.tpo.models.entity;
 
 import jakarta.persistence.Entity;
+import uade.tpo.models.types.TipoAreaComun;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,27 +14,36 @@ public class AreaComun {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String nombre;
+    private TipoAreaComun tipoAreaComun;
     private int capacidad;
 
     @OneToOne
     private Edificio edificio;
 
-    public AreaComun(String nombre, int capacidad, Edificio edificio) {
-        this.nombre = nombre;
+    public AreaComun(TipoAreaComun tipoAreaComun, int capacidad, Edificio edificio) {
+        this.tipoAreaComun = tipoAreaComun;
         this.capacidad = capacidad;
         this.edificio = edificio;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
+   
+  
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    public TipoAreaComun getTipoAreaComun() {
+		return tipoAreaComun;
+	}
 
-    public int getCapacidad() {
+
+
+
+	public void setTipoAreaComun(TipoAreaComun tipoAreaComun) {
+		this.tipoAreaComun = tipoAreaComun;
+	}
+
+
+
+
+	public int getCapacidad() {
         return capacidad;
     }
 
@@ -57,7 +67,7 @@ public class AreaComun {
     public String toString() {
         return "AreaComun{" +
                 "id=" + id +
-                ", nombre='" + nombre + '\'' +
+                ", tipo='" + tipoAreaComun + '\'' +
                 ", capacidad=" + capacidad +
                 ", edificio=" + edificio +
                 '}';
