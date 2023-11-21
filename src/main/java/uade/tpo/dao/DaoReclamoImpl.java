@@ -50,7 +50,7 @@ public class DaoReclamoImpl implements DAO<Reclamo> {
     public void update(Reclamo reclamo) {
         Session currentSession = entityManager.unwrap(Session.class);
 
-        currentSession.merge(reclamo);
+        currentSession.update(reclamo);
     }
 
     @Override

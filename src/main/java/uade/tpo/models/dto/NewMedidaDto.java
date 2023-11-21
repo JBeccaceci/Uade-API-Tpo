@@ -44,6 +44,10 @@ public class NewMedidaDto {
         this.reclamoId = reclamoId;
     }
 
+    public void setEstadoReclamo(String estadoReclamo) {
+        this.estadoReclamo = estadoReclamo;
+    }
+
     @Override
     public String toString() {
         return "NewMedidaDto{" +

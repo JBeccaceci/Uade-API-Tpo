@@ -25,6 +25,7 @@ import uade.tpo.services.usuario.IUsuarioService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -124,7 +125,7 @@ public class ReclamoController {
 
                 ReclamoDTO reclamoDTO = convertToDTO(newReclamo);
                 System.out.println(" ");
-                System.out.println("Se ha creado el reclamo: "+ reclamoDTO.getId()+ " Correctamente");
+                System.out.println("Se ha creado el reclamo: "+ reclamoDTO.toString() + " Correctamente");
                 return new ResponseEntity<>(reclamoDTO, HttpStatus.OK);
             } catch (Exception e) {
                 return new ResponseEntity<>("Error no controlado", HttpStatus.NOT_FOUND);
@@ -169,6 +170,7 @@ public class ReclamoController {
             return ResponseEntity.notFound().build();
         }
 
+        EstadoReclamo estadoReclamo = EstadoReclamo.get(updateReclamoDTO.getEstadoReclamo()).orElse(EstadoReclamo.NUEVO);
         updateReclamoDTO.setId(String.valueOf(reclamoId));
         reclamo.setTipoReclamo(updateReclamoDTO.getTipoReclamo());
         reclamo.setDescripcion(updateReclamoDTO.getDescripcion());
@@ -179,9 +181,8 @@ public class ReclamoController {
         reclamo.setUnidad(updateReclamoDTO.getUnidad());
         reclamo.setEdificio(updateReclamoDTO.getEdificio());
         reclamo.setImagenes(updateReclamoDTO.getImagenes());
-        reclamo.setEstadoReclamo(updateReclamoDTO.getEstadoReclamo());
+        reclamo.setEstadoReclamo(estadoReclamo);
         reclamo.setMedidas(updateReclamoDTO.getMedidas());
-
         reclamoService.update(reclamo.getId(), reclamo);
         System.out.println(" ");
         System.out.println("Se ha modificado el reclamo: "+ reclamo.getId()+ " Correctamente");
@@ -214,8 +215,10 @@ public class ReclamoController {
     }
 
     private NewReclamoDTO converToNewReclamoDTO(Reclamo reclamo) {
+        String unidadId = reclamo.getUnidad() != null ? String.valueOf(reclamo.getUnidad().getId()) : null;
         return new NewReclamoDTO(
                 String.valueOf(reclamo.getId()),
+                unidadId,
                 reclamo.getTipoReclamo(),
                 reclamo.getDescripcion(),
                 reclamo.isEsAreaComun(),

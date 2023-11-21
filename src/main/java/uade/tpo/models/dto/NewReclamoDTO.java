@@ -10,6 +10,7 @@ import java.util.List;
 
 public class NewReclamoDTO {
     private String id;
+    private String unidad_id;
     private TipoReclamo tipoReclamo;
     private String descripcion;
     private Date creado;
@@ -22,8 +23,9 @@ public class NewReclamoDTO {
     public NewReclamoDTO() {
     }
 
-    public NewReclamoDTO(String id, TipoReclamo tipoReclamo, String descripcion, boolean areaComun, List<Imagen> imagenes, EstadoReclamo estadoReclamo, List<Medida> medidas) {
+    public NewReclamoDTO(String id, String unidad_id, TipoReclamo tipoReclamo, String descripcion, boolean areaComun, List<Imagen> imagenes, EstadoReclamo estadoReclamo, List<Medida> medidas) {
         this.id = id;
+        this.unidad_id = unidad_id;
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.areaComun = areaComun;
@@ -102,5 +104,17 @@ public class NewReclamoDTO {
 
     public void setMedidas(List<Medida> medidas) {
         this.medidas = medidas;
+    }
+
+    public String getUnidad_id() {
+        return unidad_id;
+    }
+
+    public void setUnidad_id(String unidad_id) {
+        this.unidad_id = unidad_id;
+    }
+
+    public boolean isAreaComun() {
+        return areaComun;
     }
 }

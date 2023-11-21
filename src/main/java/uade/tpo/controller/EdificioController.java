@@ -3,9 +3,13 @@ package uade.tpo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import uade.tpo.config.JWTAuthInfo;
 import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.entity.Edificio;
+import uade.tpo.models.types.TipoRole;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.unidad.IUnidadService;
 
@@ -23,11 +27,27 @@ public class EdificioController {
 
     @GetMapping("/edificios")
     public List<EdificioDTO> findAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        JWTAuthInfo jwtAuthInfo = (JWTAuthInfo) authentication.getPrincipal();
+
         List<Edificio> listaEdificios = edificioService.findAll();
+
         List<EdificioDTO> listaEdificioDTOs = new ArrayList<>();
-        for (Edificio edificio : listaEdificios) {
-            EdificioDTO edificioDTO = convertToDTO(edificio);
-            listaEdificioDTOs.add(edificioDTO);
+        if ("ADMIN".equals(jwtAuthInfo.getRole())) {
+            for (Edificio edificio : listaEdificios) {
+                EdificioDTO edificioDTO = convertToDTO(edificio);
+                listaEdificioDTOs.add(edificioDTO);
+            }
+        } else {
+            for (Edificio edificio : listaEdificios) {
+                boolean perceneceEdificio = edificio.getUnidades().stream()
+                        .flatMap(uni -> uni.getHabitantes().stream())
+                        .anyMatch(hab -> hab.getId() == Integer.parseInt(jwtAuthInfo.getUserId()));
+                if (perceneceEdificio) {
+                    EdificioDTO edificioDTO = convertToDTO(edificio);
+                    listaEdificioDTOs.add(edificioDTO);
+                }
+            }
         }
 
         return listaEdificioDTOs;

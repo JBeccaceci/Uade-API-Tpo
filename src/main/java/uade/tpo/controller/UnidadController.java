@@ -51,6 +51,19 @@ public class UnidadController {
     public List<UnidadUsuarioDTO> getByUserAndBuilding(@RequestParam(name = "edificioId") Integer edificioId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         JWTAuthInfo jwtAuthInfo = (JWTAuthInfo) authentication.getPrincipal();
+
+        if ("ADMIN".equals(jwtAuthInfo.getRole())) {
+            List<Unidad> listaUnidades = unidadService.findAll();
+
+            List<UnidadUsuarioDTO> listaUnidadDTOs = new ArrayList<>();
+            for (Unidad unidad : listaUnidades) {
+                if (unidad.getEdificio().getId() == edificioId) {
+                    listaUnidadDTOs.add(new UnidadUsuarioDTO(unidad.getId(), unidad.getEdificio().getNombre()));
+                }
+            }
+            return listaUnidadDTOs;
+        }
+
         return unidadService.getUnitsByOccupant(Integer.parseInt(jwtAuthInfo.getUserId()), edificioId);
     }
 
@@ -84,7 +97,7 @@ public class UnidadController {
                 .filter(h -> jwtAuthInfo.getUserName().equals(h))
                 .findAny();
         if (!existPropietario.isPresent()) {
-            unidadDTO.getHabitantes().add(jwtAuthInfo.getUserName());
+            //unidadDTO.getHabitantes().add(jwtAuthInfo.getUserName());
         }
 
         Unidad nuevaUnidad = new Unidad();
@@ -98,6 +111,8 @@ public class UnidadController {
                 return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
             }
             us.setUnidad(nuevaUnidad);
+            usuarioService.save(us);
+
             nuevaUnidad.setHabitante(us);
         }
         unidadService.save(nuevaUnidad);
@@ -126,6 +141,16 @@ public class UnidadController {
         unidadOld.setEdificio(edificio);
         unidadOld.setDpto(Integer.parseInt(unidadDTO.getDpto()));
         unidadOld.setPiso(Integer.parseInt(unidadDTO.getPiso()));
+
+        for (String usuario : unidadDTO.getHabitantes()) {
+            Usuario us = usuarioService.findByUsername(usuario);
+            if (us == null) {
+                String mensaje = "usuario not found: " + unidadDTO.getEdificio_id();
+                return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+            }
+            us.setUnidad(unidadOld);
+            unidadOld.setHabitante(us);
+        }
 
         // Guardar la unidad actualizada
         unidadService.save(unidadOld);

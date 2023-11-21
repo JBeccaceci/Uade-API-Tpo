@@ -27,7 +27,7 @@ public enum EstadoReclamo {
 
     public static Optional<EstadoReclamo> get(String name) {
         return Arrays.stream(EstadoReclamo.values())
-                .filter(env -> env.name.equals(name))
+                .filter(env -> env.name.equals(name.replace(" ", "_")))
                 .findFirst();
     }
 }

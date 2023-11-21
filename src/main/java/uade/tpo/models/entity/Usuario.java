@@ -49,6 +49,10 @@ public class Usuario {
     public Usuario() {
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -107,9 +111,6 @@ public class Usuario {
 
     public void setUnidad(Unidad unidad) {
         this.unidades.add(unidad);
-        if (unidad != null && !unidad.getHabitantes().contains(this)) {
-            unidad.getHabitantes().add(this);
-        }
     }
 
     public void setReclamos(Reclamo reclamo) {

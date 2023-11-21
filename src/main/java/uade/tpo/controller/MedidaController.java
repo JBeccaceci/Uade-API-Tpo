@@ -43,34 +43,37 @@ public class MedidaController {
             return new ResponseEntity<>("Reclamo no encontrado", HttpStatus.NOT_FOUND);
         }
 
-        Medida medida = new Medida(medidaDto.getDescripcion());
-        medida.setReclamo(reclamo);
-        reclamo.addMedida(medida);
-        iMedidaService.save(medida);
-        System.out.println(" ");
-        System.out.println("Se ha creado la medida: "+ medida.getId() + " Correctamente, perteneciente al reclamo " + reclamo.getId());
-        EstadoReclamo estadoReclamo = EstadoReclamo.get(medidaDto.getEstadoReclamo()).orElse(EstadoReclamo.NUEVO);
-        reclamo.setEstadoReclamo(estadoReclamo);
-        iReclamoService.update(Integer.parseInt(medidaDto.getReclamoId()), reclamo);
-        return new ResponseEntity<>(new NewMedidaDto(String.valueOf(medida.getId()), medida.getDescripcion(), medidaDto.getReclamoId(), medidaDto.getEstadoReclamo()), HttpStatus.OK);
+        try {
+            Medida medida = new Medida(medidaDto.getDescripcion());
+            medida.setReclamo(reclamo);
+            reclamo.addMedida(medida);
+            iMedidaService.save(medida);
+            System.out.println(" ");
+            System.out.println("Se ha creado la medida: " + medida.getId() + " Correctamente, perteneciente al reclamo " + reclamo.getId());
+            EstadoReclamo estadoReclamo = EstadoReclamo.get(medidaDto.getEstadoReclamo().replace(" ", "_")).orElse(EstadoReclamo.NUEVO);
+            reclamo.setEstadoReclamo(estadoReclamo);
+            iReclamoService.update(Integer.parseInt(medidaDto.getReclamoId()), reclamo);
+            return new ResponseEntity<>(new NewMedidaDto(String.valueOf(medida.getId()), medida.getDescripcion(), medidaDto.getReclamoId(), estadoReclamo.getName().toString()), HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            throw e;
+        }
     }
-    
+
     @DeleteMapping("/medida/{medidaId}")
-    public ResponseEntity<String>deleteMedida( @PathVariable int medidaId){
-    	Medida medida = iMedidaService.findById(medidaId);
-    	if(medida != null) {
-    		String mensaje = "medida no encontrada con ID: " + medidaId;
+    public ResponseEntity<String> deleteMedida(@PathVariable int medidaId) {
+        Medida medida = iMedidaService.findById(medidaId);
+        if (medida != null) {
+            String mensaje = "medida no encontrada con ID: " + medidaId;
             return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-    	}
-    	iMedidaService.deleteById(medidaId);
-    	System.out.println(" ");
-        System.out.println("Se ha eliminado la medida: "+ medida.getId()+ " Correctamente");
-        
+        }
+        iMedidaService.deleteById(medidaId);
+        System.out.println(" ");
+        System.out.println("Se ha eliminado la medida: " + medida.getId() + " Correctamente");
+
         String mensaje = "medida eliminada [MedidaID: " + medidaId + "]";
         return new ResponseEntity<>(mensaje, HttpStatus.OK);
     }
-    
-    
-    
-    
+
+
 }

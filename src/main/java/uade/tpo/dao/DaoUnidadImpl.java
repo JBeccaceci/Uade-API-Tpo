@@ -26,7 +26,7 @@ public class DaoUnidadImpl implements DAO<Unidad> {
     @Transactional(readOnly = true)
     public List<Unidad> getAll() {
         Session currentSession = entityManager.unwrap(Session.class);
-        Query<Unidad> getQuery = currentSession.createQuery("FROM unidades", Unidad.class);
+        Query<Unidad> getQuery = currentSession.createQuery("FROM Unidad", Unidad.class);
         return getQuery.list();
     }
 

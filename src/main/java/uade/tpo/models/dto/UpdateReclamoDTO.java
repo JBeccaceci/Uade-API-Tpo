@@ -18,13 +18,13 @@ public class UpdateReclamoDTO {
     private Unidad unidad;
     private Edificio edificio;
     private List<Imagen> imagenes;
-    private EstadoReclamo estadoReclamo;
+    private String estadoReclamo;
     private List<Medida> medidas;
 
     public UpdateReclamoDTO() {
     }
 
-    public UpdateReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Date creado, Date actualizado, boolean esAreaComun, Usuario usuario, Unidad unidad, Edificio edificio, List<Imagen> imagenes, EstadoReclamo estadoReclamo, List<Medida> medidas) {
+    public UpdateReclamoDTO(TipoReclamo tipoReclamo, String descripcion, Date creado, Date actualizado, boolean esAreaComun, Usuario usuario, Unidad unidad, Edificio edificio, List<Imagen> imagenes, String estadoReclamo, List<Medida> medidas) {
         this.tipoReclamo = tipoReclamo;
         this.descripcion = descripcion;
         this.creado = creado;
@@ -110,11 +110,11 @@ public class UpdateReclamoDTO {
         this.imagenes = imagenes;
     }
 
-    public EstadoReclamo getEstadoReclamo() {
+    public String getEstadoReclamo() {
         return estadoReclamo;
     }
 
-    public void setEstadoReclamo(EstadoReclamo estadoReclamo) {
+    public void setEstadoReclamo(String estadoReclamo) {
         this.estadoReclamo = estadoReclamo;
     }
 
