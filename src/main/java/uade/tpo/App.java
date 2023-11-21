@@ -6,8 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import uade.tpo.models.entity.*;
 import uade.tpo.models.types.EstadoReclamo;
+import uade.tpo.models.types.TipoAreaComun;
 import uade.tpo.models.types.TipoReclamo;
 import uade.tpo.models.types.TipoRole;
+import uade.tpo.services.areascomunes.IAreaComunService;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.reclamo.IReclamoService;
 import uade.tpo.services.unidad.IUnidadService;
@@ -29,7 +31,11 @@ public class App {
 
     @Autowired
     private IReclamoService reclamoService;
+    
 
+    @Autowired
+    private IAreaComunService areaComunService;
+    
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
     }
@@ -55,6 +61,9 @@ public class App {
         
         Unidad unidad = new Unidad(edificio, 3, 1);
         unidadService.save(unidad);
+        
+        AreaComun areaComun = new AreaComun(TipoAreaComun.ESTACIONAMIENTO, 10, edificio2);
+        areaComunService.save(areaComun);
         
     }
     /*

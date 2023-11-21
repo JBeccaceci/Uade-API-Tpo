@@ -1,10 +1,14 @@
 package uade.tpo.models.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import uade.tpo.models.types.TipoAreaComun;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -17,7 +21,9 @@ public class AreaComun {
     private TipoAreaComun tipoAreaComun;
     private int capacidad;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "edificio_id")
+    @JsonIgnore
     private Edificio edificio;
 
     public AreaComun(TipoAreaComun tipoAreaComun, int capacidad, Edificio edificio) {
