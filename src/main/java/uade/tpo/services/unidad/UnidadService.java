@@ -43,5 +43,9 @@ public class UnidadService implements IUnidadService {
 	public List<UnidadUsuarioDTO> getUnitsByOccupant(int usuarioId, int edificioId) {
 		return daoUnidadImpl.getUnitsByOccupant(usuarioId, edificioId);
 	}
+	
+	public void eliminarHabitanteUnidad(int unidadId, int  usuarioId) {
+		 daoUnidadImpl.eliminarHabitanteUnidad(unidadId, usuarioId);
+	}
 
 }

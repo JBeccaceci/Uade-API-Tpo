@@ -151,6 +151,8 @@ public class UnidadController {
             us.setUnidad(unidadOld);
             unidadOld.setHabitante(us);
         }
+        
+        
 
         // Guardar la unidad actualizada
         unidadService.save(unidadOld);
@@ -158,6 +160,25 @@ public class UnidadController {
         System.out.println("Se ha modificado el actualizado: "+ unidadOld.getId() + " Correctamente");
         UnidadDTO unidadUpdatedDTO = convertToDTO(unidadOld);
         return new ResponseEntity<>(unidadUpdatedDTO, HttpStatus.OK);
+    }
+    
+    @DeleteMapping ("unidadUsuario/{unidadId}/{usuarioId}")
+     public ResponseEntity<String> deleteHabitanteUnidad(@PathVariable int unidadId, @PathVariable int usuarioId) {
+    	Unidad unidad = unidadService.findById(unidadId);
+    	Usuario usu = usuarioService.findById(usuarioId);
+    	if(unidad == null) {
+    		String mensaje = "unidad not found: " + unidadId;
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+    	}
+    	if(usu == null) {
+    		String mensaje = "usuario not found: " + usuarioId;
+            return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
+    		
+    	}
+    	unidadService.eliminarHabitanteUnidad(unidadId, usuarioId );
+    	String mensaje = "usuario " + usu.getNombre() + " eliminado de la unidad : " + unidadId;
+        return new ResponseEntity<>(mensaje, HttpStatus.OK);
+    	
     }
 
 

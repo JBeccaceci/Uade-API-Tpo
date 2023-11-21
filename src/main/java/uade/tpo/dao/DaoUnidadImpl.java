@@ -78,4 +78,16 @@ public class DaoUnidadImpl implements DAO<Unidad> {
         }
         return unidadUsuarioDTOS;
     }
+    
+    
+    @Transactional
+    public void eliminarHabitanteUnidad(int unidadId, int  usuarioId ) {
+    	 Session currentSession = entityManager.unwrap(Session.class);
+    	 Query query = currentSession.createQuery("DELETE FROM usuario_unidad WHERE unidadId = :unidadId AND usuarioId = :usuarioId");
+    	    query.setParameter("unidadId", unidadId);
+    	    query.setParameter("usuarioId", usuarioId);
+    	 
+    	    query.executeUpdate();
+         
+    }
 }

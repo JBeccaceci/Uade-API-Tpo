@@ -17,4 +17,6 @@ public interface IUnidadService {
     public void deleteById(int id);
 
     public List<UnidadUsuarioDTO> getUnitsByOccupant(int usuarioId, int edificioId);
+    
+    public void eliminarHabitanteUnidad(int unidadId, int  usuarioId);
 }

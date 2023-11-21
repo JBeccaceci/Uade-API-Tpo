@@ -10,5 +10,6 @@ public interface DAO<T> {
 	void save(T persistible) throws Exception;
 	void update(T persistible) throws Exception;
 	void delete(int id) throws Exception;
+	
 }
 
