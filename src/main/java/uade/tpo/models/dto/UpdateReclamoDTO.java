@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class UpdateReclamoDTO {
+    private String id;
     private TipoReclamo tipoReclamo;
     private String descripcion;
     private Date creado;
@@ -123,6 +124,14 @@ public class UpdateReclamoDTO {
 
     public void setMedidas(List<Medida> medidas) {
         this.medidas = medidas;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
