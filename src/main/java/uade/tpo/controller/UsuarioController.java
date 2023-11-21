@@ -12,6 +12,8 @@ import uade.tpo.models.dto.EdificioDTO;
 import uade.tpo.models.dto.UsuarioDto;
 import uade.tpo.models.entity.Edificio;
 import uade.tpo.models.entity.Usuario;
+import uade.tpo.models.types.TipoReclamo;
+import uade.tpo.models.types.TipoRole;
 import uade.tpo.services.edificio.EdificioService;
 import uade.tpo.services.edificio.IEdificioService;
 import uade.tpo.services.usuario.IUsuarioService;
@@ -51,8 +53,16 @@ public class UsuarioController {
 
 	@PostMapping("/usuario")
 	public ResponseEntity<UsuarioDto> add(@RequestBody UsuarioDto usuarioDto) {
-		
+
 			Usuario usuario= this.dtoToUsuario(usuarioDto);
+			if (usuarioDto.getRole().toString() == "ADMIN") {
+				usuario.setRole(TipoRole.ADMIN);
+			} else if (usuarioDto.getRole().toString() == "INQUILINO") {
+				usuario.setRole(TipoRole.INQUILINO);
+			} else {
+				usuario.setRole(TipoRole.ADMIN);
+			}
+			
 			usuarioService.save(usuario);
 			System.out.println(" ");
 	        System.out.println("Se ha creado el usuario: "+ usuario.getUsername() + " Correctamente");
@@ -61,15 +71,15 @@ public class UsuarioController {
 		return new ResponseEntity<>(usuarioDto, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/usuario/{usuarioId}")
+	@PutMapping("/usuario/update/{usuarioId}")
 	public ResponseEntity<?> update(@PathVariable int usuarioId, @RequestBody UsuarioDto usuarioDto) {
+		
 		Usuario usuario = usuarioService.findById(usuarioId);
+
 		if (usuario == null) {
 			String mensaje = "Usuario no encontrado con ID: " + usuarioId;
 			return new ResponseEntity<>(mensaje, HttpStatus.NOT_FOUND);
-		}
-
-		
+		}		
 			Usuario usuarioUpdated = dtoToUsuario(usuarioDto) ;
 			usuarioService.update(usuarioId, usuarioUpdated);
 			 System.out.println(" ");
@@ -96,7 +106,7 @@ public class UsuarioController {
 	}
 
 	private UsuarioDto convertToUsuarioDto(Usuario usuario) {
-		return new UsuarioDto(usuario.getNombre(), usuario.getApellido(), usuario.getDni(), usuario.getUsername(), usuario.getPassword(), usuario.getRole());
+		return new UsuarioDto(usuario.getId(),usuario.getNombre(), usuario.getApellido(), usuario.getDni(), usuario.getUsername(), usuario.getPassword(), usuario.getRole());
 	}
 	
 	@GetMapping("/usuarios/usuariosEdificio/{edificioId}")
@@ -127,3 +137,4 @@ public class UsuarioController {
 		return usuario;
 	}
 }
+

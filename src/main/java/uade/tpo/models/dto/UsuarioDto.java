@@ -7,19 +7,21 @@ import java.util.Date;
 
 
 public class UsuarioDto {
-    private String username;
-    private String password;
+    private Integer id;
     private String nombre;
     private String apellido;
     private String dni;
+    private String username;
+    private String password;
     private TipoRole role;
 
-    public UsuarioDto(String username, String password, String nombre, String apellido, String dni,  TipoRole role) {
-        this.username = username;
-        this.password = password;
+    public UsuarioDto(Integer id, String nombre, String apellido,  String dni, String username, String password,  TipoRole role) {
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
+        this.username = username;
+        this.password = password;
         this.role = role;
     }
     
@@ -74,15 +76,24 @@ public class UsuarioDto {
         this.role = tipoUsuario;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "UsuarioDto{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
+                " id=" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
                 ", apellido='" + apellido + '\'' +
                 ", dni='" + dni + '\'' +
-                ", role=" + role +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role + '\'' +
                 '}';
     }
 }

@@ -37,12 +37,15 @@ public class App {
 
     @PostConstruct
     public void init() {
-    	Usuario propietario1 = new Usuario("pedro4", "123456", "Pedro", "Perez", "40247775", TipoRole.ADMIN);
+    	Usuario propietario1 = new Usuario("Pedro", "Perez", "pedro4", "123456", "40247775", TipoRole.ADMIN);
         //Usuario propietario2 = new Usuario("Juan Maria", "123456", "Juan", "Beccaceci", "40247776", TipoRole.PROPIETARIO);
         usuarioService.save(propietario1);
         
-        Usuario propietario2 = new Usuario("thiago1", "123456", "thiago", "juju", "44247775", TipoRole.INQUILINO);
+        Usuario propietario2 = new Usuario("thiago", "juju","thiago1", "123456",  "44247775", TipoRole.INQUILINO);
         usuarioService.save(propietario2);
+
+        Usuario propietario3 = new Usuario("ivan", "stre", "ivan1", "123456", "41396627", TipoRole.INQUILINO);
+        usuarioService.save(propietario3);
      
         Edificio edificio = new Edificio("Uade", new Direccion("Lima", 2213, "1816"), 10, true);
         edificioService.save(edificio);
