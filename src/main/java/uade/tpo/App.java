@@ -21,6 +21,6 @@ public class App {
     @PostConstruct
     public void init() {
     	Usuario propietario1 = new Usuario("Pedro", "Perez", "admin", "admin", "40247775", TipoRole.ADMIN);
-        usuarioService.save(propietario1);
+        usuarioService.save(propietario1);	
     }
 }
