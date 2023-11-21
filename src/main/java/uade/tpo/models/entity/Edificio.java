@@ -14,6 +14,7 @@ public class Edificio {
     private Direccion direccion;
     private int numeroPisos;
     private boolean tieneAscensor;
+    
 
     @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -22,7 +23,9 @@ public class Edificio {
 	@OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
 	private List<Reclamo> reclamos = new ArrayList<>();
 	
-	
+   @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL)
+   @JsonIgnore
+    private List<AreaComun> areasComunes = new ArrayList<>();
 	
 	
 
@@ -88,6 +91,11 @@ public class Edificio {
 
 	public void setReclamos(Reclamo reclamo) {
     	this.reclamos.add(reclamo);
+	}
+
+	
+	public List<AreaComun> getAreasComunes() {
+		return areasComunes;
 	}
 
 	@Override
