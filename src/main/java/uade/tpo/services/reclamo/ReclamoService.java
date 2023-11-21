@@ -33,7 +33,9 @@ public class ReclamoService implements IReclamoService {
     }
 
     @Override
-    public void update(int id, Reclamo reclamo) { }
+    public void update(int id, Reclamo reclamo) { 
+    	//this.daoReclamoImpl.update(reclamo);
+    }
 
     @Override
     public void deleteById(int id) {

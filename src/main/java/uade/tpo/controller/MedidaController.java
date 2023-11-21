@@ -8,6 +8,7 @@ import uade.tpo.models.dto.MedidaDto;
 import uade.tpo.models.dto.NewMedidaDto;
 import uade.tpo.models.entity.Medida;
 import uade.tpo.models.entity.Reclamo;
+import uade.tpo.models.types.EstadoReclamo;
 import uade.tpo.services.medida.IMedidaService;
 import uade.tpo.services.reclamo.IReclamoService;
 
@@ -48,7 +49,10 @@ public class MedidaController {
         iMedidaService.save(medida);
         System.out.println(" ");
         System.out.println("Se ha creado la medida: "+ medida.getId() + " Correctamente, perteneciente al reclamo " + reclamo.getId());
-        return new ResponseEntity<>(new NewMedidaDto(String.valueOf(medida.getId()), medida.getDescripcion(), medidaDto.getReclamoId()), HttpStatus.OK);
+        EstadoReclamo estadoReclamo = EstadoReclamo.get(medidaDto.getEstadoReclamo()).orElse(EstadoReclamo.NUEVO);
+        reclamo.setEstadoReclamo(estadoReclamo);
+        iReclamoService.update(Integer.parseInt(medidaDto.getReclamoId()), reclamo);
+        return new ResponseEntity<>(new NewMedidaDto(String.valueOf(medida.getId()), medida.getDescripcion(), medidaDto.getReclamoId(), medidaDto.getEstadoReclamo()), HttpStatus.OK);
     }
     
     @DeleteMapping("/medida/{medidaId}")
